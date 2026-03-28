@@ -1,0 +1,165 @@
+*{
+    box-sizing: border-box;
+    font-family: "Inter";
+}
+body{
+    margin: 0;
+}
+.container{
+    display: flex;
+
+}
+.right-con{
+    width: 100%;
+    padding: 20px;
+}
+.con{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.head{
+    width: 100%;
+    padding: 0px 30px;
+}
+.head-title h1{
+margin: 0;
+}
+.xarajat{
+    font-size: 18px;
+    color: gray;
+}
+.oy{
+    font-size: 20px;
+}
+.left-con{
+  width: 300px;
+height: 100vh;
+padding: 10px;
+position: relative;
+}
+ul{
+    list-style: none;
+    font-size: 22px;
+    display: flex;
+    gap: 20px;
+    flex-direction: column;
+    padding-top: 20px;
+}
+.logo{
+    width: 100%;
+}
+.logo img{
+    padding-left: 30px;
+    padding-top:30px ;
+    width: 280px;
+}
+.btn1{
+    width: 100%;
+    padding: 15px;
+    text-align: start;
+    border: none;
+    border-radius: 12px;
+    font-size: 16px;
+    display: flex;
+    gap: 8px;
+}
+.btn2{
+    width: 100%;
+    padding: 15px;
+    text-align: start;
+    border: none;
+    border-radius: 12px;
+    font-size: 16px;
+     display: flex;
+    gap: 8px;
+}
+.btn3{
+    width: 100%;
+    padding: 15px;
+    text-align: start;
+    border: none;
+    border-radius: 12px;
+    font-size: 16px;
+    background: #ECFDF5;
+    color: #16ff92;
+    font-weight: 900;
+     display: flex;
+    gap: 8px;
+}
+.btn4{
+    width: 100%;
+    padding: 15px;
+    text-align: start;
+    border: none;
+    border-radius: 12px;
+    font-size: 16px;
+     display: flex;
+    gap: 8px;
+}
+.btn5{
+    width: 100%;
+    padding: 15px;
+    text-align: start;
+    border: none;
+    border-radius: 12px;
+    font-size: 16px;
+     display: flex;
+    gap: 8px;
+}
+.btn6{
+    width: 100%;
+    padding: 15px;
+    text-align: start;
+    border: none;
+    border-radius: 12px;
+    font-size: 16px;
+     display: flex;
+    gap: 8px;
+}
+.btn7{
+    width: 100%;
+    padding: 15px;
+    text-align: start;
+    border: none;
+    border-radius: 12px;
+    font-size: 16px;
+     display: flex;
+    gap: 8px;
+}
+ul button:hover{
+    background:#ECFDF5 ;
+    color: #16ff92;
+
+}
+ul button{
+    background-color: transparent;
+}
+.btn8{
+      width: 80%;
+    padding: 15px;
+    text-align: start;
+    border: none;
+    border-radius: 12px;
+    font-size: 16px; 
+    position: absolute;
+    bottom: 60px;
+    left: 35px;
+    background-color: transparent;
+}
+.btn8:hover{
+    background-color: #ECFDF5;
+    color: #16ff92;
+}
+.chiqim{
+    font-size: 20px;
+}
+.span{
+    color: red;
+    font-size: 28px;
+}
+.pul{
+    display: flex;
+    justify-content: end;
+    padding: 50px  30px;
+}
