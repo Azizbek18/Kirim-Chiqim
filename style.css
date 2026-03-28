@@ -1,0 +1,106 @@
+*{
+    box-sizing: border-box;
+}
+body{
+    margin: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+.container{
+    width: 480px;
+height: 71\0px;
+display: flex;
+justify-content: center;
+align-items: center;
+text-align: center;
+flex-direction: column;
+padding: 10px;
+}
+.card-main{
+    width: 80%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    gap: 20px;
+    background-color: rgb(253, 248, 248);
+    border-radius: 8px;
+}
+
+.input-1{
+    width: 100%;
+    padding: 15px;
+    font-size: 18px;
+    border-radius: 10px;
+    border: none;
+    background-color: white;
+}
+.card-input{
+    width: 100%;
+}
+.email{
+    color: gray;
+    text-align: start;
+    margin: 4px;
+    font-size: 18px;
+}
+.card-input-2{
+    width: 100%;
+}
+.input-2{
+    width: 100%;
+    padding: 15px;
+    font-size: 18px;
+    border-radius: 10px;
+    border: none;
+    background-color: white;
+}
+.parol{
+    color: green;
+    margin: 4px;
+    font-size: 18px;
+}
+.input-title{
+    display: flex;
+    justify-content: space-between;
+}
+.parol1{
+    color: gray;
+    margin: 4px;
+    font-size: 18px;
+}
+.card-btn{
+    width: 100%;
+    padding: 10px;
+    background-color: #006948;
+    color: white;
+    border-radius: 10px;
+    border: none;
+    
+}
+.head-h1{
+    margin: 0;
+}
+.footer-text{
+    display: flex;
+    justify-content: center;
+}
+.foter-text{
+    color: gray;
+    font-size: 18px;
+}
+.foter-text2{
+   color: green;
+   font-size: 18px;
+}
+.foter-title{
+    display: flex;
+justify-content: space-between;
+color: gray;
+font-size: 12px;
+}
+.foter-title p{
+    font-size: 15px;
+}
