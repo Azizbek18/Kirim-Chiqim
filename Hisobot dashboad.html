@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="uz">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hisobot Dashboard</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="stylesheet" href="style5.css">
+</head>
+
+<body>
+
+    <div class="sidebar">
+        <h2>OilaBalance</h2>
+        <ul>
+            <li>Bosh sahifa</li>
+            <li>Kirim / Chiqim</li>
+            <li>Kategoriyalar</li>
+            <li>Hisobot</li>
+        </ul>
+    </div>
+
+    <div class="main">
+        <div class="container">
+
+            <div class="header">
+                <h1>Hisobotlar</h1>
+                <button onclick="downloadPDF()">PDF yuklash</button>
+            </div>
+
+            <div class="card stats">
+                <div class="stat">
+                    <h3>Jami kirim</h3>
+                    <p class="green">+18,400,000</p>
+                </div>
+                <div class="stat">
+                    <h3>Jami chiqim</h3>
+                    <p class="red">-12,250,000</p>
+                </div>
+                <div class="stat">
+                    <h3>Tejaldı</h3>
+                    <p class="blue">6,150,000</p>
+                </div>
+            </div>
+
+            <div class="card">
+                <h3>6 oylik grafik</h3>
+                <canvas id="lineChart"></canvas>
+            </div>
+
+            <div class="card">
+                <h3>Kategoriya</h3>
+                <canvas id="pieChart"></canvas>
+            </div>
+
+        </div>
+    </div>
+
+    <script src="/script.js"></script>
+</body>
+
+</html>
