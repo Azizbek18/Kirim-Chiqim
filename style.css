@@ -90,7 +90,21 @@ label {
     color: #6b7280;
 }
 
+<<<<<<< HEAD
 .footer a {
     color: #059669;
     text-decoration: none;
 }
+=======
+        .footer {
+            text-align: center;
+            font-size: 13px;
+            margin-top: 15px;
+            color: #6b7280;
+        }
+
+        .footer a {
+            color: #059669;
+            text-decoration: none;
+        }
+>>>>>>> 43cfac15211399d25ae7587fe1befdabbb550612

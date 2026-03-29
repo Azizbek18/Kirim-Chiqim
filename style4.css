@@ -1,0 +1,139 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: sans-serif;
+}
+
+body {
+  display: flex;
+  background: #f4f6fb;
+}
+
+
+.sidebar {
+  width: 230px;
+  height: 100vh;
+  background: #fff;
+  padding: 20px;
+  border-right: 1px solid #eee;
+}
+
+.logo {
+  font-weight: bold;
+  margin-bottom: 25px;
+}
+
+.menu li {
+  list-style: none;
+  padding: 12px;
+  border-radius: 10px;
+  margin-bottom: 8px;
+  display: flex;
+  gap: 10px;
+  cursor: pointer;
+}
+
+.menu li.active {
+  background: #e8f5ef;
+  color: #0a8f6a;
+}
+
+
+.main {
+  flex: 1;
+  padding: 25px;
+}
+
+.top {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 20px;
+}
+
+.cards {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 15px;
+}
+
+.card {
+  background: #fff;
+  border-radius: 14px;
+  padding: 15px;
+}
+
+.card-top {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 10px;
+}
+
+.icon {
+  width: 40px;
+  height: 40px;
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.green { background: #e8f5ef; color: #0a8f6a; }
+.blue { background: #e8f0ff; color: #2d6cdf; }
+.red { background: #fdecec; color: #e74c3c; }
+
+.progress {
+  height: 8px;
+  background: #eee;
+  border-radius: 10px;
+  margin: 10px 0;
+  overflow: hidden;
+}
+
+.progress span {
+  display: block;
+  height: 100%;
+  background: #0a8f6a;
+}
+
+.row {
+  display: flex;
+  justify-content: space-between;
+  font-size: 13px;
+  color: gray;
+}
+
+.btn {
+  margin-top: 10px;
+  padding: 10px;
+  border-radius: 8px;
+  border: 1px solid #0a8f6a;
+  text-align: center;
+  cursor: pointer;
+}
+
+
+.add {
+  border: 2px dashed #ccc;
+  border-radius: 14px;
+  height: 150px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  color: #888;
+}
+
+
+.bottom {
+  display: flex;
+  gap: 15px;
+  margin-top: 20px;
+}
+
+.box {
+  background: #fff;
+  padding: 15px;
+  border-radius: 12px;
+  flex: 1;
+}
