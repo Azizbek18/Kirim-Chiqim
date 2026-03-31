@@ -90,6 +90,19 @@ label {
     color: #6b7280;
 }
 
+
+.footer a {
+    color: #059669;
+    text-decoration: none;
+}
+
+.footer {
+    text-align: center;
+    font-size: 13px;
+    margin-top: 15px;
+    color: #6b7280;
+}
+
 .footer a {
     color: #059669;
     text-decoration: none;

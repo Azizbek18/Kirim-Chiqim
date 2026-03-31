@@ -1,0 +1,91 @@
+body {
+    font-family: Arial, sans-serif;
+    background: #f4f6f8;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+.container {
+    background: #fff;
+    width: 350px;
+    padding: 20px;
+    border-radius: 12px;
+    box-shadow: 0 5px 20px rgba(0,0,0,0.08);
+}
+h2 {
+    text-align: center;
+    margin-bottom: 5px;
+}
+.sub {
+    text-align: center;
+    font-size: 13px;
+    color: #777;
+    margin-bottom: 15px;
+}
+.toggle {
+    display: flex;
+    background: #eee;
+    border-radius: 10px;
+    overflow: hidden;
+    margin-bottom: 15px;
+}
+.toggle button {
+    flex: 1;
+    padding: 10px;
+    border: none;
+    cursor: pointer;
+    background: transparent;
+}
+.toggle .active {
+    background: #0f6b43;
+    color: #fff;
+}
+input {
+    width: 100%;
+    padding: 12px;
+    border-radius: 8px;
+    border: none;
+    background: #f1f3f5;
+    margin-bottom: 10px;
+}
+.label {
+    font-size: 12px;
+    color: #777;
+    margin: 10px 0 5px;
+}
+.categories {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 8px;
+}
+.categories button {
+    padding: 8px;
+    border: none;
+    border-radius: 8px;
+    background: #f1f3f5;
+    cursor: pointer;
+}
+.row {
+    display: flex;
+    gap: 10px;
+}
+.row input {
+    flex: 1;
+}
+.save {
+    width: 100%;
+    padding: 12px;
+    border: none;
+    background: #0f6b43;
+    color: #fff;
+    border-radius: 8px;
+    margin-top: 15px;
+    cursor: pointer;
+}
+.cancel {
+    text-align: center;
+    margin-top: 10px;
+    color: #777;
+    font-size: 13px;
+}
