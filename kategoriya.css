@@ -163,3 +163,53 @@ ul button{
     justify-content: end;
     padding: 50px  30px;
 }
+.start{
+display: flex;
+align-items: center;
+gap: 10px;
+}
+.start h1{
+    font-size: 25px;
+    margin: 0;
+}
+.start img{
+width: 50px;
+}
+.start p{
+    color: gray;
+    margin: 0;
+    
+}
+.hisoblar{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 2px solid rgb(189, 189, 189);
+}
+.foiz{
+    font-size: 20px;
+    padding-left: 50px;
+}
+.som{
+    font-size: 20px;
+    color: red;
+}
+.btn9{
+    width: 300px;
+    padding: 15px;
+    font-size: 20px;
+    background-color: transparent;
+    border-radius: 10px;
+    color: #059669;
+    border: 2px solid #059669;
+}
+.foter{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+height: 26vh;
+}
+.foter p{
+    color: gray;
+}
