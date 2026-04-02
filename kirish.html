@@ -5,7 +5,10 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="kirish.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap" rel="stylesheet">
 </head>
 
 <body>
@@ -14,12 +17,12 @@
         <div class="card-head">
             <img src="./M_rasmlar/Background+Shadow.svg" alt="">
             <h1 class="head-h1">Kirish</h1>
-            <p>oila hisobiga kiring</p>
+            <p class="head-p">oila hisobiga kiring</p>
         </div>
-        <div class="card-main">
+        <div class="card-main"> 
             <div class="card-input">
                 <p class="email">Email</p>
-                <input class="input-1" type="email" placeholder="example@mail.com">
+                <input id="email" class="input-1" type="email" placeholder="example@mail.com">
 
             </div>
             <div class="card-input">
@@ -27,15 +30,14 @@
                     <p class="parol1">Parol</p>
                     <p class="parol" href="#">Parolni unutdingizmi?</p>
                 </div>
-                <input class="input-2" type="password" placeholder="Password">
+                <input id="parol" class="input-2" type="password" placeholder="Password">
             </div>
             <button class="card-btn">Kirish</button>
         </div>
            <div class="card-footer">
                 <div class="footer-text">
-
                 <p class="foter-text">Hisob yo'qmi? </p>
-                    <p class="foter-text2">Ro'yxatdan o'ting</p>
+                <p class="foter-text2">Ro'yxatdan o'ting</p>
                 </div>
                 <div class="foter-title">
                     <p>Minimalist</p>
@@ -44,7 +46,7 @@
                 </div>
             </div>
     </div>
-
+<script src="kirish.js"></script>
 </body>
 
 </html>
