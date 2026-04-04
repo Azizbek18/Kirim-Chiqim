@@ -1,31 +1,32 @@
-let supaBaseUrl = 'https://pcdugrawrtezxmzagaqh.supabase.co'
-let supaBaseKey = 'sb_publishable_oJnISbwOks8wEIh6gCAkqw_Npr5Q6qB'
+let supaBaseUrl = 'https://mwndanxkvpgeaicrjeia.supabase.co'
+let supaBaseKey = 'sb_publishable_deLmezxuUNJ7NZHLJJAAuA_YGluXUAo'
 
 const _supabase = supabase.createClient(supaBaseUrl, supaBaseKey)
 
-async function Yubor() {
-    let email = document.getElementById('email').value
-    let parol = document.getElementById('parol').value
-
-
-    const { data, error } = await _supabase
-        .from('Malumotlar')
-        .insert([
-            {
-                Ism: email,
-                Familiya: parol,
-            }
-        ])
-    if (error) {
-        alert('Xatolik yuz berdi!', error)
+async function Yubor    () {
+    let email = document.getElementById('email')
+    let parol = document.getElementById('parol')
+  
+    if(email.value == "" && parol.value == ""){
+        alert("Maydonlarni to'ldiring")
+        return
     }
-    else {
-        alert("Bazaga qo'shildi")
-        tozala()
+
+    const {data:foydalanuvchi, error:xatolik} = await _supabase
+    .from('login')
+    .select('*')
+    .eq('email',email.value)
+    .eq('parol', parol.value)
+    if(xatolik){
+        alert("Xatolik yuz berdi" + error.message)
+        return
     }
-}
-function tozala() {
-    email.value = ''
-    parol.value = ''
-   
+    if(foydalanuvchi.length > 0){
+        alert("Siz tizimga muvaffaqiyatli kirdingiz!!!")
+        window.location.href = "qarzlar.html"
+    }
+    else{
+        alert("Siz ro'yxatdan o'tmagansiz")
+    }
+
 }
