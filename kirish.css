@@ -1,0 +1,102 @@
+* {
+    box-sizing: border-box;
+    font-family: "Inter";
+}
+
+body {
+    margin: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    text-align: center;
+    background-color: aliceblue;
+}
+
+.container {
+    width: 380px;
+    height: 610px;
+}
+
+.head-h1 {
+    margin: 0;
+}
+
+.card-img img {
+    width: 200px;
+}
+
+.card-main {
+    background-color: white;
+    border-radius: 12px;
+    width: 380px;
+    padding: 8px;
+}
+
+.head-p {
+    color: gray;
+}
+
+.input-1 {
+    width: 90%;
+    padding: 10px 10px;
+    border: 1px solid gray;
+    font-size: 18px;
+    outline: none;
+    border-radius: 10px;
+}
+.email{
+    color: gray ;
+    font-size: 18px;
+    margin: 5px;
+    text-align: start;
+}
+.input-2{
+     width: 90%;
+    padding: 10px 10px;
+    border: 1px solid gray;
+    border-radius: 10px;
+    font-size: 18px;
+    outline: none;
+    
+}
+.input-title{
+    display: flex;
+    justify-content: space-between;
+}
+.parol1{
+    color: gray;
+    margin: 5px;
+}
+.parol{
+    color: green;
+    margin: 5px;
+}
+.card-input{
+    margin-top: 20px;
+}
+.card-btn{
+    width: 90%;
+    background-color: #006948;
+    color: white;
+    padding: 14px 20px;
+    border-radius: 12px;
+    border: none;
+    margin-top: 20px;
+}
+.footer-text{
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    color: gray ;
+}
+.foter-text2{
+    color: #006948;
+}
+.foter-title{
+    display: flex; 
+    justify-content: center;
+    gap: 20px;
+    color: gray;
+
+}

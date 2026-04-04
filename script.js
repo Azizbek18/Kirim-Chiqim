@@ -29,6 +29,9 @@ new Chart(pieCtx, {
 });
 
 
+
 function downloadPDF() {
     window.print();
 }
+
+c
