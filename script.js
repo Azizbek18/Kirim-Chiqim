@@ -16,6 +16,7 @@ new Chart(lineCtx, {
 });
 
 const pieCtx = document.getElementById('pieChart');
+
 new Chart(pieCtx, {
     type: 'doughnut',
     data: {
@@ -27,6 +28,10 @@ new Chart(pieCtx, {
     }
 });
 
+
+
 function downloadPDF() {
     window.print();
 }
+
+c
