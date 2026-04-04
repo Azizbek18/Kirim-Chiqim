@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="uz">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AI Maslahat</title>
+<link rel="stylesheet" href="/style6.css">
+</head>
+<body>
+
+<div class="sidebar">
+  <div class="logo">OilaBalance</div>
+
+  <div class="menu">
+    <div>Bosh sahifa</div>
+    <div>Kirim / Chiqim</div>
+    <div>Kategoriyalar</div>
+    <div>Maqsadlar</div>
+    <div>Qarzlar</div>
+    <div class="active">AI maslahat</div>
+  </div>
+</div>
+
+<div class="main">
+  <div class="title">Byudjetingiz bo‘yicha aqlli tavsiyalar</div>
+  <div class="subtitle">Shaxsiy moliyaviy yordamchingizdan tahlil oling.</div>
+
+  <div class="chat-container" id="chat"></div>
+
+  <div class="input-box">
+    <input id="input" placeholder="AI'dan so‘rash...">
+    <button class="send" onclick="send()">➤</button>
+  </div>
+</div>
+
+<div class="right">
+
+
+  <div class="rating-card">
+    <div class="circle">
+      <span>B+</span>
+    </div>
+
+    <div>
+      <h3>Byudjet reytingingiz</h3>
+      <p>Siz boshqa foydalanuvchilarning 74% idan ko‘ra intizomliroqsiz.</p>
+      <small>📈 O‘tgan oyga nisbatan +5%</small>
+    </div>
+  </div>
+
+ 
+  <div class="suggestions">
+
+    <div class="title">
+      <h3>Avtomatik tavsiyalar</h3>
+      <span>3 YANGI</span>
+    </div>
+
+   
+    <div class="item warning">
+      <div class="icon">⚠️</div>
+      <div>
+        <b>"Kofexona" limiti yaqin</b>
+        <p>Oylik limitingizning 85% qismini sarflab bo‘ldingiz. Yana 42,000 so‘m qoldi.</p>
+      </div>
+    </div>
+
+
+    <div class="item success">
+      <div class="icon">✔️</div>
+      <div>
+        <b>Yaxshi tejash!</b>
+        <p>Kommunal xizmatlar uchun to‘lovni vaqtida amalga oshirdingiz.</p>
+      </div>
+    </div>
+
+  
+    <div class="item danger">
+      <div class="icon">❗</div>
+      <div>
+        <b>Kutilmagan xarajat</b>
+        <p>Avtomobil ta’miri uchun byudjetdan tashqari 1.2 mln so‘m sarflandi.</p>
+      </div>
+    </div>
+
+  
+    <div class="footer">
+      <b>Reytingni oshirish uchun:</b>
+      <ul>
+        <li>Obunalarni tekshiring (Netflix, Spotify)</li>
+        <li>Haftalik reja qiling</li>
+        <li>Xarajatlarni yozib boring</li>
+      </ul>
+    </div>
+
+  </div>
+</div>
+<script src="ai.js"></script>
+
+</body>
+</html>

@@ -11,6 +11,7 @@ body {
 }
 
 
+
 .sidebar {
   width: 230px;
   height: 100vh;
@@ -136,4 +137,19 @@ body {
   padding: 15px;
   border-radius: 12px;
   flex: 1;
+}
+
+.progress{
+  height:8px;
+  background:#eee;
+  border-radius:10px;
+  margin:10px 0;
+}
+
+.bar{
+  height:100%;
+  width:0%;
+  background:#1fa971;
+  border-radius:10px;
+  transition:0.4s;
 }
