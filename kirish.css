@@ -83,6 +83,7 @@ body {
     border-radius: 12px;
     border: none;
     margin-top: 20px;
+    font-size: 15px;
 }
 .footer-text{
     display: flex;
