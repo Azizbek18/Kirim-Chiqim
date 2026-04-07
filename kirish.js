@@ -29,8 +29,4 @@ async function Yubor    () {
         alert("Siz ro'yxatdan o'tmagansiz")
         window.location.href = "oila Hisobi.html"
     }
-    else{
-        alert("Siz ro'yxatdan o'tmagansiz")
-    }
-
 }

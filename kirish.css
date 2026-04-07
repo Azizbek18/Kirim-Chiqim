@@ -88,11 +88,13 @@ body {
 .footer-text{
     display: flex;
     justify-content: center;
+    align-items: center;
     gap: 10px;
     color: gray ;
 }
 .foter-text2{
     color: #006948;
+    text-decoration: none;
 }
 .foter-title{
     display: flex; 
