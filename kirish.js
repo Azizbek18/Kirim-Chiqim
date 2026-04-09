@@ -1,36 +1,60 @@
-let supaBaseUrl = 'https://mwndanxkvpgeaicrjeia.supabase.co'
-let supaBaseKey = 'sb_publishable_deLmezxuUNJ7NZHLJJAAuA_YGluXUAo'
+const xabarCon = document.querySelector(".xabar-con");
 
-const _supabase = supabase.createClient(supaBaseUrl, supaBaseKey)
+// Xabarnoma chiqarish funksiyasi
+function xabarnoma(xabar, turi) {
+    let xabarMatn = document.createElement('div');
+    xabarMatn.classList.add("xabar", turi);
+    xabarMatn.innerText = xabar;
 
-async function Yubor    () {
-    let email = document.getElementById('email')
-    let parol = document.getElementById('parol')
+    xabarCon.appendChild(xabarMatn);
+
+    // 4 soniyadan keyin o'chirib tashlash
+    setTimeout(() => {
+        xabarMatn.remove();
+    }, 4000);
+}
+
+let supaBaseUrl = 'https://mwndanxkvpgeaicrjeia.supabase.co';
+let supaBaseKey = 'sb_publishable_deLmezxuUNJ7NZHLJJAAuA_YGluXUAo';
+
+const _supabase = supabase.createClient(supaBaseUrl, supaBaseKey);
+
+async function Yubor() {
+    let email = document.getElementById('email');
+    let parol = document.getElementById('parol');
   
-    if(email.value == "" && parol.value == ""){
-        alert("Maydonlarni to'ldiring")
-        return
+    // Maydonlar bo'shligini tekshirish
+    if(email.value === "" || parol.value === ""){
+        xabarnoma("Maydonlarni to'ldiring", "error"); // turi: error yoki warning
+        return;
     }
 
-    const {data:foydalanuvchi, error:xatolik} = await _supabase
-    .from('login')
-    .select('*')
-    .eq('email',email.value)
-    .eq('parol', parol.value)
+    const { data: foydalanuvchi, error: xatolik } = await _supabase
+        .from('login')
+        .select('*')
+        .eq('email', email.value)
+        .eq('parol', parol.value);
+
+    // Bazada xatolik bo'lsa
     if(xatolik){
-        alert("Xatolik yuz berdi" + error.message)
-        return
-    }
-    if(foydalanuvchi.length > 0){
-        alert("Siz tizimga muvaffaqiyatli kirdingiz!!!")
-        window.location.href = "qarzlar.html"
-    }
-    else{
-        alert("Siz ro'yxatdan o'tmagansiz")
-        window.location.href = "oila Hisobi.html"
-    }
-    else{
-        alert("Siz ro'yxatdan o'tmagansiz")
+        xabarnoma("Xatolik yuz berdi: " + xatolik.message, "error");
+        return;
     }
 
+    // Foydalanuvchi topilsa
+    if(foydalanuvchi && foydalanuvchi.length > 0){
+        xabarnoma("Siz tizimga muvaffaqiyatli kirdingiz!!!", "success");
+        
+        // Xabar ko'rinishi uchun biroz kutib keyin o'tish (ixtiyoriy)
+        setTimeout(() => {
+            window.location.href = "qarzlar.html";
+        }, 1500);
+    } 
+    else {
+        xabarnoma("Siz ro'yxatdan o'tmagansiz yoki ma'lumotlar xato", "error");
+        
+        setTimeout(() => {
+            window.location.href = "oila Hisobi.html";
+        }, 2000);
+    }
 }
