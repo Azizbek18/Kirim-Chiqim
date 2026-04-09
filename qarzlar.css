@@ -24,7 +24,13 @@ body {
     align-items: center;
 
 }
-
+a:hover{
+color: #16ff92;
+}
+a{
+    text-decoration: none;
+    color: black;
+}
 .input-card {
     display: flex;
     gap: 15px;

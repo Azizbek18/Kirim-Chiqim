@@ -30,7 +30,7 @@ if (parol !== tasdiqlang) {
     .insert([
       {
          ism : ism,
-         familya : email,
+         email : email, 
          oila_nomi : oila
       }
     ]);
