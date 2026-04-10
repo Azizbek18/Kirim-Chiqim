@@ -17,19 +17,45 @@
 </head>
 
 <body>
+    <div id="debtModal" class="modal">
+    <div class="modal-content">
+        <span class="close-btn">&times;</span>
+        <h2>Yangi qarz qo'shish</h2>
+        <div class="modal-body">
+            <input type="text" id="debtName" placeholder="Kimga / Kimdan?">
+            <input type="text" id="debtAmount" placeholder="Summa (masalan: 500 000)">
+            <input type="text" id="debtReason" placeholder="Sana va sabab (masalan: 12-may, To'y uchun)">
+            <button id="saveDebtBtn" class="save-btn">Saqlash</button>
+        </div>
+    </div>
+</div>
     <div class="container">
         <div class="left-con">
             <div class="logo">
                 <img src="./M_rasmlar/Logo (1).svg" alt="">
             </div>
             <ul>
-                <button class="btn1"><i class="fa-regular fa-house"></i>Home</button>
-                <button class="btn2"><i class="fa-solid fa-wallet"></i>Kirim/Chiqim</button>
-                <button class="btn3"><i class="fa-solid fa-table-cells-large"></i><a href="./kategotiya.html">Kategoriyalar</a></button>
-                <button class="btn4"><i class="fa-solid fa-bullseye"></i>Maqsadlar</button>
-                <button class="btn5"><i class="fa-regular fa-credit-card"></i>Qarzlar</button>
-                <button class="btn6"><i class="fa-regular fa-file-lines"></i>Hisobot</button>
-                <button class="btn7"><i class="fa-solid fa-robot"></i>AI maslahat</button>
+                <a href="./bosh sahifa.html" class="btn1">
+                    <i class="fa-regular fa-house"></i>Home
+                </a>
+                <a href="#" class="btn2">
+                    <i class="fa-solid fa-wallet"></i>Kirim/Chiqim
+                </a>
+                <a href="./kategotiya.html" class="btn3">
+                    <i class="fa-solid fa-table-cells-large"></i>Kategoriyalar
+                </a>
+                <a href="./Maqsadlar.html" class="btn4">
+                    <i class="fa-solid fa-bullseye"></i>Maqsadlar
+                </a>
+                <a href="./qarzlar.html" class="btn5">
+                    <i class="fa-regular fa-credit-card"></i> Qarzlar
+                </a>
+                <a href="./Hisobot dashboad.html" class="btn6">
+                    <i class="fa-regular fa-file-lines"></i>Hisobot
+                </a>
+                <a href="./ai maslahatlar.html" class="btn7">
+                    <i class="fa-solid fa-robot"></i>AI maslahat
+                </a>
             </ul>
             <button class="btn8"><i class="fa-solid fa-gear"></i> Sozlamalar</button>
         </div>

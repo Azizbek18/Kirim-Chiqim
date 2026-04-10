@@ -185,7 +185,7 @@ color: #16ff92;
 .pul{
     display: flex;
     justify-content: end;
-    padding: 2  0px  30px;
+    padding: 20px  30px;
 }
 .oy {
     display: flex;
@@ -320,3 +320,4 @@ a{
     text-decoration: none;
     color: black;
 }
+
