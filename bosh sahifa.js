@@ -1,56 +1,118 @@
 
+let currentDate = new Date();
+
 let transactions = [
   { name: "Oziq-ovqat", amount: -450000 },
   { name: "Transport", amount: -28000 },
   { name: "Maosh", amount: 8500000 },
-  { name: "Uy-joy", amount: -1200000 },
-  { name: "Ta'lim", amount: -150000 }
 ];
 
-function render() {
-  let list = document.getElementById("list");
+const monthTitle = document.querySelector(".month-title");
+const leftBtn = document.querySelector(".arrow.left");
+const rightBtn = document.querySelector(".arrow.right");
+
+const months = [
+  "Yanvar", "Fevral", "Mart", "Aprel", "May", "Iyun",
+  "Iyul", "Avgust", "Sentabr", "Oktabr", "Noyabr", "Dekabr"
+];
+
+function updateMonth() {
+  monthTitle.textContent =
+    months[currentDate.getMonth()] + " " + currentDate.getFullYear();
+}
+
+leftBtn.onclick = () => {
+  currentDate.setMonth(currentDate.getMonth() - 1);
+  updateMonth();
+};
+
+rightBtn.onclick = () => {
+  currentDate.setMonth(currentDate.getMonth() + 1);
+  updateMonth();
+};
+
+updateMonth();
+
+
+const addBtn = document.querySelector(".add-fab");
+const list = document.querySelector(".transaction-list");
+
+addBtn.onclick = () => {
+  let name = prompt("Nomi:");
+  let amount = parseInt(prompt("Summa:"));
+
+  if (!name || isNaN(amount)) return;
+
+  transactions.push({ name, amount });
+
+  renderTransactions();
+};
+
+function renderTransactions() {
   list.innerHTML = "";
 
-  let income = 0;
-  let expense = 0;
-
-  transactions.forEach(t => {
+  transactions.forEach((t) => {
     let div = document.createElement("div");
-    div.className = "transaction";
+    div.className = "transaction-item";
+
+    let sign = t.amount > 0 ? "+" : "-";
+    let color = t.amount > 0 ? "positive" : "negative";
 
     div.innerHTML = `
-      <span>${t.name}</span>
-      <span class="${t.amount > 0 ? 'green' : 'red'}">
-        ${t.amount.toLocaleString()} so'm
-      </span>
+      <div class="icon-container">
+        <i class="icon">💰</i>
+      </div>
+      <div class="transaction-details">
+        <span class="name">${t.name}</span>
+        <span class="date">Hozir</span>
+      </div>
+      <div class="amount ${color}">
+        ${sign} ${Math.abs(t.amount).toLocaleString()} so'm
+      </div>
     `;
 
     list.appendChild(div);
-
-    if (t.amount > 0) income += t.amount;
-    else expense += t.amount;
   });
-
-  document.getElementById("income").innerText = income.toLocaleString();
-  document.getElementById("expense").innerText = expense.toLocaleString();
-  document.getElementById("balance").innerText =
-    (income + expense).toLocaleString() + " so'm";
 }
 
-render();
+renderTransactions();
 
 
-function downloadReport() {
-  let csv = "Nomi,Summa\n";
+const downloadBtn = document.querySelector(".upload-button");
 
-  transactions.forEach(t => {
-    csv += `${t.name},${t.amount}\n`;
+downloadBtn.onclick = () => {
+  let content = "Hisobot:\n\n";
+
+  transactions.forEach((t) => {
+    content += `${t.name} : ${t.amount} so'm\n`;
   });
 
-  let blob = new Blob([csv], { type: "text/csv" });
-  let a = document.createElement("a");
+  let blob = new Blob([content], { type: "text/plain" });
+  let link = document.createElement("a");
 
-  a.href = URL.createObjectURL(blob);
-  a.download = "hisobot.csv";
-  a.click();
-}
+  link.href = URL.createObjectURL(blob);
+  link.download = "hisobot.txt";
+
+  link.click();
+};
+
+
+const modal = document.getElementById("modal");
+const openBtn = document.querySelector(".add-fab");
+const closeBtn = document.querySelector(".cancel");
+
+
+openBtn.addEventListener("click", () => {
+  modal.classList.add("active");
+});
+
+
+closeBtn.addEventListener("click", () => {
+  modal.classList.remove("active");
+});
+
+modal.addEventListener("click", (e) => {
+  if (e.target === modal) {
+    modal.classList.remove("active");
+  }
+});

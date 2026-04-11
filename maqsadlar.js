@@ -1,45 +1,79 @@
-const cards = document.querySelectorAll(".goal-card");
+function format(num) {
+  return num.toLocaleString("ru-RU");
+}
 
-cards.forEach((card, index) => {
 
-  const total = +card.dataset.total;
+function updateGoal(card) {
+  let total = +card.dataset.total;
   let current = +card.dataset.current;
 
-  const bar = card.querySelector(".bar");
-  const percentText = card.querySelector(".percent");
-  const leftText = card.querySelector(".left");
-  const btn = card.querySelector(".add-btn");
+  let percent = Math.min((current / total) * 100, 100);
 
-  const key = "goal_" + index;
+  card.querySelector(".bar").style.width = percent + "%";
+  card.querySelector(".percent").innerText = percent.toFixed(1) + "% bajarildi";
 
-  if(localStorage.getItem(key)){
-    current = +localStorage.getItem(key);
-  }
-
-  function updateUI(){
-    let percent = Math.min((current / total) * 100, 100);
-
-    bar.style.width = percent + "%";
-    percentText.innerText = percent.toFixed(1) + "% bajarildi";
-
-    let left = total - current;
-    leftText.innerText = left.toLocaleString() + " so‘m qoldi";
-  }
-
-  updateUI();
-
-  btn.addEventListener("click", () => {
-    let amount = prompt("Qancha pul qo‘shasiz?");
-    amount = +amount;
-
-    if(!amount || amount <= 0) return;
-
-    current += amount;
+  let left = total - current;
+  card.querySelector(".left").innerText =
+    format(left) + " so'm qoldi";
+}
 
 
-    localStorage.setItem(key, current);
+document.querySelectorAll(".btn").forEach(btn => {
+  btn.onclick = () => {
+    let card = btn.closest(".goal-card");
 
-    updateUI();
-  });
+    let sum = parseInt(prompt("Qancha pul qo‘shasiz?"));
+    if (!sum || sum <= 0) return;
 
+    card.dataset.current = +card.dataset.current + sum;
+
+    updateGoal(card);
+  };
 });
+
+
+document.querySelectorAll(".goal-card").forEach(card => {
+  updateGoal(card);
+});
+
+
+
+const addBox = document.querySelector(".btn");
+const cards = document.querySelector(".cards");
+
+addBox.onclick = () => {
+  let name = prompt("Maqsad nomi:");
+  let total = parseInt(prompt("Umumiy summa:"));
+
+  if (!name || !total) return;
+
+  let div = document.createElement("div");
+  div.className = "goal-card";
+  div.dataset.total = total;
+  div.dataset.current = 0;
+
+  div.innerHTML = `
+    <h4>${name}</h4>
+
+    <div class="progress">
+      <div class="bar"></div>
+    </div>
+
+    <p class="percent"></p>
+    <p class="left"></p>
+
+    <button class="btn">Pul qo‘shish</button>
+  `;
+
+  cards.prepend(div);
+
+  div.querySelector(".btn").onclick = () => {
+    let sum = parseInt(prompt("Qancha pul qo‘shasiz?"));
+    if (!sum) return;
+
+    div.dataset.current = +div.dataset.current + sum;
+    updateGoal(div);
+  };
+
+  updateGoal(div);
+};

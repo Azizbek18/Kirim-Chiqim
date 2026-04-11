@@ -250,3 +250,106 @@ body{
 .footer li{
   margin-bottom:5px;
 }
+
+
+/* Ushbu qismni sizning asosiy CSS faylingizga qo'shing */
+
+/* Chat container */
+.chat-container {
+  width: 100%;
+  height: 400px; /* O'zingiz xohlagancha balandlik */
+  overflow-y: auto; /* Agar xabarlar ko'paysa, skroll qo'shadi */
+  border: 1px solid #eee;
+  padding: 15px;
+  margin-bottom: 20px;
+  background-color: #f9f9f9;
+  border-radius: 8px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px; /* Xabarlar orasidagi bo'shliq */
+}
+
+/* Har bir xabar uchun umumiy stil */
+.message {
+  padding: 10px 15px;
+  border-radius: 15px;
+  max-width: 70%;
+  word-wrap: break-word; /* Matnni qat'iy o'rash */
+}
+
+/* Foydalanuvchi xabari */
+.user-message {
+  background-color: #007bff; /* Moviy rang */
+  color: white;
+  align-self: flex-end; /* O'ng tomonga surish */
+  border-bottom-right-radius: 5px; /* Shaklni o'zgartirish */
+}
+
+/* AI javobi */
+.ai-message {
+  background-color: #e9e9eb; /* Och kulrang */
+  color: #333;
+  align-self: flex-start; /* Chap tomonga surish */
+  border-bottom-left-radius: 5px; /* Shaklni o'zgartirish */
+}
+
+/* Xatolik xabari */
+.error-message {
+  background-color: #f8d7da;
+  color: #721c24;
+  align-self: center;
+  text-align: center;
+  font-weight: bold;
+}
+
+/* Input box */
+.input-box {
+  display: flex;
+  gap: 10px;
+}
+
+.input-box input {
+  flex-grow: 1; /* Qolgan bo'sh joyni egallaydi */
+  padding: 10px 15px;
+  border: 1px solid #ccc;
+  border-radius: 20px;
+  outline: none; /* Fokuslanganda chiziqni olib tashlash */
+  font-size: 16px;
+}
+
+.input-box .send {
+  padding: 10px 15px;
+  border: none;
+  background-color: #007bff;
+  color: white;
+  border-radius: 20px;
+  cursor: pointer;
+  font-size: 18px;
+  transition: background-color 0.3s ease;
+}
+
+.input-box .send:hover {
+  background-color: #0056b3;
+}
+
+/* Boshqa klasslar uchun ham kerakli stillarni qo'shishingiz mumkin */
+/* Masalan, .sidebar, .main, .right va ularning ichidagi elementlar */
+
+
+.msg {
+  padding: 10px;
+  margin: 5px;
+  border-radius: 10px;
+  max-width: 70%;
+}
+
+.user {
+  background: #d1e7ff;
+  margin-left: auto;
+  text-align: right;
+}
+
+.ai {
+  background: #e9f7ef;
+  margin-right: auto;
+}

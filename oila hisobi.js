@@ -1,42 +1,46 @@
 const SUPABASE_URL = "https://mwndanxkvpgeaicrjeia.supabase.co";
 const SUPABASE_ANON_KEY = "sb_publishable_deLmezxuUNJ7NZHLJJAAuA_YGluXUAo";
 
-const supabase = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+const _supabase = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
-const form = document.getElementById("registerForm");
-const msg = document.getElementById("msg");
 
-form.addEventListener("submit", async (e) => {
-  e.preventDefault();
 
-  const family_name = document.getElementById("family_name").value;
-  const user_name = document.getElementById("user_name").value;
-  const email = document.getElementById("email").value;
-  const income = document.getElementById("income").value;
-  const password = document.getElementById("password").value;
+async function Yaratish() {
 
-  const { data, error } = await supabase
+  const oila = document.getElementById("oila").value;
+  const ism = document.getElementById("ism").value;
+  const gmail = document.getElementById("gmail").value;
+  const oylik = document.getElementById("oylik").value;
+  const parol = document.getElementById("parol").value;
 
-  if (error) {
-    msg.innerText = "Xatolik: " + error.message;
+  const { data: foydalanuvchi, error: xatolik } = await _supabase
+    .from('login')
+    .select("*")
+  if (xatolik) {
+    alert("Xatolik: " + error.message)
     return;
   }
-
-
-  const { error: dbError } = await supabase
-    .from("login")
-    .insert([
-      {
-         ism : user_name,
-         familya : family_name,
-         oila_nomi : 
-      }
-    ]);
-
-  if (dbError) {
-    msg.innerText = "DB xatolik: " + dbError.message;
-    return;
+  if (foydalanuvchi.length > 0) {
+    alert("Siz oldin ro'yhatdan o'tgan ekansiz kirish qismiga o'tishiz mumkin")
   }
-
-  msg.innerText = "✅ Hisob muvaffaqiyatli yaratildi!";
-});
+  else {
+    const { data, error } = await _supabase
+      .from("login")
+      .insert([
+        {
+          oila_nomi: oila,
+          ism: ism,
+          email: gmail,
+          oylik_tolov: oylik,
+          parol: parol
+        }
+      ]);
+    if (error) {
+      alert('Xatolik yuz berdi')
+      return;
+    }
+    else {
+      alert(innerText = "✅ Hisob muvaffaqiyatli yaratildi!")
+    }
+  }
+};
