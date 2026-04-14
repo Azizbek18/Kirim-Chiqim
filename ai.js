@@ -1,68 +1,121 @@
+// =====================
+// DATA (demo)
+// =====================
+let balance = 12450000;
+let income = 8500000;
+let expense = 6050000;
+
+// =====================
+// ELEMENTLAR
+// =====================
+const input = document.getElementById("input");
 const chat = document.getElementById("chat");
 
-function add(text, type){
-  const div = document.createElement("div");
+// =====================
+// SEND FUNCTION
+// =====================
+function send() {
+  let text = input.value.trim();
+  if (!text) return;
+
+  addMessage(text, "user");
+  input.value = "";
+
+  let reply = getAIResponse(text.toLowerCase());
+
+  setTimeout(() => {
+    addMessage(reply, "ai");
+  }, 400);
+}
+
+// ENTER BOSILSA HAM YUBORADI
+input.addEventListener("keypress", function(e) {
+  if (e.key === "Enter") {
+    send();
+  }
+});
+
+
+// =====================
+// MESSAGE CHIQARISH
+// =====================
+function addMessage(text, type) {
+  let div = document.createElement("div");
   div.className = "msg " + type;
-  div.innerHTML = `<div class="bubble">${text}</div>`;
+  div.innerText = text;
+
   chat.appendChild(div);
   chat.scrollTop = chat.scrollHeight;
 }
 
-function random(arr){
-  return arr[Math.floor(Math.random()*arr.length)];
-}
 
-function ai(msg){
-  msg = msg.toLowerCase();
+// =====================
+// AI LOGIC
+// =====================
+function getAIResponse(text) {
 
-  if(msg.includes("transport")){
-    return random([
-      "Oxirgi haftalarda transportga ko‘p sarflagansiz. Jamoat transportiga o‘ting.",
-      "Taxi o‘rniga avtobus ishlatsangiz 40% tejaysiz.",
-      "Yandex Together orqali xarajatni kamaytirish mumkin."
-    ]);
+  if (text.includes("salom") || text.includes("assalom")) {
+    return "Va alaykum assalom! 😊 Byudjetingizni tahlil qilib beraman.";
   }
 
-  if(msg.includes("ovqat")){
-    return random([
-      "Restoran xarajatlari yuqori — kamaytirish foydali.",
-      "Uyda ovqat qilish orqali katta tejash mumkin.",
-      "Fast foodni kamaytirish tavsiya etiladi."
-    ]);
+  if (text.includes("balans")) {
+    return `Sizning balansingiz: ${format(balance)} so'm 💰`;
   }
 
-  if(msg.includes("tejash")){
-    return random([
-      "Har kuni xarajat yozib boring.",
-      "Keraksiz obunalarni o‘chiring.",
-      "Limit qo‘ying va undan oshmang."
-    ]);
+  if (text.includes("kirim")) {
+    return `Oylik daromadingiz ${format(income)} so'm 👍`;
+  }
+
+  if (text.includes("chiqim")) {
+    return `Siz ${format(expense)} so'm sarflagansiz. Nazorat qilish kerak ⚠️`;
+  }
+
+  if (text.includes("qancha tejadim") || text.includes("tejash")) {
+    let save = income - expense;
+    return `Siz ${format(save)} so'm tejagansiz 💵`;
+  }
+
+  if (text.includes("maslahat")) {
+    return generateAdvice();
   }
 
   return random([
-    "Aniqroq yozsangiz yordam beraman.",
-    "Qaysi xarajat haqida gapiryapsiz?",
-    "Moliyaviy holatingizni tahlil qilaymi?"
+    "Aniqroq yozing 🙂 Masalan: balans, chiqim, maslahat",
+    "Men sizga moliyaviy yordam bera olaman 💡",
+    "Byudjet haqida savol bering 😉"
   ]);
 }
 
-function send(){
-  const input = document.getElementById("input");
-  const text = input.value.trim();
-  if(!text) return;
 
-  add(text, "user");
+// =====================
+// SMART MASLAHAT
+// =====================
+function generateAdvice() {
+  let save = income - expense;
 
-  setTimeout(()=>{
-    add(ai(text), "ai");
-  },500);
+  if (save < 0) {
+    return "❗ Siz zarar qilyapsiz. Xarajatlarni kamaytiring!";
+  }
 
-  input.value="";
+  if (save < income * 0.2) {
+    return "⚠️ Tejash kam. Kamida 20% saqlashga harakat qiling.";
+  }
+
+  return random([
+    "👏 Zo‘r! Siz yaxshi tejayapsiz!",
+    "💡 Ortiqcha xarajatlarni kamaytirsangiz yanada yaxshi bo‘ladi",
+    "📊 Budgetingiz yaxshi nazoratda!"
+  ]);
 }
 
-document.getElementById("input").addEventListener("keypress", e=>{
-  if(e.key==="Enter") send();
-});
 
+// =====================
+// HELPERS
+// =====================
+function format(num) {
+  return num.toLocaleString("ru-RU");
+}
 
-add("Assalomu alaykum! Men sizning byudjet yordamchingizman 💰", "ai");
+function random(arr) {
+  return arr[Math.floor(Math.random() * arr.length)];
+}

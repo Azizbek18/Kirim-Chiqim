@@ -3,79 +3,257 @@
 
 <head>
   <meta charset="UTF-8">
-  <title>OilaBalance Dashboard</title>
-  <link rel="stylesheet" href="">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>OilaBalance</title>
+  <link rel="stylesheet" href="/style7.css">
 </head>
 
 <body>
-
   <div class="container">
-
-    <div class="sidebar">
-      <h2>OilaBalance</h2>
-      <ul>
-        <li>Bosh sahifa</li>
-        <li>Kirim / Chiqim</li>
-        <li>Kategoriyalar</li>
-        <li>Maqsadlar</li>
-        <li>Hisobot</li>
-      </ul>
-    </div>
-
-
-    <div class="main">
-
-      <h2>Mart 2026</h2>
-      <button onclick="downloadReport()">Hisobot yuklab olish</button>
-
-
-      <div class="cards">
-        <div class="card">
-          <h3>Umumiy balans</h3>
-          <p id="balance">0 so'm</p>
-        </div>
-
-        <div class="card">
-          <h3>Kirim</h3>
-          <p id="income" class="green">0</p>
-        </div>
-
-        <div class="card">
-          <h3>Chiqim</h3>
-          <p id="expense" class="red">0</p>
-        </div>
+    <aside class="sidebar">
+      <div class="sidebar-header">
+        <img src="logo.png" alt="Logo" class="logo">
+        <span class="app-name">OilaBalance</span>
       </div>
-
-      <div class="transactions">
-        <h3>So‘nggi harakatlar</h3>
-        <div id="list"></div>
+      <nav class="sidebar-nav">
+        <ul>
+          <li class="nav-item active">
+            <i class="icon">🏠</i>
+            <span>Bosh sahifa</span>
+          </li>
+          <li class="nav-item">
+            <i class="icon">➕</i>
+            <span>Kirim / Chiqim</span>
+          </li>
+          <li class="nav-item">
+            <i class="icon">📦</i>
+            <span>Kategoriyalar</span>
+          </li>
+          <li class="nav-item">
+            <i class="icon">🎯</i>
+            <span>Maqsadlar</span>
+          </li>
+          <li class="nav-item">
+            <i class="icon">📄</i>
+            <span>Qarzlar</span>
+          </li>
+          <li class="nav-item">
+            <i class="icon">📊</i>
+            <span>Hisobot</span>
+          </li>
+          <li class="nav-item">
+            <i class="icon">💡</i>
+            <span>Al mashlahat</span>
+          </li>
+        </ul>
+      </nav>
+      <div class="user-profile">
+        <i class="icon">👤</i>
+        <span>Abdullayev Oila</span>
       </div>
-
-
-      <div class="transactions">
-        <h3>Kategoriyalar</h3>
-
-        <p>Oziq-ovqat</p>
-        <div class="progress">
-          <div class="orange" style="width:42%"></div>
-        </div>
-
-        <p>Uy-joy</p>
-        <div class="progress">
-          <div class="purple" style="width:25%"></div>
-        </div>
-
-        <p>Transport</p>
-        <div class="progress">
-          <div class="blue" style="width:18%"></div>
-        </div>
+      <div class="settings">
+        <i class="icon">⚙️</i>
+        <span>Sozlamalar</span>
       </div>
+    </aside>
 
+    <main class="main-content">
+      <header class="main-header">
+        <div class="month-selector">
+          <span class="arrow left">&lt;</span>
+          <h1 class="month-title">Mart 2026</h1>
+          <span class="arrow right">&gt;</span>
+        </div>
+        <button class="upload-button">
+          <i class="icon">⬆️</i>
+          <span>Hisobot yuklab olish</span>
+        </button>
+        <div class="user-actions">
+          <i class="icon">🔔</i>
+          <i class="icon">❓</i>
+        </div>
+      </header>
+
+      <section class="summary-cards">
+        <div class="card">
+          <div class="card-header">UMUMIY BALANS</div>
+          <div class="card-body">
+            <span class="amount">12 450 000</span>
+            <span class="currency">so'm</span>
+          </div>
+          <div class="card-footer positive">+2.5% o'tgan oydan</div>
+        </div>
+        <div class="card">
+          <div class="card-header">SU OYLIK KIRIM</div>
+          <div class="card-body">
+            <span class="amount">8 500 000</span>
+            <span class="currency">so'm</span>
+          </div>
+          <div class="card-footer">o'rtacha oy bilan teng</div>
+        </div>
+        <div class="card">
+          <div class="card-header">SU OYLIK CHIQIM</div>
+          <div class="card-body">
+            <span class="amount">6 050 000</span>
+            <span class="currency">so'm</span>
+          </div>
+          <div class="card-footer negative">-8% o'tgan oydan</div>
+        </div>
+        <div class="card">
+          <div class="card-header">TEJALGAN</div>
+          <div class="card-body">
+            <span class="amount">2 450 000</span>
+            <span class="currency">so'm</span>
+          </div>
+          <div class="card-footer">
+            <div class="progress-bar-container">
+              <div class="progress-bar" style="width: 75%;"></div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="recent-transactions-and-charts">
+        <div class="transactions-section">
+          <div class="section-header">
+            <h2>So'nggi harakatlar</h2>
+            <span class="view-all">Hammasini ko'rish</span>
+          </div>
+          <div class="transaction-list">
+            <div class="transaction-item">
+              <div class="icon-container food">
+                <i class="icon">🛒</i>
+              </div>
+              <div class="transaction-details">
+                <span class="name">Oziq-ovqat</span>
+                <span class="date">Bugun, 14:30 - Korzinka.uz</span>
+              </div>
+              <div class="amount negative">- 450 000 so'm</div>
+            </div>
+            <div class="transaction-item">
+              <div class="icon-container transport">
+                <i class="icon">🚕</i>
+              </div>
+              <div class="transaction-details">
+                <span class="name">Transport</span>
+                <span class="date">Kecha, 09:15 - Yandex Go</span>
+              </div>
+              <div class="amount negative">- 28 000 so'm</div>
+            </div>
+            <div class="transaction-item">
+              <div class="icon-container income">
+                <i class="icon">💰</i>
+              </div>
+              <div class="transaction-details">
+                <span class="name">Maosh</span>
+                <span class="date">02 Mart, 10:00 - "Apex Soft" MCHJ</span>
+              </div>
+              <div class="amount positive">+ 8 500 000 so'm</div>
+            </div>
+            <div class="transaction-item">
+              <div class="icon-container housing">
+                <i class="icon">🏠</i>
+              </div>
+              <div class="transaction-details">
+                <span class="name">Uy-joy</span>
+                <span class="date">01 Mart, 18:45 - Kommunal to'lov</span>
+              </div>
+              <div class="amount negative">- 1 200 000 so'm</div>
+            </div>
+            <div class="transaction-item">
+              <div class="icon-container education">
+                <i class="icon">🎓</i>
+              </div>
+              <div class="transaction-details">
+                <span class="name">Ta'lim</span>
+                <span class="date">28 Fevral, 11:20 - Udemy Course</span>
+              </div>
+              <div class="amount negative">- 150 000 so'm</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="charts-section">
+          <div class="category-chart section-block">
+            <div class="section-header">
+              <h2>Kategoriyalar xarajati</h2>
+            </div>
+            <div class="chart-item">
+              <span class="category-name">Oziq-ovqat</span>
+              <div class="progress-bar-container">
+                <div class="progress-bar orange" style="width: 42%;"></div>
+              </div>
+              <span class="percentage">42%</span>
+            </div>
+            <div class="chart-item">
+              <span class="category-name">Uy-joy</span>
+              <div class="progress-bar-container">
+                <div class="progress-bar purple" style="width: 25%;" ;></div>
+              </div>
+              <span class="percentage">25%</span>
+            </div>
+            <div class="chart-item">
+              <span class="category-name">Transport</span>
+              <div class="progress-bar-container">
+                <div class="progress-bar blue" style="width: 18%;"></div>
+              </div>
+              <span class="percentage">18%</span>
+            </div>
+          </div>
+
+          <div class="goals-section section-block">
+            <div class="section-header">
+              <h2>Maqsadlar</h2>
+              <span class="add-icon">➕</span>
+            </div>
+            <div class="goal-item">
+              <div class="icon-container">
+                <i class="icon">📱</i>
+              </div>
+              <div class="goal-details">
+                <span class="goal-name">iPhone 15 Pro</span>
+                <div class="progress-bar-container">
+                  <div class="progress-bar green" style="width: 75%;"></div>
+                </div>
+                <span class="progress-text">8 000 000 so'm / 12 000 000 so'm</span>
+              </div>
+            </div>
+            <div class="goal-item">
+              <div class="icon-container">
+                <i class="icon">✈️</i>
+              </div>
+              <div class="goal-details">
+                <span class="goal-name">Istanbul holiday</span>
+                <div class="progress-bar-container">
+                  <div class="progress-bar teal" style="width: 30%;"></div>
+                </div>
+                <span class="progress-text">4 500 000 so'm / 15 000 000 so'm</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+  </div>
+
+<div class="modal" id="modal">
+  <div class="modal-content">
+    <h3>Yangi qo‘shish</h3>
+
+    <input type="text" placeholder="Nomi">
+    <input type="number" placeholder="Summasi">
+
+    <div class="modal-actions">
+      <button class="cancel">Bekor qilish</button>
+      <button class="save">Saqlash</button>
     </div>
   </div>
 
-  <script src="/bosh sahifa.js"></script>
+  <button class="add-fab">
+    <i class="icon">➕</i>
+  </button>
 
+  <script src="/bosh sahifa.js"></script>
 </body>
 
 </html>
