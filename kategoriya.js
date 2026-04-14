@@ -38,9 +38,7 @@ newCategory.innerHTML = `
         <div class="end">
             <h1 class="foiz">${percentage}%</h1>
             <h1 class="som" style="white-space: nowrap;">-${Number(spent).toLocaleString()}</h1>
-            <button class="delete-btn" style="background:none; border:none; color:#ff4d4d; cursor:pointer; font-size: 18px;">
-                <i class="fa-solid fa-trash"></i>
-            </button>
+    
         </div>
     </div>
 `;
@@ -58,19 +56,6 @@ newCategory.innerHTML = `
     }
 }
 
-categoryList.addEventListener('click', (e) => {
-    if (e.target.closest('.delete-btn')) {
-        const row = e.target.closest('.hisoblar');
-        
-        if (confirm("Ushbu kategoriyani o'chirmoqchimisiz?")) {
-            const amountText = row.querySelector('.som').innerText.replace(/[^\d]/g, '');
-            
-            updateTotalExpenses(-parseInt(amountText));
-            
-            row.remove();
-        }
-    }
-});
 function getCategoryImage(name) {
     const category = name.toLowerCase();
 
@@ -98,15 +83,6 @@ function updateTotalExpenses(amount) {
     totalExpensesText.innerText = updatedTotal.toLocaleString() + " so'm";
 }
 
-document.querySelectorAll('.hisoblar .end').forEach(endBlock => {
-    if (!endBlock.querySelector('.delete-btn')) {
-        const btn = document.createElement('button');
-        btn.className = 'delete-btn';
-        btn.style.cssText = "background:none; border:none; color:red; cursor:pointer; margin-left:10px;";
-        btn.innerHTML = '<i class="fa-solid fa-trash"></i>';
-        endBlock.appendChild(btn);
-    }
-});
 
 document.addEventListener("DOMContentLoaded", function () {
     const monthYearElement = document.getElementById("currentMonthYear");
