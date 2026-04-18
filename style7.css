@@ -1,5 +1,4 @@
 
-/* Umumiy uslublar */
 :root {
     --primary-color: #007BFF;
     --secondary-color: #6c757d;
@@ -38,14 +37,61 @@ body {
     color: var(--secondary-color);
 }
 
-/* Sidebar */
-.sidebar {
-    width: 250px;
-    background-color: var(--sidebar-background);
-    padding: 20px;
-    display: flex;
-    flex-direction: column;
-    border-right: 1px solid var(--light-gray);
+.left-con {
+  width: 250px;
+  height: 100vh;
+  background: #ffffff;
+  position: fixed;
+  left: 0;
+  top: 0;
+  display: flex;
+  flex-direction: column;
+    transition: 0.3s;
+  z-index: 1001;
+  
+}
+
+.burger {
+  display: none;
+  position: fixed;
+  top: 15px;
+  left: 15px;
+  font-size: 22px;
+  background: #007BFF;
+  color: #fff;
+  padding: 10px;
+  border-radius: 8px;
+  z-index: 2000;
+}
+
+.overlay {
+  position: fixed;
+  width: 100%;
+  height: 100%;
+  background: rgba(0,0,0,0.4);
+  top: 0;
+  left: 0;
+  display: none;
+  z-index: 900;
+}
+
+
+@media (max-width:768px){
+  .left-con{
+    left:-100%;
+  }
+
+  .left-con.active{
+    left:0;
+  }
+
+  .burger{
+    display:block;
+  }
+
+  .overlay.active{
+    display:block;
+  }
 }
 
 .sidebar-header {
@@ -57,9 +103,12 @@ body {
 }
 
 .logo {
-    width: 32px;
-    height: 32px;
-    margin-right: 10px;
+  padding: 20px;
+}
+
+.logo img {
+  width: 100px;
+  padding: 0; 
 }
 
 .app-name {
@@ -258,8 +307,7 @@ body {
 }
 
 .progress-bar {
-    heig
-ht: 100%;
+height: 100%;
     background-color: var(--primary-color);
     border-radius: 5px;
     transition: width 0.5s ease-in-out;
@@ -473,7 +521,7 @@ ht: 100%;
     color: var(--secondary-color);
 }
 
-/* Floating Action Button */
+
 .add-fab {
     position: fixed;
     bottom: 30px;
@@ -499,7 +547,7 @@ ht: 100%;
     transform: translateY(-2px);
 }
 
-/* Responsive */
+
 @media (max-width: 1024px) {
     .recent-transactions-and-charts {
         grid-template-columns: 1fr;
@@ -507,11 +555,12 @@ ht: 100%;
     .sidebar {
         width: 180px;
     }
+ 
 }
 
 @media (max-width: 768px) {
     .sidebar {
-        display: none; /* Yoki ochiladigan meny qilib o'zgartirish mumkin */
+        display: none;
     }
     .main-content {
         padding: 15px;
@@ -669,4 +718,219 @@ ht: 100%;
     right: 15px;
     bottom: 15px;
   }
+}
+
+.ull {
+  list-style: none;
+  font-size: 18px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding: 0 15px;
+  margin: 0; 
+}
+.right-con {
+    width: 100%;
+    padding: 10px 30px;
+}
+
+.logo {
+    width: 100%;
+}
+
+.logo img {
+    padding-left: 30px;
+    padding-top: 30px;
+    width: 280px;
+}
+
+.btn1 {
+    width: 100%;
+    padding: 15px;
+    text-align: start;
+    border: none;
+    border-radius: 12px;
+    font-size: 16px;
+    display: flex;
+    gap: 8px;
+background-color: #ffffff;
+color: rgb(0, 0, 0);
+}
+
+.btn2 {
+    width: 100%;
+    padding: 15px;
+    text-align: start;
+    border: none;
+    border-radius: 12px;
+    font-size: 16px;
+    display: flex;
+    gap: 8px;
+    background-color: #ffffff;
+    color: #000000;
+}
+
+.btn3 {
+    width: 100%;
+    padding: 15px;
+    text-align: start;
+    border: none;
+    border-radius: 12px;
+    font-size: 16px;
+    display: flex;
+    gap: 8px;
+    background-color: #ffffff;
+    color: rgb(0, 0, 0);
+}
+
+.btn4 {
+    width: 100%;
+    padding: 15px;
+    text-align: start;
+    border: none;
+    border-radius: 12px;
+    font-size: 16px;
+    display: flex;
+    gap: 8px;
+    background-color: #ffffff;
+    color: rgb(0, 0, 0);
+}
+
+.btn5 {
+   width: 100%;
+    padding: 15px;
+    text-align: start;
+    border: none;
+    border-radius: 12px;
+    font-size: 16px;
+    display: flex;
+    gap: 8px;
+    background-color: #ffffff;
+    color: rgb(0, 0, 0);
+}
+
+.btn6 {
+    width: 100%;
+    padding: 15px;
+    text-align: start;
+    border: none;
+    border-radius: 12px;
+    font-size: 16px;
+    display: flex;
+    gap: 8px;
+    background-color: #ffffff;
+    color: #000000;
+}
+
+.btn7 {
+    width: 100%;
+    padding: 15px;
+    text-align: start;
+    border: none;
+    border-radius: 12px;
+    font-size: 16px;
+    display: flex;
+    gap: 8px;
+    background-color: #ffffff;
+    color: #000000;
+}
+
+ul button:hover {
+    background: #000000;
+    color: #16ff92;
+
+}
+
+ul button {
+    background-color: transparent;
+}
+
+.btn8 {
+    width: 80%;
+    padding: 15px;
+    text-align: start;
+    border: none;
+    border-radius: 12px;
+    font-size: 16px;
+    position: absolute;
+    bottom: 60px;
+    left: 35px;
+    background-color: transparent;
+}
+
+.btn8:hover {
+    background-color: #ECFDF5;
+    color: #16ff92;
+}
+
+.btn8 {
+  margin-top: auto;
+  position: static; 
+}
+
+.modal{
+  position:fixed;
+  top:0;
+  left:0;
+  width:100%;
+  height:100%;
+  background:rgba(0,0,0,0.4);
+  display:none;
+  align-items:center;
+  justify-content:center;
+  z-index:9999;
+}
+
+.modal.active{
+  display:flex;
+}
+
+.modal-content{
+  background:#fff;
+  padding:20px;
+  border-radius:15px;
+  width:300px;
+}
+.modal-content {
+  background: #fff;
+  padding: 25px;
+  border-radius: 20px;
+  width: 350px;
+  max-width: 90%;
+  animation: pop 0.3s ease;
+}
+
+@keyframes pop {
+  from {
+    transform: scale(0.8);
+    opacity: 0;
+  }
+  to {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+.modal-content input {
+  width: 100%;
+  padding: 12px;
+  margin-top: 10px;
+  border-radius: 10px;
+  border: 1px solid #ddd;
+  font-size: 14px;
+}
+
+.modal-actions {
+  display: flex;
+  gap: 10px;
+  margin-top: 15px;
+}
+
+.cancel {
+  background: #eee;
+}
+
+.save {
+  background: #007BFF;
+  color: #fff;
 }

@@ -6,57 +6,46 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>OilaBalance</title>
   <link rel="stylesheet" href="/style7.css">
+   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css"
+        integrity="sha512-2SwdPD6INVrV/lHTZbO2nodKhrnDdJK9/kg2XD1r9uGqPo1cUbujc+IYdlYdEErWNu69gVcYgdxlmVmzTWnetw=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
 </head>
 
 <body>
+  <div class="burger" id="burger">☰</div>
+<div class="overlay" id="overlay"></div>
   <div class="container">
-    <aside class="sidebar">
-      <div class="sidebar-header">
-        <img src="logo.png" alt="Logo" class="logo">
-        <span class="app-name">OilaBalance</span>
-      </div>
-      <nav class="sidebar-nav">
-        <ul>
-          <li class="nav-item active">
-            <i class="icon">🏠</i>
-            <span>Bosh sahifa</span>
-          </li>
-          <li class="nav-item">
-            <i class="icon">➕</i>
-            <span>Kirim / Chiqim</span>
-          </li>
-          <li class="nav-item">
-            <i class="icon">📦</i>
-            <span>Kategoriyalar</span>
-          </li>
-          <li class="nav-item">
-            <i class="icon">🎯</i>
-            <span>Maqsadlar</span>
-          </li>
-          <li class="nav-item">
-            <i class="icon">📄</i>
-            <span>Qarzlar</span>
-          </li>
-          <li class="nav-item">
-            <i class="icon">📊</i>
-            <span>Hisobot</span>
-          </li>
-          <li class="nav-item">
-            <i class="icon">💡</i>
-            <span>Al mashlahat</span>
-          </li>
-        </ul>
-      </nav>
-      <div class="user-profile">
-        <i class="icon">👤</i>
-        <span>Abdullayev Oila</span>
-      </div>
-      <div class="settings">
-        <i class="icon">⚙️</i>
-        <span>Sozlamalar</span>
-      </div>
-    </aside>
 
+        <div class="left-con">
+            <div class="logo">
+                <img src="./M_rasmlar/Logo (1).svg" alt="">
+            </div>
+            <ul class="ull">
+    <button class="btn1"><i class="fa-regular fa-house"></i>Home</button>
+                <button class="btn2"><i class="fa-solid fa-wallet"></i>Kirim/Chiqim</button>
+                <button class="btn3"><i class="fa-solid fa-table-cells-large"></i>Kategoriyalar</button>
+                <button class="btn4"><i class="fa-solid fa-bullseye"></i>Maqsadlar</button>
+                <button class="btn5"><i class="fa-regular fa-credit-card"></i>Qarzlar</button>
+                <button class="btn6"><i class="fa-regular fa-file-lines"></i>Hisobot</button>
+                <button class="btn7"><i class="fa-solid fa-robot"></i>AI maslahat</button>
+            
+            </ul>
+            
+            <button class="btn8"><i class="fa-solid fa-gear"></i> Sozlamalar</button>
+        </div>
+        <div class="modal" id="modal">
+  <div class="modal-content">
+    <h3>Yangi qo‘shish</h3>
+
+    <input type="text" placeholder="Nomi">
+    <input type="number" placeholder="Summasi">
+
+    <div class="modal-actions">
+      <button class="cancel">Bekor qilish</button>
+      <button class="save">Saqlash</button>
+    </div>
+  </div>
+</div>
     <main class="main-content">
       <header class="main-header">
         <div class="month-selector">
@@ -68,10 +57,22 @@
           <i class="icon">⬆️</i>
           <span>Hisobot yuklab olish</span>
         </button>
-        <div class="user-actions">
-          <i class="icon">🔔</i>
-          <i class="icon">❓</i>
-        </div>
+    <div class="user-actions">
+  <i class="icon" id="bell">🔔</i>
+  <i class="icon" id="help">❓</i>
+</div>
+<div class="modal" id="bellModal">
+  <div class="modal-content">
+    <h3>Bildirishnomalar</h3>
+    <p>Hozircha yangi xabar yo‘q</p>
+  </div>
+</div>
+<div class="modal" id="helpModal">
+  <div class="modal-content">
+    <h3>Yordam</h3>
+    <p>Bu dashboard orqali moliyangizni boshqarasiz.</p>
+  </div>
+</div>
       </header>
 
       <section class="summary-cards">
