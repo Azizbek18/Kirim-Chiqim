@@ -24,13 +24,16 @@ body {
     align-items: center;
 
 }
-a:hover{
-color: #16ff92;
+
+a:hover {
+    color: #16ff92;
 }
-a{
+
+a {
     text-decoration: none;
     color: black;
 }
+
 .input-card {
     display: flex;
     gap: 15px;
@@ -219,7 +222,7 @@ ul button {
     justify-content: center;
     margin: 10px 0px;
     gap: 20px;
-    
+
 }
 
 .card {
@@ -230,6 +233,14 @@ ul button {
     justify-content: space-between;
     background-color: #f8f8f8;
     border-radius: 12px;
+}
+
+select {
+    border: 2px solid rgb(231, 231, 231);
+    padding: 10px;
+    border-radius: 10px;
+    background-color: transparent;
+    outline: none;
 }
 
 .red {
@@ -275,17 +286,21 @@ ul button {
     font-size: 25px;
 
 }
-.chiqim-kirim{
+
+.chiqim-kirim {
     background-color: #f8f8f8;
     border-radius: 20px;
 }
+
 .text p {
     color: gray;
     margin: 0;
 }
-hr{
+
+hr {
     color: gray;
 }
+
 .img-card img {
     width: 80px;
 }
@@ -299,7 +314,8 @@ hr{
     color: red;
     font-size: 22px;
 }
-.oxiri{
+
+.oxiri {
     display: flex;
     justify-content: center;
     align-items: center;
@@ -312,24 +328,27 @@ hr{
     text-align: end;
     border-radius: 17px;
     background-color: orange;
+    border: none;
 }
 
-.boshqa6 {font-size: 18px;
+.boshqa6 {
+    font-size: 18px;
     color: white;
     padding: 7px 10px;
     text-align: end;
     border-radius: 17px;
     background-color: green;
 }
+
 .modal {
-    display: none; 
+    display: none;
     position: fixed;
     z-index: 1000;
     left: 0;
     top: 0;
     width: 100%;
     height: 100%;
-    background-color: rgba(0,0,0,0.5); 
+    background-color: rgba(0, 0, 0, 0.5);
 }
 
 .modal-content {
@@ -339,7 +358,7 @@ hr{
     border-radius: 15px;
     width: 350px;
     position: relative;
-    box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
 }
 
 .close-btn {
@@ -378,6 +397,7 @@ hr{
 .save-btn:hover {
     background-color: #4a4cd8;
 }
+
 .btn {
     padding: 20px 50px;
     color: green;
@@ -397,4 +417,190 @@ hr{
 
 .qaytarilish {
     color: orangered;
+}
+
+@media (max-width: 1024px) {
+    .left-con {
+        width: 250px;
+    }
+
+    .logo img {
+        width: 200px;
+    }
+
+    .text h1 {
+        font-size: 20px;
+    }
+}
+
+@media (max-width: 768px) {
+    .container {
+        flex-direction: column;
+    }
+
+
+    .left-con {
+        width: 100%;
+        height: auto;
+        position: relative;
+        border-bottom: 1px solid #eee;
+    }
+
+    .logo img {
+        width: 180px;
+        padding-top: 10px;
+    }
+
+    .search {
+        font-size: 15px;
+    }
+
+    .input {
+        display: flex;
+
+    }
+
+    ul {
+        flex-direction: row;
+        overflow-x: auto;
+        padding: 10px;
+        white-space: nowrap;
+    }
+
+    .btn1,
+    .btn2,
+    .btn3,
+    .btn4,
+    .btn5,
+    .btn6,
+    .btn7 {
+        width: auto;
+        padding: 10px 15px;
+    }
+
+    .btn8 {
+        display: none;
+    }
+
+    .right-con {
+        padding: 20px;
+    }
+
+    .kirimlar {
+        gap: 10px;
+    }
+}
+
+@media (max-width: 575px) {
+    .con-input {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 15px;
+    }
+
+
+    .input-card {
+        width: 100%;
+        justify-content: space-between;
+    }
+
+    .kirimlar {
+        flex-direction: column;
+    }
+
+    .card {
+        width: 100%;
+    }
+
+    .card2 {
+        flex-direction: column;
+        align-items: flex-start;
+        padding: 15px;
+        position: relative;
+    }
+
+    .oxiri {
+        width: 100%;
+        justify-content: space-between;
+        margin-top: 10px;
+    }
+
+    .text2 h1 {
+        font-size: 16px;
+    }
+
+    .text2 p {
+        font-size: 12px;
+    }
+
+    .left-con {
+        position: fixed;
+        left: -280px;
+        top: 0;
+        width: 280px;
+        height: 100vh;
+        background: #fff;
+        z-index: 9999;
+        transition: all 0.3s ease-in-out;
+        padding: 20px;
+        display: flex;
+        flex-direction: column;
+    }
+
+    .left-con.active {
+        left: 0;
+    }
+
+    .overlay {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(255, 255, 255, );
+        display: none;
+        z-index: 9998;
+    }
+
+    .overlay.active {
+        display: block;
+    }
+
+
+    .hamburger {
+        position: fixed;
+        top: 15px;
+        left: 15px;
+        z-index: 10000;
+        background: #ffffff;
+        color: rgb(0, 0, 0);
+        border: none;
+        width: 45px;
+        height: 45px;
+        border-radius: 8px;
+        font-size: 20px;
+        cursor: pointer;
+    }
+
+    .left-con ul {
+        margin-top: 60px;
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+    }
+
+    .left-con .btn1,
+    .left-con .btn2,
+    .left-con .btn3,
+    .left-con .btn4 {
+        width: 100%;
+        font-size: 16px !important;
+        justify-content: flex-start;
+        padding: 12px;
+    }
+}
+@media (min-width: 768px) {
+    .hamburger {
+        display: none;
+    }
 }
