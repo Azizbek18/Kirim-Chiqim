@@ -83,15 +83,18 @@ body {
     border-radius: 12px;
     border: none;
     margin-top: 20px;
+    font-size: 15px;
 }
 .footer-text{
     display: flex;
     justify-content: center;
+    align-items: center;
     gap: 10px;
     color: gray ;
 }
 .foter-text2{
     color: #006948;
+    text-decoration: none;
 }
 .foter-title{
     display: flex; 
@@ -99,4 +102,52 @@ body {
     gap: 20px;
     color: gray;
 
+}
+.xabar-con{
+    position: fixed;
+    top: 30px;
+    right: 30px;
+}
+
+.xabar{
+    width: 400px;
+    padding: 15px 20px;
+    color: white;
+    border-radius: 10px;
+    margin: 10px 0px;
+
+    animation: kirish 1s ease, chiqish 1s ease 2s forwards;
+}
+
+
+
+.error{
+    background-color: red;
+}
+.success{
+    background-color: rgb(0, 209, 0);
+}
+.info{
+    background-color: skyblue;
+}
+@keyframes kirish{
+    from{
+        transform: translateX(100%);
+        opacity: 0;
+    }
+    to{
+        transform: translateX(0%);
+        opacity: 1;
+    }
+}
+
+@keyframes chiqish{
+    from{
+        transform: translateX(0%);
+        opacity: 1;
+    }
+    to{
+        transform: translateX(120%);
+        opacity: 0;
+    }
 }

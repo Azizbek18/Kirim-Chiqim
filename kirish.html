@@ -6,12 +6,16 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
     <link rel="stylesheet" href="kirish.css">
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap"
+        rel="stylesheet">
 </head>
 
 <body>
+<div class="xabar-con"></div>
 
     <div class="container">
         <div class="card-head">
@@ -19,11 +23,10 @@
             <h1 class="head-h1">Kirish</h1>
             <p class="head-p">oila hisobiga kiring</p>
         </div>
-        <div class="card-main"> 
+        <div class="card-main">
             <div class="card-input">
                 <p class="email">Email</p>
                 <input id="email" class="input-1" type="email" placeholder="example@mail.com">
-
             </div>
             <div class="card-input">
                 <div class="input-title">
@@ -32,11 +35,12 @@
                 </div>
                 <input id="parol" class="input-2" type="password" placeholder="Password">
             </div>
-            <button class="card-btn">Kirish</button>
+            <button class="card-btn" onclick="Yubor()">Kirish</button>
         </div>
-           <div class="card-footer">
-                <div class="footer-text">
+        <div class="card-footer">
+            <div class="footer-text">
                 <p class="foter-text">Hisob yo'qmi? </p>
+<<<<<<< HEAD
                  <p class="parol" href="/oila Hisobi.html">Royhadan oting</p>
                 </div>
                 <div class="foter-title">
@@ -44,9 +48,18 @@
                     <p>Secure</p>
                     <p>Premium</p>
                 </div>
+=======
+                <a class="foter-text2" href="./oila Hisobi.html">Ro'yxatdan o'ting</a>
+>>>>>>> b651c34050fefbbf34e56468ff22322e6867453f
             </div>
+            <div class="foter-title">
+                <p>Minimalist</p>
+                <p>Secure</p>
+                <p>Premium</p>
+            </div>
+        </div>
     </div>
-<script src="kirish.js"></script>
+    <script src="kirish.js"></script>
 </body>
 
 </html>
