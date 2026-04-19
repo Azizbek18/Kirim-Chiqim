@@ -1,12 +1,10 @@
-// 1. Supabase sozlamalari
+
 const supabaseUrl = "https://pcdugrawrtezxmzagaqh.supabase.co";
 const supabaseKey = 'sb_publishable_oJnISbwOks8wEIh6gCAkqw_Npr5Q6qB';
 const _supabase = supabase.createClient(supabaseUrl, supabaseKey);
 
-// Global elementlar (hamma funksiyalar ishlata olishi uchun)
 let listContainer, modal;
 
-// 2. Ma'lumotlarni ekranga chiqarish (Render)
 function renderCard(item) {
     if (!listContainer) return;
 
@@ -14,101 +12,101 @@ function renderCard(item) {
         <div class="card2" data-id="${item.id}">
             <div class="text2">
                 <h1>${item.ism}</h1>
-                <p><span>${item.qancha}</span> so'm - <small>${item.sana}</small></p>
+                <p> ${item.sabab} - <small>${item.sana}</small></p>
             </div>
-            <button class="boshqa2">Qaytarish</button>
+            <div><p class="item"><span>${item.qancha}</span> so'm</p>
+            <button class="boshqa2">${item.holat}</button></div>
         </div>
         <hr>`;
     listContainer.insertAdjacentHTML('beforeend', cardHtml);
 }
 
-// 3. Bazadan ma'lumotlarni olish
 async function Olish() {
     const { data, error } = await _supabase
         .from('qarzlar')
         .select('*')
-        .order('id', { ascending: false }); // Yangilari tepada chiqishi uchun
-
+        .order('id', { ascending: false });
     if (error) {
         console.error("Xatolik yuz berdi:", error.message);
     } else {
-        listContainer.innerHTML = ''; // Tozalash
+        listContainer.innerHTML = '';
         data.forEach(item => renderCard(item));
     }
 }
 
-// 4. Yangi qarz qo'shish
-async function Yuborish() {
-    const nameInput = document.getElementById('debtName');
-    const amountInput = document.getElementById('debtAmount');
-    const reasonInput = document.getElementById('debtReason');
-
+async function Jonatish() {
+    const nameInput = document.getElementById('ism');
+    const amountInput = document.getElementById('summa');
+    const reasonInput = document.getElementById('sana');
+    const holatInput = document.getElementById("holat");
+    const sabab = document.getElementById("sabab")
     const name = nameInput.value.trim();
     const summa = amountInput.value.trim();
     const reason = reasonInput.value.trim();
 
+
     if (name && summa && reason) {
         const { data, error } = await _supabase
             .from('qarzlar')
-            .insert([{ ism: name, qancha: summa, sana: reason }])
+            .insert([{
+                ism: name,
+                qancha: summa,
+                sabab: sabab.value,
+                sana: new Date().toLocaleDateString(),
+                holat: holatInput.value
+            }])
             .select();
 
         if (error) {
             alert("Bazaga yozishda xatolik: " + error.message);
         } else {
             alert("Muvaffaqiyatli qo'shildi!");
-            // Formani tozalash
             nameInput.value = '';
             amountInput.value = '';
             reasonInput.value = '';
             modal.style.display = 'none';
-            
-            // Sahifani yangilamasdan yangi qatorni qo'shish
-            if (data) renderCard(data[0]);
+
+            if (data && data.length > 0) renderCard(data[0]);
         }
     } else {
         alert("Iltimos, barcha maydonlarni to'ldiring!");
     }
 }
 
-// 5. Asosiy Event Listenerlar (Yuklanganda ishlaydi)
 document.addEventListener('DOMContentLoaded', () => {
-    // Elementlarni tanlab olamiz
+    Olish();
+});
+
+document.addEventListener('DOMContentLoaded', () => {
     listContainer = document.querySelector('.chiqim-kirim');
     modal = document.getElementById('debtModal');
     const addBtn = document.querySelector('.foter .btn');
     const closeBtn = document.querySelector('.close-btn');
-    const saveBtn = document.getElementById('saveDebtBtn');
+    const saveBtn = document.getElementById('save-Btn');
     const searchInput = document.querySelector('.input-3');
 
-    // Dastlabki ma'lumotlarni yuklash
     Olish();
 
-    // Modalni ochish
     if (addBtn) {
         addBtn.addEventListener('click', () => {
             modal.style.display = 'block';
         });
     }
 
-    // Modalni yopish
     if (closeBtn) {
         closeBtn.addEventListener('click', () => {
             modal.style.display = 'none';
         });
     }
 
-    // Saqlash tugmasi
     if (saveBtn) {
-        saveBtn.addEventListener('click', Yuborish);
+        saveBtn.addEventListener('click', Jonatish);
     }
 
-    // Tashqariga bosganda yopish
     window.addEventListener('click', (e) => {
         if (e.target == modal) modal.style.display = 'none';
     });
 
-    // Qarzni qaytarish (Delegation orqali)
     if (listContainer) {
         listContainer.addEventListener('click', (e) => {
             if (e.target.classList.contains('boshqa2')) {
@@ -118,7 +116,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     btn.style.background = "green";
                     btn.style.color = "white";
                     btn.classList.replace('boshqa2', 'boshqa6');
-                    
+
                     const textContent = btn.previousElementSibling;
                     if (textContent) textContent.style.opacity = "0.5";
                 }
@@ -126,7 +124,6 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    // Qidiruv funksiyasi
     if (searchInput) {
         searchInput.addEventListener('input', (e) => {
             const value = e.target.value.toLowerCase();
@@ -141,4 +138,24 @@ document.addEventListener('DOMContentLoaded', () => {
             });
         });
     }
-});
+}); 
+
+    const menuToggle = document.getElementById('menu-toggle');
+    const sidebar = document.querySelector('.left-con');
+    const overlay = document.getElementById('sidebar-overlay');
+
+    function toggleMenu() {
+        sidebar.classList.toggle('active');
+        overlay.classList.toggle('active');
+        
+        const icon = menuToggle.querySelector('i');
+        if(sidebar.classList.contains('active')) {
+            icon.className = 'fas fa-times';
+        } else {
+            icon.className = 'fas fa-bars';
+        }
+    }
+
+    menuToggle.addEventListener('click', toggleMenu);
+    
+    overlay.addEventListener('click', toggleMenu);

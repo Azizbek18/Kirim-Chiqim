@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
     <link rel="stylesheet" href="qarzlar.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css"
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css"
         integrity="sha512-2SwdPD6INVrV/lHTZbO2nodKhrnDdJK9/kg2XD1r9uGqPo1cUbujc+IYdlYdEErWNu69gVcYgdxlmVmzTWnetw=="
         crossorigin="anonymous" referrerpolicy="no-referrer" />
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -24,10 +24,15 @@
             <span class="close-btn">&times;</span>
             <h2>Yangi qarz qo'shish</h2>
             <div class="modal-body">
-                <input type="text" id="debtName" placeholder="Kimga / Kimdan?">
-                <input type="text" id="debtAmount" placeholder="Summa (masalan: 500 000)">
-                <input type="text" id="debtReason" placeholder="Sana va sabab (masalan: 12-may, To'y uchun)">
-                <button onclick="Yuborish()" class="save-btn">Saqlash</button>
+                <input type="text" id="ism" placeholder="Kimga / Kimdan?">
+                <input type="text" id="summa" placeholder="Summa (masalan: 500 000)">
+                <input type="date" id="sana" placeholder="Sana">
+                <input type="text" id="sabab" placeholder="nima uchun">
+                <select name="" id="holat">
+                    <option value="Qaytarildi">Qaytarildi</option>
+                    <option value="Kutilmoqda">Kutilmoqda</option>
+                </select>
+                <button class="save-btn" onclick="Jonatish()" > Saqlash </button>
             </div>
         </div>
     </div>
@@ -60,6 +65,11 @@
                 </a>
             </ul>
             <button class="btn8"><i class="fa-solid fa-gear"></i> Sozlamalar</button>
+            <button id="menu-toggle" class="hamburger">
+    <i class="fas fa-bars"></i>
+</button>
+
+<div id="sidebar-overlay" class="overlay"></div>
         </div>
         <div class="right-con">
             <header>
@@ -121,7 +131,6 @@
                         <span><i class="fa-solid fa-ellipsis-vertical"></i></span>
 
                     </div>
-
                 </div>
                 <hr>
                 <div class="card2">

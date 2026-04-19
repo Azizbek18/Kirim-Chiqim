@@ -1,32 +1,98 @@
-const modal = document.getElementById("categoryModal");
-const openModalBtn = document.querySelector(".btn9"); 
-const closeModalBtn = document.querySelector(".close");
-const saveBtn = document.getElementById("saveCategory");
-const categoryList = document.querySelector('.right-con');
-const totalExpensesText = document.querySelector('.span');
+const SUPABASE_URL = 'https://pcdugrawrtezxmzagaqh.supabase.co';
+const SUPABASE_KEY = 'sb_publishable_oJnISbwOks8wEIh6gCAkqw_Npr5Q6qB';
+const _supabase = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
 
-openModalBtn.onclick = () => modal.style.display = "block";
-closeModalBtn.onclick = () => modal.style.display = "none";
-window.onclick = (event) => { if (event.target == modal) modal.style.display = "none"; }
-const imageSrc = getCategoryImage(name);
-saveBtn.onclick = function() {
+let listContainer;
+let totalExpensesText;
+let modal;
+
+document.addEventListener('DOMContentLoaded', () => {
+    listContainer = document.querySelector('.chiqim-kirim') || document.querySelector('.right-con');
+    totalExpensesText = document.querySelector('.span');
+    modal = document.getElementById('categoryModal');
+    
+    const openModalBtn = document.querySelector(".btn9");
+    const closeModalBtn = document.querySelector(".close");
+    const saveBtn = document.getElementById("saveCategory");
+
+    if (openModalBtn) openModalBtn.onclick = () => modal.style.display = "block";
+    if (closeModalBtn) closeModalBtn.onclick = () => modal.style.display = "none";
+    
+    window.onclick = (event) => { 
+        if (event.target == modal) modal.style.display = "none"; 
+    };
+
+    if (saveBtn) {
+        saveBtn.addEventListener('click', Jonatish);
+    }
+
+    Olish();
+    initCalendar();
+});
+
+async function Olish() {
+    const { data, error } = await _supabase
+        .from('kategoriyalar') 
+        .select('*')
+        .order('id', { ascending: false });
+
+    if (error) {
+        console.error("Xatolik yuz berdi:", error.message);
+    } else {
+        let total = 0;
+        data.forEach(item => {
+            renderCard(item);
+            total += parseFloat(item.sarflangan || 0);
+        });
+        updateTotalDisplay(total);
+    }
+}
+
+async function Jonatish() {
     const name = document.getElementById("catName").value;
     const limit = document.getElementById("catLimit").value;
     const spent = document.getElementById("catSpent").value;
 
     if (name && limit && spent) {
-        const percentage = Math.min(Math.round((spent / limit) * 100), 100);
-        
-        const newCategory = document.createElement('div');
-   
-newCategory.innerHTML = `
-    <div class="hisoblar">
+        const { data, error } = await _supabase
+            .from('kategoriyalar')
+            .insert([{
+                nomi: name,
+                oylik_limit: parseFloat(limit),
+                sarflangan: parseFloat(spent)
+            }])
+            .select();
+
+        if (error) {
+            alert("Xatolik: " + error.message);
+        } else {
+            document.getElementById("catName").value = "";
+            document.getElementById("catLimit").value = "";
+            document.getElementById("catSpent").value = "";
+            modal.style.display = "none";
+            
+            if (data && data.length > 0) {
+                renderCard(data[0]);
+                addToTotal(spent);
+            }
+        }
+    } else {
+        alert("Iltimos, barcha maydonlarni to'ldiring!");
+    }
+}
+
+function renderCard(item) {
+    const percentage = Math.min(Math.round((item.sarflangan / item.oylik_limit) * 100), 100);
+    const imageSrc = getCategoryImage(item.nomi);
+
+    const cardHTML = `
+    <div class="hisoblar" style="display:flex; justify-content:space-between; align-items:center; margin-bottom: 15px;">
         <div class="card">
-            <div class="start">
-                <img src="${imageSrc}" alt="${name}">
+            <div class="start" style="display:flex; align-items:center;">
+                <img src="${imageSrc}" alt="${item.nomi}" style="width:40px; margin-right:10px;">
                 <div class="text">
-                    <h1>${name}</h1>
-                    <p>${Number(spent).toLocaleString()} / ${Number(limit).toLocaleString()}</p>
+                    <h1 style="font-size:16px; margin:0;">${item.nomi}</h1>
+                    <p style="font-size:12px; color:#666;">${Number(item.sarflangan).toLocaleString()} / ${Number(item.oylik_limit).toLocaleString()}</p>
                 </div>
             </div>
         </div>
@@ -35,82 +101,83 @@ newCategory.innerHTML = `
                 <div style="width: ${percentage}%; background: ${percentage > 90 ? '#ff4d4d' : '#4CAF50'}; height: 100%; border-radius: 5px;"></div>
             </div>
         </div>
-        <div class="end">
-            <h1 class="foiz">${percentage}%</h1>
-            <h1 class="som" style="white-space: nowrap;">-${Number(spent).toLocaleString()}</h1>
-    
+        <div class="end" style="text-align:right;">
+            <h1 class="foiz" style="font-size:14px; margin:0;">${percentage}%</h1>
+            <h1 class="som" style="white-space: nowrap; font-size:14px; color:red;">-${Number(item.sarflangan).toLocaleString()}</h1>
         </div>
-    </div>
-`;
-        
+    </div>`;
 
-        categoryList.insertBefore(newCategory, document.querySelector('.foter'));
-        updateTotalExpenses(spent);
-
-        document.getElementById("catName").value = "";
-        document.getElementById("catLimit").value = "";
-        document.getElementById("catSpent").value = "";
-        modal.style.display = "none";
+    const div = document.createElement('div');
+    div.innerHTML = cardHTML;
+    
+    const footer = document.querySelector('.foter');
+    if (footer) {
+        listContainer.insertBefore(div, footer);
     } else {
-        alert("Iltimos, barcha maydonlarni to'ldiring!");
+        listContainer.appendChild(div);
     }
 }
 
 function getCategoryImage(name) {
     const category = name.toLowerCase();
+    const path = "./M_rasmlar/";
+    if (category.includes("ovqat")) return path + "food.png";
+    if (category.includes("transport")) return path + "transport.png";
+    if (category.includes("uy")) return path + "home.png";
+    if (category.includes("kiyim")) return path + "clothes.png";
+    if (category.includes("sog'liq")) return path + "health.png";
+    return path + "other.png";
+}
 
-    if (category.includes("ovqat") || category.includes("food")) {
-        return "./M_rasmlar/food.png";
-    } else if (category.includes("transport")) {
-        return "./M_rasmlar/transport.png";
-    } else if (category.includes("uy") || category.includes("ijara")) {
-        return "./M_rasmlar/home.png";
-    } else if (category.includes("kiyim")) {
-        return "./M_rasmlar/clothes.png";
-    } else if (category.includes("sog'liq") || category.includes("tibbiyot")) {
-        return "./M_rasmlar/health.png";
-    } else if (category.includes("ta'lim")) {
-        return "./M_rasmlar/education.png";
-    } else if (category.includes("o'yin") || category.includes("ko'ngilochar")) {
-        return "./M_rasmlar/entertainment.png";
-    } else {
-        return "./M_rasmlar/other.png";
+function updateTotalDisplay(total) {
+    if (totalExpensesText) {
+        totalExpensesText.innerText = total.toLocaleString() + " so'm";
     }
 }
-function updateTotalExpenses(amount) {
+
+function addToTotal(amount) {
     let currentTotal = parseInt(totalExpensesText.innerText.replace(/[^\d]/g, '')) || 0;
-    let updatedTotal = currentTotal + parseInt(amount);
-    totalExpensesText.innerText = updatedTotal.toLocaleString() + " so'm";
+    updateTotalDisplay(currentTotal + parseInt(amount));
 }
 
-
-document.addEventListener("DOMContentLoaded", function () {
+function initCalendar() {
     const monthYearElement = document.getElementById("currentMonthYear");
     const prevBtn = document.getElementById("prevMonth");
     const nextBtn = document.getElementById("nextMonth");
+    if (!monthYearElement) return;
 
-    const months = [
-        "Yanvar", "Fevral", "Mart", "Aprel", "May", "Iyun",
-        "Iyul", "Avgust", "Sentabr", "Oktabr", "Noyabr", "Dekabr"
-    ];
-
+    const months = ["Yanvar", "Fevral", "Mart", "Aprel", "May", "Iyun", "Iyul", "Avgust", "Sentabr", "Oktabr", "Noyabr", "Dekabr"];
     let currentDate = new Date();
 
-    function updateMonthYear() {
-        const month = months[currentDate.getMonth()];
-        const year = currentDate.getFullYear();
-        monthYearElement.textContent = `${month} ${year}`;
-    }
+    const updateMonthYear = () => {
+        monthYearElement.textContent = `${months[currentDate.getMonth()]} ${currentDate.getFullYear()}`;
+    };
 
-    prevBtn.addEventListener("click", function () {
-        currentDate.setMonth(currentDate.getMonth() - 1);
-        updateMonthYear();
-    });
-
-    nextBtn.addEventListener("click", function () {
-        currentDate.setMonth(currentDate.getMonth() + 1);
-        updateMonthYear();
-    });
+    if (prevBtn) prevBtn.onclick = () => { currentDate.setMonth(currentDate.getMonth() - 1); updateMonthYear(); };
+    if (nextBtn) nextBtn.onclick = () => { currentDate.setMonth(currentDate.getMonth() + 1); updateMonthYear(); };
 
     updateMonthYear();
-});
+}
+
+    const menuToggle = document.getElementById('menu-toggle');
+    const leftCon = document.querySelector('.left-con');
+
+    menuToggle.addEventListener('click', () => {
+        // "active" klassini qo'shadi yoki olib tashlaydi
+        leftCon.classList.toggle('active');
+        
+        // Tugma ikonkasini o'zgartirish (ixtiyoriy)
+        const icon = menuToggle.querySelector('i');
+        if (leftCon.classList.contains('active')) {
+            icon.classList.replace('fa-bars', 'fa-times'); // X shakli
+        } else {
+            icon.classList.replace('fa-times', 'fa-bars'); // Hamburger shakli
+        }
+    });
+
+    // Menyu tashqarisini bossa yopilishi uchun (Ixtiyoriy)
+    document.addEventListener('click', (e) => {
+        if (!leftCon.contains(e.target) && !menuToggle.contains(e.target)) {
+            leftCon.classList.remove('active');
+        }
+    });

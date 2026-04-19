@@ -14,7 +14,9 @@
     <link
         href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap"
         rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 </head>
 
 <body>
@@ -49,6 +51,8 @@
             <a href="#" class="btn8">
                 <i class="fa-solid fa-gear"></i> Sozlamalar
             </a>
+            <button id="menu-toggle" class="hamburger">
+    <i class="fas fa-bars"></i> </button>
         </div>
         <div class="right-con">
             <div id="categoryModal" class="modal">
@@ -63,7 +67,7 @@
                         <input type="number" id="catSpent" placeholder="Sarflangan summa (so'm)">
                     </div>
                     <div class="modal-footer">
-                        <button id="saveCategory" class="btn-save">Saqlash</button>
+                        <button id="saveCategory" class="btn-save" onclick="Jonatish()">Saqlash</button>
                     </div>
                 </div>
             </div>
@@ -88,97 +92,7 @@
             <div class="pul">
                 <p class="chiqim">Jami chiqim: <span class="span">6050 000 so'm</span></p>
             </div>
-            <div class="hisoblar">
-                <div class="card">
-                    <div class="start">
-                        <img src="./M_rasmlar/Border.png" alt="">
-                        <div class="text">
-                            <h1 class="text3">Oziq-ovqat</h1>
-                            <p>1 800 000/2 500 000</p>
-                        </div>
-                    </div>
-                </div>
-                <div class="center">
-                    <img src="./M_rasmlar/Background.png" alt="">
-                </div>
-                <div class="end">
-                    <h1 class="foiz">84%</h1>
-                    <h1 class="som">-1 800 000</h1>
-                </div>
-            </div>
-            <div class="hisoblar">
-                <div class="card">
-                    <div class="start">
-                        <img src="./M_rasmlar/Border (2).png" alt="">
-                        <div class="text">
-                            <h1>Uy-joy</h1>
-                            <p>2 000 000/2 000 000</p>
-
-                        </div>
-                    </div>
-                </div>
-                <div class="center">
-                    <img src="./M_rasmlar/Background (1).png" alt="">
-                </div>
-                <div class="end">
-                    <h1 class="foiz">100%</h1>
-                    <h1 class="som">-2 000 000</h1>
-                </div>
-            </div>
-            <div class="hisoblar">
-                <div class="card">
-                    <div class="start">
-                        <img src="./M_rasmlar/Border (3).png" alt="">
-                        <div class="text">
-                            <h1>Transport</h1>
-                            <p>720 000/800 000</p>
-                        </div>
-                    </div>
-                </div>
-                <div class="center">
-                    <img src="./M_rasmlar/Background (3).png" alt="">
-                </div>
-                <div class="end">
-                    <h1 class="foiz">90%</h1>
-                    <h1 class="som">-720 000</h1>
-                </div>
-            </div>
-            <div class="hisoblar">
-                <div class="card">
-                    <div class="start">
-                        <img src="./M_rasmlar/Border (4).png" alt="">
-                        <div class="text">
-                            <h1>Ta'lim</h1>
-                            <p>750 000/1 000 000</p>
-                        </div>
-                    </div>
-                </div>
-                <div class="center">
-                    <img src="./M_rasmlar/Background (4).png" alt="">
-                </div>
-                <div class="end">
-                    <h1 class="foiz">75%</h1>
-                    <h1 class="som">-750 000</h1>
-                </div>
-            </div>
-            <div class="hisoblar">
-                <div class="card">
-                    <div class="start">
-                        <img src="./M_rasmlar/Border (5).png" alt="">
-                        <div class="text">
-                            <h1>Boshqa</h1>
-                            <p>63 000/100 000</p>
-                        </div>
-                    </div>
-                </div>
-                <div class="center">
-                    <img src="./M_rasmlar/Background (5).png" alt="">
-                </div>
-                <div class="end">
-                    <h1 class="foiz">63%</h1>
-                    <h1 class="som">-63 000</h1>
-                </div>
-            </div>
+           
 
             <div class="foter">
                 <button class="btn9">+ Kategoriya qo'shish</button>
