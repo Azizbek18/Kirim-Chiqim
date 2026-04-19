@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="uz">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Oila Hisobi - Glass 3D</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+</head>
+<body>
+
+    <div class="card" id="mainCard">
+        <h2>Oila hisobi ochish</h2>
+        <p class="subtitle">Byudjetingizni boshqarishni boshlang</p>
+
+        <div class="input-group">
+            <label>Oila nomi</label>
+            <div class="input-box">
+                <span class="icon">🏠</span>
+                <input id="oila" type="text" placeholder="Abdullayevlar oilasi">
+            </div>
+        </div>
+
+        <div class="input-group">
+            <label>Sizning ismingiz</label>
+            <div class="input-box">
+                <span class="icon">👤</span>
+                <input id="ism" type="text" placeholder="Ismingiz">
+            </div>
+        </div>
+
+        <div class="input-group">
+            <label>Email</label>
+            <div class="input-box">
+                <span class="icon">✉️</span>
+                <input id="gmail" type="email" placeholder="example@mail.com">
+            </div>
+        </div>
+
+        <div class="input-group">
+            <label>Oylik daromad (so'm)</label>
+            <div class="input-box">
+                <span class="icon">💵</span>
+                <input id="oylik" type="text" placeholder="5 000 000">
+            </div>
+        </div>
+
+        <div class="input-group">
+            <label>Parol</label>
+            <div class="input-box">
+                <span class="icon">🔒</span>
+                <input id="parol" type="password" placeholder="••••••••">
+            </div>
+        </div>
+
+        <button class="btn" onclick="Yaratish()">Hisob yaratish</button>
+
+        <p class="footer">Hisobingiz bormi? <a href="./index.html">Kiring</a></p>
+    </div>
+
+    <div id="toast-container" class="toast-container"></div>
+
+    <script src="oila hisobi.js"></script>
+</body>
+</html>

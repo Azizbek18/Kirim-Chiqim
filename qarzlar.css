@@ -1,606 +1,247 @@
-* {
-    box-sizing: border-box;
-    font-family: "Inter";
+/* OilaBalance - Qarzlar Sahifasi CSS 
+    Design: Glassmorphism / Premium UI
+*/
+
+/* 1. Asosiy Konteynerlar */
+.app-main {
+    padding: 30px;
+    max-width: 1200px;
+    margin: 0 auto;
 }
 
-body {
-    margin: 0;
-}
-
-.container {
-    display: flex;
-}
-
-.left-con {
-    width: 300px;
-    height: 100vh;
-    padding: 10px;
-    position: relative;
-}
-
-.con-input {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-
-}
-
-a:hover {
-    color: #16ff92;
-}
-
-a {
-    text-decoration: none;
-    color: black;
-}
-
-.input-card {
-    display: flex;
-    gap: 15px;
-    align-items: center;
-    font-size: 20px;
-}
-
-.input {
-    background-color: #F0F3FF;
-    width: auto;
-    padding: 8px;
+.chiqim-kirim {
+    background: rgba(255, 255, 255, 0.4);
+    backdrop-filter: blur(15px);
+    -webkit-backdrop-filter: blur(15px);
     border-radius: 24px;
-    align-items: center;
-}
-
-.search {
-    color: gray;
-}
-
-.input-3 {
-    padding: 10px;
-    border: none;
-    font-size: 16 px;
-    outline: none;
-    background-color: transparent;
-}
-
-ul {
-    list-style: none;
-    font-size: 22px;
-    display: flex;
-    gap: 20px;
-    flex-direction: column;
-    padding-top: 20px;
-}
-
-.right-con {
-    width: 100%;
-    padding: 10px 30px;
-}
-
-.logo {
-    width: 100%;
-}
-
-.logo img {
-    padding-left: 30px;
-    padding-top: 30px;
-    width: 280px;
-}
-
-.btn1 {
-    width: 100%;
-    padding: 15px;
-    text-align: start;
-    border: none;
-    border-radius: 12px;
-    font-size: 16px;
-    display: flex;
-    gap: 8px;
-}
-
-.btn2 {
-    width: 100%;
-    padding: 15px;
-    text-align: start;
-    border: none;
-    border-radius: 12px;
-    font-size: 16px;
-    display: flex;
-    gap: 8px;
-}
-
-.btn3 {
-    width: 100%;
-    padding: 15px;
-    text-align: start;
-    border: none;
-    border-radius: 12px;
-    font-size: 16px;
-    display: flex;
-    gap: 8px;
-}
-
-.btn4 {
-    width: 100%;
-    padding: 15px;
-    text-align: start;
-    border: none;
-    border-radius: 12px;
-    font-size: 16px;
-    display: flex;
-    gap: 8px;
-}
-
-.btn5 {
-    width: 100%;
-    padding: 15px;
-    text-align: start;
-    border: none;
-    border-radius: 12px;
-    font-size: 16px;
-    display: flex;
-    gap: 8px;
-    background: #ECFDF5;
-    color: #16ff92;
-    font-weight: 900;
-}
-
-.btn6 {
-    width: 100%;
-    padding: 15px;
-    text-align: start;
-    border: none;
-    border-radius: 12px;
-    font-size: 16px;
-    display: flex;
-    gap: 8px;
-}
-
-.btn7 {
-    width: 100%;
-    padding: 15px;
-    text-align: start;
-    border: none;
-    border-radius: 12px;
-    font-size: 16px;
-    display: flex;
-    gap: 8px;
-}
-
-ul button:hover {
-    background: #ECFDF5;
-    color: #16ff92;
-
-}
-
-ul button {
-    background-color: transparent;
-}
-
-.btn8 {
-    width: 80%;
-    padding: 15px;
-    text-align: start;
-    border: none;
-    border-radius: 12px;
-    font-size: 16px;
-    position: absolute;
-    bottom: 60px;
-    left: 35px;
-    background-color: transparent;
-}
-
-.btn8:hover {
-    background-color: #ECFDF5;
-    color: #16ff92;
-}
-
-.qarz {
-    width: 100%;
-    display: flex;
-    gap: 20px;
-}
-
-.berilgan {
-    font-size: 20px;
-    color: green;
-    padding: 5px;
-    border-bottom: 2px solid green;
-}
-
-.bergan {
-    font-size: 20px;
-    padding: 5px;
-}
-
-.bergan:hover {
-    color: green;
-    padding: 5px;
-    border-bottom: 2px solid green;
-}
-
-.kirimlar {
-    display: flex;
-    justify-content: center;
-    margin: 10px 0px;
-    gap: 20px;
-
-}
-
-.card {
-    display: flex;
-    width: 50%;
-    padding: 20px;
-    align-items: center;
-    justify-content: space-between;
-    background-color: #f8f8f8;
-    border-radius: 12px;
-}
-
-select {
-    border: 2px solid rgb(231, 231, 231);
-    padding: 10px;
-    border-radius: 10px;
-    background-color: transparent;
-    outline: none;
-}
-
-.red {
-    color: red;
-
-}
-
-.green {
-    color: green;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    box-shadow: 0 8px 32px rgba(31, 38, 135, 0.07);
+    padding: 24px;
+    margin-top: 20px;
 }
 
 .royxat {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 10px 30px;
+    margin-bottom: 20px;
+    padding: 0 10px;
+}
+
+.royxat h1 {
+    font-size: 22px;
+    font-weight: 800;
+    color: #1e293b;
+    margin: 0;
 }
 
 .royxat p {
-    color: green;
+    color: #64748b;
+    font-weight: 600;
+    cursor: pointer;
+    font-size: 14px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
 }
 
-.card2 {
-    padding: 0px 30px;
+/* 2. Qarz Kartalari (List Item) */
+.debt-card {
     display: flex;
     justify-content: space-between;
     align-items: center;
-
+    padding: 18px 24px;
+    background: rgba(255, 255, 255, 0.6);
+    border-radius: 18px;
+    margin-bottom: 12px;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    border: 1px solid rgba(255, 255, 255, 0.1);
 }
 
-.text2 h1 {
-    font-size: 20px;
-    margin: 0;
+.debt-card:hover {
+    transform: translateY(-3px);
+    background: rgba(255, 255, 255, 0.9);
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.04);
 }
 
-.img-card {
+/* 3. Chap tomon (Avatar + Ma'lumot) */
+.debt-info {
     display: flex;
+    align-items: center;
+    gap: 16px;
+}
+
+.user-avatar-small {
+    width: 48px;
+    height: 48px;
+    background: linear-gradient(135deg, #6366f1 0%, #a855f7 100%);
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 14px;
+    font-weight: 800;
+    font-size: 16px;
+    box-shadow: 0 4px 12px rgba(99, 102, 241, 0.2);
+}
+.debt-card{
+    margin: 20px 0px;
+}
+
+.debt-details h3 {
+    margin: 0;
+    font-size: 18px;
+    font-weight: 700;
+    color: #0f172a;
+}
+
+.debt-details p {
+    margin: 4px 0 0 0;
+    font-size: 13px;
+    color: #64748b;
+    font-weight: 500;
+}
+
+.debt-details span {
+    color: #94a3b8;
+    font-weight: 400;
+}
+
+/* 4. O'ng tomon (Summa + Status) */
+.debt-actions {
+    display: flex;
+    align-items: center;
     gap: 20px;
+}
+
+.amount-wrapper {
+    text-align: right;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+}
+
+.amount-wrapper h2 {
+    margin: 0;
+    font-size: 20px;
+    font-weight: 800;
+    letter-spacing: -0.5px;
+    color: #0f172a;
+}
+
+.amount-negative { color: #0f172a; }
+.amount-neutral { 
+    color: #94a3b8 !important; 
+    text-decoration: line-through; 
+    opacity: 0.7;
+}
+
+/* 5. Status Badge sozlamalari */
+.status-badge {
+    display: inline-block;
+    padding: 6px 14px;
+    border-radius: 10px;
+    font-size: 11px;
+    font-weight: 700;
+    margin-top: 6px;
+    cursor: pointer;
+    transition: all 0.2s;
+    border: 1px solid transparent;
+}
+
+.status-pending {
+    background: #fff7ed;
+    color: #c2410c;
+    border-color: #ffedd5;
+}
+
+.status-pending:hover {
+    background: #ffedd5;
+}
+
+.status-completed {
+    background: #f0fdf4;
+    color: #15803d;
+    border-color: #dcfce7;
+}
+
+/* 6. Dashboard Stat Kartalari */
+.kirimlar {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+    margin-bottom: 25px;
+}
+
+.card {
+    padding: 24px;
+    display: flex;
+    justify-content: space-between;
     align-items: center;
 }
 
-.text h1 {
-    font-size: 25px;
-
+.card .text h1 {
+    font-size: 26px;
+    font-weight: 800;
+    margin-top: 8px;
 }
 
-.chiqim-kirim {
-    background-color: #f8f8f8;
-    border-radius: 20px;
-}
+.red { color: #ef4444; }
+.green { color: #10b981; }
 
-.text p {
-    color: gray;
-    margin: 0;
-}
-
-hr {
-    color: gray;
-}
-
-.img-card img {
-    width: 80px;
-}
-
-.boshqa5 {
-    color: gray;
-    font-size: 22px;
-}
-
-.boshqa1 {
-    color: red;
-    font-size: 22px;
-}
-
-.oxiri {
+/* 7. Footer va Tugmalar */
+.foter {
     display: flex;
-    justify-content: center;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 35px;
+    gap: 12px;
+}
+
+.btn-primary {
+    background: #10b981;
+    color: white;
+    padding: 16px 40px;
+    border-radius: 50px;
+    font-weight: 700;
+    font-size: 16px;
+    border: none;
+    cursor: pointer;
+    transition: all 0.3s;
+    box-shadow: 0 10px 20px rgba(16, 185, 129, 0.2);
+    display: flex;
     align-items: center;
     gap: 10px;
 }
 
-.boshqa2 {
-    color: red;
-    padding: 7px 15px;
-    text-align: end;
-    border-radius: 17px;
-    background-color: orange;
-    border: none;
-}
-
-.boshqa6 {
-    font-size: 18px;
-    color: white;
-    padding: 7px 10px;
-    text-align: end;
-    border-radius: 17px;
-    background-color: green;
-}
-
-.modal {
-    display: none;
-    position: fixed;
-    z-index: 1000;
-    left: 0;
-    top: 0;
-    width: 100%;
-    height: 100%;
-    background-color: rgba(0, 0, 0, 0.5);
-}
-
-.modal-content {
-    background-color: #fff;
-    margin: 10% auto;
-    padding: 25px;
-    border-radius: 15px;
-    width: 350px;
-    position: relative;
-    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
-}
-
-.close-btn {
-    position: absolute;
-    right: 20px;
-    top: 15px;
-    font-size: 28px;
-    cursor: pointer;
-    color: #888;
-}
-
-.modal-body {
-    display: flex;
-    flex-direction: column;
-    gap: 15px;
-    margin-top: 20px;
-}
-
-.modal-body input {
-    padding: 12px;
-    border: 1px solid #ddd;
-    border-radius: 8px;
-    outline: none;
-}
-
-.save-btn {
-    background-color: #5D5FEF;
-    color: white;
-    padding: 12px;
-    border: none;
-    border-radius: 8px;
-    cursor: pointer;
-    font-weight: bold;
-}
-
-.save-btn:hover {
-    background-color: #4a4cd8;
-}
-
-.btn {
-    padding: 20px 50px;
-    color: green;
-    border: 2px solid green;
-    background-color: transparent;
-    font-size: 20px;
-    border-radius: 30px;
-}
-
-.foter {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    padding: 30px 0px;
-    flex-direction: column;
+.btn-primary:hover {
+    background: #059669;
+    transform: translateY(-2px);
+    box-shadow: 0 12px 24px rgba(16, 185, 129, 0.3);
 }
 
 .qaytarilish {
-    color: orangered;
+    font-size: 14px;
+    color: #f97316;
+    font-weight: 600;
 }
 
-@media (max-width: 1024px) {
-    .left-con {
-        width: 250px;
-    }
-
-    .logo img {
-        width: 200px;
-    }
-
-    .text h1 {
-        font-size: 20px;
-    }
-}
-
+/* 8. Responsive Design */
 @media (max-width: 768px) {
-    .container {
-        flex-direction: column;
-    }
-
-
-    .left-con {
-        width: 100%;
-        height: auto;
-        position: relative;
-        border-bottom: 1px solid #eee;
-    }
-
-    .logo img {
-        width: 180px;
-        padding-top: 10px;
-    }
-
-    .search {
-        font-size: 15px;
-    }
-
-    .input {
-        display: flex;
-
-    }
-
-    ul {
-        flex-direction: row;
-        overflow-x: auto;
-        padding: 10px;
-        white-space: nowrap;
-    }
-
-    .btn1,
-    .btn2,
-    .btn3,
-    .btn4,
-    .btn5,
-    .btn6,
-    .btn7 {
-        width: auto;
-        padding: 10px 15px;
-    }
-
-    .btn8 {
-        display: none;
-    }
-
-    .right-con {
-        padding: 20px;
-    }
-
     .kirimlar {
-        gap: 10px;
+        grid-template-columns: 1fr;
     }
-}
-
-@media (max-width: 575px) {
-    .con-input {
+    
+    .debt-card {
         flex-direction: column;
         align-items: flex-start;
         gap: 15px;
     }
-
-
-    .input-card {
+    
+    .debt-actions {
         width: 100%;
         justify-content: space-between;
-    }
-
-    .kirimlar {
-        flex-direction: column;
-    }
-
-    .card {
-        width: 100%;
-    }
-
-    .card2 {
-        flex-direction: column;
-        align-items: flex-start;
-        padding: 15px;
-        position: relative;
-    }
-
-    .oxiri {
-        width: 100%;
-        justify-content: space-between;
-        margin-top: 10px;
-    }
-
-    .text2 h1 {
-        font-size: 16px;
-    }
-
-    .text2 p {
-        font-size: 12px;
-    }
-
-    .left-con {
-        position: fixed;
-        left: -280px;
-        top: 0;
-        width: 280px;
-        height: 100vh;
-        background: #fff;
-        z-index: 9999;
-        transition: all 0.3s ease-in-out;
-        padding: 20px;
-        display: flex;
-        flex-direction: column;
-    }
-
-    .left-con.active {
-        left: 0;
-    }
-
-    .overlay {
-        position: fixed;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        background: rgba(255, 255, 255, );
-        display: none;
-        z-index: 9998;
-    }
-
-    .overlay.active {
-        display: block;
-    }
-
-
-    .hamburger {
-        position: fixed;
-        top: 15px;
-        left: 15px;
-        z-index: 10000;
-        background: #ffffff;
-        color: rgb(0, 0, 0);
-        border: none;
-        width: 45px;
-        height: 45px;
-        border-radius: 8px;
-        font-size: 20px;
-        cursor: pointer;
-    }
-
-    .left-con ul {
-        margin-top: 60px;
-        display: flex;
-        flex-direction: column;
-        gap: 10px;
-    }
-
-    .left-con .btn1,
-    .left-con .btn2,
-    .left-con .btn3,
-    .left-con .btn4 {
-        width: 100%;
-        font-size: 16px !important;
-        justify-content: flex-start;
-        padding: 12px;
-    }
-}
-@media (min-width: 768px) {
-    .hamburger {
-        display: none;
+        padding-top: 10px;
+        border-top: 1px solid rgba(0,0,0,0.05);
     }
 }

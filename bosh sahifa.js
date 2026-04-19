@@ -1,168 +1,177 @@
-document.addEventListener("DOMContentLoaded", () => {
+const SUPABASE_URL = "https://nwjqvgqydrjkveievogo.supabase.co"; 
+const SUPABASE_ANON_KEY = "sb_publishable_WaZvU4qjGkSQu2Vd1qZujw_RcPZfqAh";
+const supabaseClient = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
 
-  let currentDate = new Date();
+document.addEventListener("DOMContentLoaded", async () => {
+    let currentDate = new Date();
+    const months = ["Yanvar", "Fevral", "Mart", "Aprel", "May", "Iyun", "Iyul", "Avgust", "Sentabr", "Oktabr", "Noyabr", "Dekabr"];
 
-  let transactions = [
-    { name: "Oziq-ovqat", amount: -450000 },
-    { name: "Transport", amount: -28000 },
-    { name: "Maosh", amount: 8500000 },
-  ];
+    // --- SELEKTORLAR ---
+    const monthTitle = document.querySelector(".calendar-nav h2");
+    const list = document.getElementById("transactionList");
+    const leftBtn = document.querySelectorAll(".icon-circle")[0];
+    const rightBtn = document.querySelectorAll(".icon-circle")[1];
+    
+    // Modal va Inputlar
+    const modal = document.getElementById("modal");
+    const openFab = document.querySelector(".app-fab");
+    const saveBtn = document.querySelector(".save");
+    const cancelBtns = document.querySelectorAll(".cancel"); // Ikkala bekor qilish tugmasi uchun
+    const nameInput = document.getElementById("t-nomi");
+    const amountInput = document.getElementById("t-summa");
 
-
-  const monthTitle = document.querySelector(".month-title");
-  const leftBtn = document.querySelector(".arrow.left");
-  const rightBtn = document.querySelector(".arrow.right");
-  const list = document.querySelector(".transaction-list");
-
-  const modal = document.getElementById("modal");
-  const openBtns = document.querySelectorAll(".add-fab, .add-icon");
-  const closeBtn = document.querySelector(".cancel");
-  const saveBtn = document.querySelector(".save");
-
-  const nameInput = modal.querySelector("input[type='text']");
-  const amountInput = modal.querySelector("input[type='number']");
-
-  const downloadBtn = document.querySelector(".upload-button");
-
-  const months = [
-    "Yanvar","Fevral","Mart","Aprel","May","Iyun",
-    "Iyul","Avgust","Sentabr","Oktabr","Noyabr","Dekabr"
-  ];
-
-
-  function updateMonth() {
-    monthTitle.textContent =
-      months[currentDate.getMonth()] + " " + currentDate.getFullYear();
-  }
-
-  leftBtn.onclick = () => {
-    currentDate.setMonth(currentDate.getMonth() - 1);
-    updateMonth();
-  };
-
-  rightBtn.onclick = () => {
-    currentDate.setMonth(currentDate.getMonth() + 1);
-    updateMonth();
-  };
-
-  updateMonth();
-
-
-  function renderTransactions() {
-    list.innerHTML = "";
-
-    transactions.forEach((t) => {
-      let div = document.createElement("div");
-      div.className = "transaction-item";
-
-      let sign = t.amount > 0 ? "+" : "-";
-      let color = t.amount > 0 ? "positive" : "negative";
-
-      div.innerHTML = `
-        <div class="icon-container">
-          <i class="icon">💰</i>
-        </div>
-        <div class="transaction-details">
-          <span class="name">${t.name}</span>
-          <span class="date">Hozir</span>
-        </div>
-        <div class="amount ${color}">
-          ${sign} ${Math.abs(t.amount).toLocaleString()} so'm
-        </div>
-      `;
-
-      list.appendChild(div);
-    });
-  }
-
-  renderTransactions();
-
-
-  openBtns.forEach(btn => {
-    btn.addEventListener("click", () => {
-      modal.classList.add("active");
-    });
-  });
-
-  closeBtn.onclick = () => modal.classList.remove("active");
-
-  modal.onclick = (e) => {
-    if(e.target === modal){
-      modal.classList.remove("active");
-    }
-  };
-
-  saveBtn.onclick = () => {
-    const name = nameInput.value.trim();
-    const amount = parseInt(amountInput.value);
-
-    if (!name || isNaN(amount)) {
-      alert("To‘ldir!");
-      return;
+    // --- 1. FOYDALANUVCHINI TEKSHIRISH ---
+    async function checkUser() {
+        const { data: { user }, error } = await supabaseClient.auth.getUser();
+        if (error || !user) {
+            window.location.href = "index.html"; // Kirilmagan bo'lsa login sahifasiga
+            return null;
+        }
+        return user;
     }
 
-    transactions.unshift({ name, amount });
-    renderTransactions();
+    // --- 2. MA'LUMOTLARNI OLISH (FETCH) ---
+    async function fetchTransactions() {
+        const user = await checkUser();
+        if (!user) return;
 
-    nameInput.value = "";
-    amountInput.value = "";
+        // Tanlangan oy oralig'ini hisoblash
+        const firstDay = new Date(currentDate.getFullYear(), currentDate.getMonth(), 1).toISOString();
+        const lastDay = new Date(currentDate.getFullYear(), currentDate.getMonth() + 1, 0, 23, 59, 59).toISOString();
 
-    modal.classList.remove("active");
-  };
+        const { data: transactions, error } = await supabaseClient
+            .from('transactions')
+            .select('*')
+            .eq('user_id', user.id) // Faqat shu userga tegishli ma'lumotlar
+            .gte('created_at', firstDay)
+            .lte('created_at', lastDay)
+            .order('created_at', { ascending: false });
 
- 
-  downloadBtn.onclick = () => {
-    let content = "Hisobot:\n\n";
+        if (error) {
+            console.error("Xatolik:", error.message);
+            return;
+        }
 
-    transactions.forEach((t) => {
-      content += `${t.name}: ${t.amount} so'm\n`;
-    });
-
-    let blob = new Blob([content], { type: "text/plain" });
-    let link = document.createElement("a");
-
-    link.href = URL.createObjectURL(blob);
-    link.download = "hisobot.txt";
-    link.click();
-  };
-
-
-  const bell = document.getElementById("bell");
-  const help = document.getElementById("help");
-  const bellModal = document.getElementById("bellModal");
-  const helpModal = document.getElementById("helpModal");
-
-  bell.onclick = () => bellModal.classList.add("active");
-  help.onclick = () => helpModal.classList.add("active");
-
-  window.onclick = (e) => {
-    if(e.target.classList.contains("modal")){
-      e.target.classList.remove("active");
+        renderTransactions(transactions);
+        updateStats(transactions);
     }
-  };
 
+    // --- 3. EKRANGA CHIQARISH (RENDER) ---
+    function renderTransactions(data) {
+        if (!list) return;
+        list.innerHTML = "";
+
+        if (data.length === 0) {
+            list.innerHTML = `<p style="text-align:center; padding:40px; color:#9ca3af; font-size:14px; grid-column: 1/-1;">Hozircha hech qanday harakat topilmadi.</p>`;
+            return;
+        }
+
+        data.forEach((t) => {
+            const isIncome = t.amount > 0;
+            const div = document.createElement("div");
+            div.className = "data-item";
+            // Dizaynni inline-style orqali yanada kuchaytiramiz
+            div.style = "display: flex; align-items: center; justify-content: space-between; padding: 16px; background: rgba(255,255,255,0.3); border-radius: 20px; margin-bottom: 12px; border: 1px solid rgba(255,255,255,0.4);";
+
+            div.innerHTML = `
+                <div style="display: flex; align-items: center; gap: 14px;">
+                    <div style="background: ${isIncome ? '#e6fcf5' : '#fff5f5'}; width: 42px; height: 42px; border-radius: 14px; display: flex; align-items: center; justify-content: center;">
+                        <i class="fa-solid ${isIncome ? 'fa-arrow-up' : 'fa-arrow-down'}" style="color: ${isIncome ? '#10b981' : '#ef4444'}"></i>
+                    </div>
+                    <div>
+                        <p style="font-weight: 700; color: #1f2937; margin: 0; font-size: 15px;">${t.name}</p>
+                        <small style="color: #6b7280; font-size: 11px;">${new Date(t.created_at).toLocaleDateString('uz-UZ')}</small>
+                    </div>
+                </div>
+                <div style="font-weight: 800; font-size: 15px; color: ${isIncome ? '#10b981' : '#ef4444'}">
+                    ${isIncome ? '+' : ''}${t.amount.toLocaleString()} UZS
+                </div>
+            `;
+            list.appendChild(div);
+        });
+    }
+
+    // --- 4. STATISTIKANI HISOBLASH ---
+    function updateStats(data) {
+        const income = data.filter(t => t.amount > 0).reduce((s, t) => s + Number(t.amount), 0);
+        const expense = data.filter(t => t.amount < 0).reduce((s, t) => s + Math.abs(Number(t.amount)), 0);
+        const balance = income - expense;
+
+        const cards = document.querySelectorAll(".card-value");
+        if (cards.length >= 3) {
+            cards[0].innerHTML = `${balance.toLocaleString()} <span>UZS</span>`;
+            cards[1].textContent = income.toLocaleString();
+            cards[2].textContent = expense.toLocaleString();
+            // Agar Tejalgan (Savings) kartasi bo'lsa:
+            if(cards[3]) cards[3].textContent = (balance > 0 ? balance : 0).toLocaleString();
+        }
+    }
+
+    // --- 5. MODALNI BOSHQARISH (NULL-CHECK BILAN) ---
+    if (openFab && modal) {
+        openFab.onclick = () => modal.classList.add("active");
+    }
+
+    if (cancelBtns.length > 0 && modal) {
+        cancelBtns.forEach(btn => {
+            btn.onclick = () => modal.classList.remove("active");
+        });
+    }
+
+    // --- 6. MA'LUMOT SAQLASH ---
+    if (saveBtn) {
+        saveBtn.onclick = async () => {
+            const user = await checkUser();
+            if (!user) return;
+
+            const name = nameInput?.value.trim();
+            const amount = parseFloat(amountInput?.value);
+
+            if (!name || isNaN(amount)) {
+                alert("Iltimos, barcha maydonlarni to'g'ri to'ldiring!");
+                return;
+            }
+
+            const { error } = await supabaseClient
+                .from('transactions')
+                .insert([{ name, amount, user_id: user.id }]);
+
+            if (error) {
+                alert("Xatolik: " + error.message);
+            } else {
+                if (nameInput) nameInput.value = "";
+                if (amountInput) amountInput.value = "";
+                modal?.classList.remove("active");
+                fetchTransactions(); // Ro'yxatni yangilash
+            }
+        };
+    }
+
+    // --- 7. OY NAVIGATSIYASI ---
+    function updateMonthUI() {
+        if (monthTitle) {
+            monthTitle.textContent = `${months[currentDate.getMonth()]} ${currentDate.getFullYear()}`;
+        }
+    }
+
+    if (leftBtn) {
+        leftBtn.onclick = () => {
+            currentDate.setMonth(currentDate.getMonth() - 1);
+            updateMonthUI();
+            fetchTransactions();
+        };
+    }
+
+    if (rightBtn) {
+        rightBtn.onclick = () => {
+            currentDate.setMonth(currentDate.getMonth() + 1);
+            updateMonthUI();
+            fetchTransactions();
+        };
+    }
+
+    // --- ILK BOR ISHGA TUSHIRISH ---
+    updateMonthUI();
+    fetchTransactions();
 });
-
-
-const burger = document.getElementById("burger");
-const sidebar = document.querySelector(".left-con");
-const overlay = document.getElementById("overlay");
-
-burger.onclick = () => {
-  sidebar.classList.toggle("active");
-  overlay.classList.toggle("active");
-};
-
-
-overlay.onclick = () => {
-  sidebar.classList.remove("active");
-  overlay.classList.remove("active");
-};
-burger.onclick = () => {
-  sidebar.classList.toggle("active");
-  overlay.classList.toggle("active");
-
-  document.body.style.overflow =
-    sidebar.classList.contains("active") ? "hidden" : "auto";
-};

@@ -1,129 +1,159 @@
-
+// 1. SUPABASE SOZLAMALARI
 const supabaseUrl = "https://pcdugrawrtezxmzagaqh.supabase.co";
 const supabaseKey = 'sb_publishable_oJnISbwOks8wEIh6gCAkqw_Npr5Q6qB';
 const _supabase = supabase.createClient(supabaseUrl, supabaseKey);
 
-let listContainer, modal;
+let listContainer;
 
+// 2. TOAST XABARNOMALARI
+function showToast(message, type = 'success') {
+    let container = document.getElementById('toast-container');
+    const toast = document.createElement('div');
+    toast.className = `custom-toast ${type}`;
+
+    const icon = type === 'success' ? 'fa-circle-check' : 'fa-circle-exclamation';
+    const color = type === 'success' ? '#10b981' : '#ef4444';
+
+    toast.innerHTML = `
+        <i class="fa-solid ${icon}" style="color: ${color}"></i>
+        <span>${message}</span>
+    `;
+    container.appendChild(toast);
+
+    setTimeout(() => { toast.classList.add('show'); }, 100);
+    setTimeout(() => {
+        toast.classList.remove('show');
+        setTimeout(() => toast.remove(), 500);
+    }, 3000);
+}
+
+// 3. QARZ KARTASINI CHIZISH
 function renderCard(item) {
     if (!listContainer) return;
 
+    const statusClass = item.holat === "Qaytarildi" ? "status-completed" : "status-pending";
+    const amountClass = item.holat === "Qaytarildi" ? "amount-neutral" : "amount-negative";
+
     const cardHtml = `
-        <div class="card2" data-id="${item.id}">
-            <div class="text2">
-                <h1>${item.ism}</h1>
-                <p> ${item.sabab} - <small>${item.sana}</small></p>
+        <div class="debt-card" data-id="${item.id}">
+            <div class="debt-info">
+                <div class="user-avatar-small">${item.ism.charAt(0).toUpperCase()}</div>
+                <div class="debt-details">
+                    <h3>${item.ism}</h3>
+                    <p>${item.sabab} • <span>${item.sana}</span></p>
+                </div>
             </div>
-            <div><p class="item"><span>${item.qancha}</span> so'm</p>
-            <button class="boshqa2">${item.holat}</button></div>
-        </div>
-        <hr>`;
+            <div class="debt-actions">
+                <div class="amount-wrapper">
+                    <h2 class="${amountClass}">${Number(item.qancha).toLocaleString()} so'm</h2>
+                    <span class="status-badge ${statusClass}" onclick="updateStatus(${item.id}, '${item.holat}')">
+                        ${item.holat}
+                    </span>
+                </div>
+                
+            </div>
+        </div>`;
     listContainer.insertAdjacentHTML('beforeend', cardHtml);
 }
 
+// 4. MA'LUMOTLARNI OLISH VA HISOB-KITOB
 async function Olish() {
     const { data, error } = await _supabase
         .from('qarzlar')
         .select('*')
         .order('id', { ascending: false });
+
     if (error) {
-        console.error("Xatolik yuz berdi:", error.message);
+        showToast("Xatolik: " + error.message, "error");
     } else {
         listContainer.innerHTML = '';
-        data.forEach(item => renderCard(item));
+        let totalSent = 0;
+        let pending = 0;
+
+        data.forEach(item => {
+            renderCard(item);
+            if (item.holat !== "Qaytarildi") {
+                totalSent += Number(item.qancha);
+                pending += Number(item.qancha);
+            }
+        });
+
+        // Dashboard statlarini yangilash
+        document.getElementById('totalSent').innerText = totalSent.toLocaleString() + " so'm";
+        document.getElementById('pendingAmount').innerText = pending.toLocaleString();
     }
 }
 
+// 5. YANGI QARZ QO'SHISH
 async function Jonatish() {
-    const nameInput = document.getElementById('ism');
-    const amountInput = document.getElementById('summa');
-    const reasonInput = document.getElementById('sana');
-    const holatInput = document.getElementById("holat");
-    const sabab = document.getElementById("sabab")
-    const name = nameInput.value.trim();
-    const summa = amountInput.value.trim();
-    const reason = reasonInput.value.trim();
+    const inputs = {
+        name: document.getElementById('ism'),
+        amount: document.getElementById('summa'),
+        date: document.getElementById('sana'),
+        reason: document.getElementById('sabab'),
+        status: document.getElementById('holat')
+    };
 
-
-    if (name && summa && reason) {
-        const { data, error } = await _supabase
+    if (inputs.name.value && inputs.amount.value && inputs.date.value) {
+        const { error } = await _supabase
             .from('qarzlar')
             .insert([{
-                ism: name,
-                qancha: summa,
-                sabab: sabab.value,
-                sana: new Date().toLocaleDateString(),
-                holat: holatInput.value
-            }])
-            .select();
+                ism: inputs.name.value.trim(),
+                qancha: inputs.amount.value,
+                sabab: inputs.reason.value.trim(),
+                sana: inputs.date.value,
+                holat: inputs.status.value
+            }]);
 
         if (error) {
-            alert("Bazaga yozishda xatolik: " + error.message);
+            showToast("Xatolik yuz berdi", "error");
         } else {
-            alert("Muvaffaqiyatli qo'shildi!");
-            nameInput.value = '';
-            amountInput.value = '';
-            reasonInput.value = '';
-            modal.style.display = 'none';
-
-            if (data && data.length > 0) renderCard(data[0]);
+            showToast("Qarz muvaffaqiyatli saqlandi!");
+            closeDebtModal();
+            // Inputlarni tozalash
+            Object.values(inputs).forEach(input => input.value = '');
+            Olish();
         }
     } else {
-        alert("Iltimos, barcha maydonlarni to'ldiring!");
+        showToast("Iltimos, barcha maydonlarni to'ldiring!", "error");
     }
 }
 
-document.addEventListener('DOMContentLoaded', () => {
-    Olish();
-});
+// 6. STATUSNI YANGILASH (Qaytarildi qilish)
+async function updateStatus(id, currentStatus) {
+    if (currentStatus === "Qaytarildi") return;
+
+    if (confirm("Ushbu qarz qaytarildimi?")) {
+        const { error } = await _supabase
+            .from('qarzlar')
+            .update({ holat: 'Qaytarildi' })
+            .eq('id', id);
+
+        if (error) {
+            showToast("Yangilashda xato", "error");
+        } else {
+            showToast("Holat yangilandi!");
+            Olish();
+        }
+    }
+}
+
+// 7. MODAL VA QIDIRUV BOSHQARUVI
+function openDebtModal() {
+    document.getElementById('debtModal').classList.add('active');
+}
+
+function closeDebtModal() {
+    document.getElementById('debtModal').classList.remove('active');
+}
 
 document.addEventListener('DOMContentLoaded', () => {
-    listContainer = document.querySelector('.chiqim-kirim');
-    modal = document.getElementById('debtModal');
-    const addBtn = document.querySelector('.foter .btn');
-    const closeBtn = document.querySelector('.close-btn');
-    const saveBtn = document.getElementById('save-Btn');
+    listContainer = document.getElementById('debtsListContainer');
     const searchInput = document.querySelector('.input-3');
 
     Olish();
 
-    if (addBtn) {
-        addBtn.addEventListener('click', () => {
-            modal.style.display = 'block';
-        });
-    }
-
-    if (closeBtn) {
-        closeBtn.addEventListener('click', () => {
-            modal.style.display = 'none';
-        });
-    }
-
-    if (saveBtn) {
-        saveBtn.addEventListener('click', Jonatish);
-    }
-
-    window.addEventListener('click', (e) => {
-        if (e.target == modal) modal.style.display = 'none';
-    });
-
-    if (listContainer) {
-        listContainer.addEventListener('click', (e) => {
-            if (e.target.classList.contains('boshqa2')) {
-                if (confirm("Ushbu qarz qaytarildimi?")) {
-                    const btn = e.target;
-                    btn.innerText = "Qaytarildi";
-                    btn.style.background = "green";
-                    btn.style.color = "white";
-                    btn.classList.replace('boshqa2', 'boshqa6');
-
-                    const textContent = btn.previousElementSibling;
-                    if (textContent) textContent.style.opacity = "0.5";
-                }
-            }
-        });
-    }
-
+    // Qidiruv tizimi
     if (searchInput) {
         searchInput.addEventListener('input', (e) => {
             const value = e.target.value.toLowerCase();
@@ -138,24 +168,10 @@ document.addEventListener('DOMContentLoaded', () => {
             });
         });
     }
-}); 
 
-    const menuToggle = document.getElementById('menu-toggle');
-    const sidebar = document.querySelector('.left-con');
-    const overlay = document.getElementById('sidebar-overlay');
-
-    function toggleMenu() {
-        sidebar.classList.toggle('active');
-        overlay.classList.toggle('active');
-        
-        const icon = menuToggle.querySelector('i');
-        if(sidebar.classList.contains('active')) {
-            icon.className = 'fas fa-times';
-        } else {
-            icon.className = 'fas fa-bars';
-        }
-    }
-
-    menuToggle.addEventListener('click', toggleMenu);
-    
-    overlay.addEventListener('click', toggleMenu);
+    // Modalni tashqarisini bosganda yopish
+    window.addEventListener('click', (e) => {
+        const modal = document.getElementById('debtModal');
+        if (e.target == modal) closeDebtModal();
+    });
+});

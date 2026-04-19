@@ -3,152 +3,129 @@
 
 <head>
   <meta charset="UTF-8">
-  <title>Maqsadlar</title>
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
-  <link rel="stylesheet" href="/style4.css">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css"
-    integrity="sha512-2SwdPD6INVrV/lHTZbO2nodKhrnDdJK9/kg2XD1r9uGqPo1cUbujc+IYdlYdEErWNu69gVcYgdxlmVmzTWnetw=="
-    crossorigin="anonymous" referrerpolicy="no-referrer" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Maqsadlarim | OilaBalance</title>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;600;800&display=swap"
+    rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  <link rel="stylesheet" href="style7.css">
 </head>
 
 <body>
+  <div id="toast-container"></div>
 
-  <div class="left-con">
-    <div class="logo">
-      <img src="./M_rasmlar/Logo (1).svg" alt="">
-    </div>
-    <ul class="ull">
-      <button class="btn1"><i class="fa-regular fa-house"></i>Home</button>
-      <button class="btn2"><i class="fa-solid fa-wallet"></i>Kirim/Chiqim</button>
-      <button class="btn3"><i class="fa-solid fa-table-cells-large"></i>Kategoriyalar</button>
-      <button class="btn4"><i class="fa-solid fa-bullseye"></i>Maqsadlar</button>
-      <button class="btn5"><i class="fa-regular fa-credit-card"></i>Qarzlar</button>
-      <button class="btn6"><i class="fa-regular fa-file-lines"></i>Hisobot</button>
-      <button class="btn7"><i class="fa-solid fa-robot"></i>AI maslahat</button>
-    </ul>
-
-    <button class="btn8"><i class="fa-solid fa-gear"></i> Sozlamalar</button>
-  </div>
-  <div class="main">
-
-    <div class="top">
-      <h2>Maqsadlar</h2>
-      <div><i class="fa fa-user"></i> Anvar</div>
-    </div>
-
-    <div class="goal-card" data-total="12500000" data-current="3000000">
-
-      <h4>iPhone 15</h4>
-
-      <div class="progress">
-        <div class="bar"></div>
-      </div>
-
-
-      <p class="left"></p>
-
-      <div class="btn">Pul qo‘shish</div>
-
-    </div>
-
-    <div class="cards">
-      <div class="card">
-        <div class="card-top">
-          <div class="icon blue"><i class="fa fa-plane"></i></div>
-          <b>25 000 000 so'm</b>
-        </div>
-        <h4>Istanbul ta'tili</h4>
-
-        <div class="progress"><span style="width:40%"></span></div>
-
-        <div class="row">
-          <span>10 500 000 yig‘ildi</span>
-          <span>6 oy qoldi</span>
-        </div>
-
-        <div class="btn">Pul qo‘shish</div>
-      </div>
-
-      <div class="card">
-        <div class="card-top">
-          <div class="icon red"><i class="fa fa-couch"></i></div>
-          <b>8 000 000 so'm</b>
-        </div>
-        <h4>Yangi divan</h4>
-
-        <div class="progress"><span style="width:65%"></span></div>
-
-        <div class="row">
-          <span>5 360 000 yig‘ildi</span>
-          <span>2 oy qoldi</span>
-        </div>
-
-        <div class="btn">Pul qo‘shish</div>
-      </div>
-
-
-      <div class="card">
-        <div class="card-top">
-          <div class="icon green"><i class="fa fa-shield"></i></div>
-          <b>50 000 000 so'm</b>
-        </div>
-        <h4>Favqulodda fond</h4>
-
-        <div class="progress"><span style="width:15%"></span></div>
-
-        <div class="row">
-          <span>7 500 000 yig‘ildi</span>
-          <span>21 oy qoldi</span>
-        </div>
-
-        <div class="btn">Pul qo‘shish</div>
-      </div>
-
-
-      <div class="add">
-        <i class="fa fa-plus fa-2x"></i>
-        <p>Yangi maqsad qo‘shish</p>
-      </div>
-
-    </div>
-
-    <div class="bottom">
-      <div class="box">
-        <h4>Maslahat</h4>
-        <p>Siz tezroq yig‘ishingiz mumkin</p>
-      </div>
-      <div class="box">
-        <h4>Muvaffaqiyatlar</h4>
-        <p>Yangi uy mebeli</p>
-      </div>
-    </div>
-
+  <div class="app-background">
+    <div class="liquid-blob blob-1"></div>
+    <div class="liquid-blob blob-2"></div>
   </div>
 
+  <div class="app-shell">
+    <aside class="app-sidebar">
+      <div class="app-logo">
+        <img src="./M_rasmlar/Logo (1).svg" alt="Logo">
+      </div>
 
-  <div class="burger" onclick="toggleMenu()">☰</div>
+      <nav class="app-nav">
+        <a href="bosh sahifa.html" class="nav-link">
+          <i class="fa-solid fa-grid-2"></i> <span>Dashboard</span>
+        </a>
+        <a href="#" class="nav-link">
+          <i class="fa-solid fa-wallet"></i> <span>Hamyon</span>
+        </a>
+        <a href="#" class="nav-link">
+          <i class="fa-solid fa-chart-line"></i> <span>Tahlil</span>
+        </a>
+        <a href="#" class="nav-link active">
+          <i class="fa-solid fa-bullseye"></i> <span>Maqsadlar</span>
+        </a>
+        <a href="#" class="nav-link ai-gold">
+          <i class="fa-solid fa-wand-magic-sparkles"></i> <span>AI Maslahat</span>
+        </a>
+      </nav>
 
+      <div class="app-sidebar-footer">
+        <button class="nav-link"><i class="fa-solid fa-gear"></i> <span>Sozlamalar</span></button>
+      </div>
+    </aside>
 
-  <div class="modal" id="moneyModal">
-    <div class="modal-content">
-      <span class="close" onclick="closeModal()">&times;</span>
-      <h3>Pul qo‘shish</h3>
-      <input type="number" id="moneyInput" placeholder="Summani kiriting">
-      <button onclick="addMoney()">Qo‘shish</button>
+    <main class="app-main">
+      <header class="app-header">
+        <div class="calendar-nav">
+          <h2>Maqsadlarim</h2>
+        </div>
+
+        <div style="display: flex; gap: 15px; align-items: center;">
+          <button class="btn-primary" onclick="openGoalModal()">
+            <i class="fa-solid fa-plus"></i> Yangi maqsad
+          </button>
+          <div class="user-avatar">AB</div>
+        </div>
+      </header>
+
+      <div class="content-panel">
+        <div class="panel-header" style="margin-bottom: 30px;">
+          <h3>Jamg'armalar holati</h3>
+        </div>
+
+        <div id="goalsList"
+          style="display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 20px;">
+        </div>
+      </div>
+    </main>
+  </div>
+
+  <div class="modal-overlay" id="goalModal">
+    <div class="glass-modal">
+      <div class="modal-header"
+        style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 25px;">
+        <h3 style="font-weight: 800;">Yangi maqsad</h3>
+        <button class="close-x" onclick="closeGoalModal()"
+          style="border:none; background:none; cursor:pointer; font-size: 20px;">
+          <i class="fa-solid fa-xmark"></i>
+        </button>
+      </div>
+      <div class="modal-body">
+        <div class="input-group">
+          <label>Nomi</label>
+          <input type="text" id="goalName" placeholder="Masalan: iPhone 16 Pro Max">
+        </div>
+        <div class="input-group">
+          <label>Kerakli summa (sum)</label>
+          <input type="number" id="goalPrice" placeholder="15000000">
+        </div>
+      </div>
+      <div class="modal-footer" style="display: flex; gap: 12px; margin-top: 10px;">
+        <button class="btn-secondary" onclick="closeGoalModal()" style="flex: 1;">Bekor qilish</button>
+        <button class="btn-primary" onclick="createGoal()" style="flex: 1; justify-content: center;">Saqlash</button>
+      </div>
     </div>
   </div>
 
-  <div class="modal" id="goalModal">
-  <div class="modal-content">
-    <span class="close" onclick="closeGoalModal()">&times;</span>
-    <h3>Yangi maqsad</h3>
-    <input type="text" id="goalName" placeholder="Maqsad nomi">
-    <input type="number" id="goalPrice" placeholder="Summani kiriting">
-    <button onclick="createGoal()">Qo‘shish</button>
+  <div class="modal-overlay" id="moneyModal">
+    <div class="glass-modal">
+      <div class="modal-header"
+        style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 25px;">
+        <h3 style="font-weight: 800;">Pul qo'shish</h3>
+        <button class="close-x" onclick="closeModal()"
+          style="border:none; background:none; cursor:pointer; font-size: 20px;">
+          <i class="fa-solid fa-xmark"></i>
+        </button>
+      </div>
+      <div class="modal-body">
+        <div class="input-group">
+          <label>Qancha qo'shmoqchisiz?</label>
+          <input type="number" id="moneyInput" placeholder="Masalan: 200000">
+        </div>
+      </div>
+      <div class="modal-footer" style="display: flex; gap: 12px; margin-top: 10px;">
+        <button class="btn-secondary" onclick="closeModal()" style="flex: 1;">Orqaga</button>
+        <button class="btn-primary" onclick="addMoney()" style="flex: 1; justify-content: center;">Tasdiqlash</button>
+      </div>
+    </div>
   </div>
-</div>
-  
-  <script src="/maqsadlar.js"></script>
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="maqsadlar.js"></script>
 </body>
 
 </html>
