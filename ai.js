@@ -1,121 +1,114 @@
-// =====================
-// DATA (demo)
-// =====================
-let balance = 12450000;
-let income = 8500000;
-let expense = 6050000;
 
-// =====================
-// ELEMENTLAR
-// =====================
-const input = document.getElementById("input");
 const chat = document.getElementById("chat");
-
-// =====================
-// SEND FUNCTION
-// =====================
-function send() {
-  let text = input.value.trim();
-  if (!text) return;
-
-  addMessage(text, "user");
-  input.value = "";
-
-  let reply = getAIResponse(text.toLowerCase());
-
-  setTimeout(() => {
-    addMessage(reply, "ai");
-  }, 400);
-}
-
-// ENTER BOSILSA HAM YUBORADI
-input.addEventListener("keypress", function(e) {
-  if (e.key === "Enter") {
-    send();
-  }
-});
+const input = document.getElementById("input");
 
 
-// =====================
-// MESSAGE CHIQARISH
-// =====================
-function addMessage(text, type) {
-  let div = document.createElement("div");
+function addMessage(text, type = "user", image = null) {
+  const div = document.createElement("div");
   div.className = "msg " + type;
-  div.innerText = text;
+
+  if (text) {
+    const p = document.createElement("div");
+    p.innerText = text;
+    div.appendChild(p);
+  }
+
+  if (image) {
+    const img = document.createElement("img");
+    img.src = image;
+    div.appendChild(img);
+  }
 
   chat.appendChild(div);
   chat.scrollTop = chat.scrollHeight;
 }
 
 
-// =====================
-// AI LOGIC
-// =====================
 function getAIResponse(text) {
+  text = text.toLowerCase();
 
-  if (text.includes("salom") || text.includes("assalom")) {
-    return "Va alaykum assalom! 😊 Byudjetingizni tahlil qilib beraman.";
+  if (text.includes("salom")) {
+    return "Va alaykum assalom 😊";
   }
 
-  if (text.includes("balans")) {
-    return `Sizning balansingiz: ${format(balance)} so'm 💰`;
+  if (text.includes("pul") || text.includes("byudjet")) {
+    return "Xarajatlaringizni nazorat qiling va 20% tejashga harakat qiling 💰";
   }
 
-  if (text.includes("kirim")) {
-    return `Oylik daromadingiz ${format(income)} so'm 👍`;
+  if (text.includes("qarz")) {
+    return "Qarzlarni kichikdan boshlab yopish samaraliroq 📉";
   }
 
-  if (text.includes("chiqim")) {
-    return `Siz ${format(expense)} so'm sarflagansiz. Nazorat qilish kerak ⚠️`;
-  }
-
-  if (text.includes("qancha tejadim") || text.includes("tejash")) {
-    let save = income - expense;
-    return `Siz ${format(save)} so'm tejagansiz 💵`;
-  }
-
-  if (text.includes("maslahat")) {
-    return generateAdvice();
-  }
-
-  return random([
-    "Aniqroq yozing 🙂 Masalan: balans, chiqim, maslahat",
-    "Men sizga moliyaviy yordam bera olaman 💡",
-    "Byudjet haqida savol bering 😉"
-  ]);
+  return "Tushundim 👍 yana savol bering!";
 }
 
 
-// =====================
-// SMART MASLAHAT
-// =====================
-function generateAdvice() {
-  let save = income - expense;
-
-  if (save < 0) {
-    return "❗ Siz zarar qilyapsiz. Xarajatlarni kamaytiring!";
-  }
-
-  if (save < income * 0.2) {
-    return "⚠️ Tejash kam. Kamida 20% saqlashga harakat qiling.";
-  }
-
-  return random([
-    "👏 Zo‘r! Siz yaxshi tejayapsiz!",
-    "💡 Ortiqcha xarajatlarni kamaytirsangiz yanada yaxshi bo‘ladi",
-    "📊 Budgetingiz yaxshi nazoratda!"
-  ]);
+function speak(text) {
+  const speech = new SpeechSynthesisUtterance(text);
+  speech.lang = "uz-UZ";
+  speechSynthesis.speak(speech);
 }
 
 
-// =====================
-// HELPERS
-// =====================
-function format(num) {
-  return num.toLocaleString("ru-RU");
+function send() {
+  const text = input.value.trim();
+  if (!text) return;
+
+  addMessage(text, "user");
+
+  setTimeout(() => {
+    const reply = getAIResponse(text);
+    addMessage(reply, "ai");
+    speak(reply);
+  }, 500);
+
+  input.value = "";
 }
 
-function random(arr) {
-  return arr[Math.floor(Math.random() * arr.length)];
+
+input.addEventListener("keypress", (e) => {
+  if (e.key === "Enter") send();
+});
+
+function startVoice() {
+  const recognition = new (window.SpeechRecognition || window.webkitSpeechRecognition)();
+  recognition.lang = "uz-UZ";
+
+  recognition.onresult = function(event) {
+    const text = event.results[0][0].transcript;
+    input.value = text;
+    send();
+  };
+
+  recognition.start();
 }
+
+document.getElementById("imageInput").addEventListener("change", function() {
+  const file = this.files[0];
+  if (!file) return;
+
+  const reader = new FileReader();
+  reader.onload = function(e) {
+    addMessage("", "user", e.target.result);
+
+    setTimeout(() => {
+      addMessage("Rasm qabul qilindi 📸", "ai");
+    }, 500);
+  };
+
+  reader.readAsDataURL(file);
+});
+
+  const burger = document.getElementById("burger");
+  const sidebar = document.querySelector(".left-con");
+  const overlay = document.getElementById("overlay");
+
+  burger.addEventListener("click", () => {
+    sidebar.classList.toggle("active");
+    overlay.classList.toggle("active");
+  });
+
+  overlay.addEventListener("click", () => {
+    sidebar.classList.remove("active");
+    overlay.classList.remove("active");
+  });

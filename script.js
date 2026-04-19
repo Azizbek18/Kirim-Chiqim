@@ -34,4 +34,17 @@ function downloadPDF() {
     window.print();
 }
 
-c
+
+const burger = document.getElementById("burger");
+const sidebar = document.querySelector(".left-con");
+const overlay = document.getElementById("overlay");
+
+burger.onclick = () => {
+    sidebar.classList.toggle("active");
+    overlay.classList.toggle("active");
+};
+
+overlay.onclick = () => {
+    sidebar.classList.remove("active");
+    overlay.classList.remove("active");
+};
