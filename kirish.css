@@ -1,6 +1,12 @@
 * {
     box-sizing: border-box;
-    font-family: "Inter";
+    font-family: "Inter", sans-serif;
+}
+
+html, body {
+    width: 100%;
+    height: 100%;
+    overflow-x: hidden; /* Scroll chiqishini oldini oladi */
 }
 
 body {
@@ -8,146 +14,151 @@ body {
     display: flex;
     justify-content: center;
     align-items: center;
-    height: 100vh;
-    text-align: center;
-    background-color: aliceblue;
+    min-height: 100vh;
+    background: linear-gradient(135deg, #eef2ff 0%, #f9fafb 100%);
+    padding: 20px;
+    perspective: 1000px;
 }
 
-.container {
-    width: 380px;
-    height: 610px;
+.card {
+    background: rgba(255, 255, 255, 0.75);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border: 1px solid rgba(255, 255, 255, 0.5);
+    border-radius: 24px;
+    width: 100%;
+    max-width: 400px;
+    padding: 35px 25px;
+    text-align: center;
+    box-shadow: 0 20px 50px rgba(0, 0, 0, 0.05);
+    transition: transform 0.2s ease-out;
 }
 
 .head-h1 {
-    margin: 0;
-}
-
-.card-img img {
-    width: 200px;
-}
-
-.card-main {
-    background-color: white;
-    border-radius: 12px;
-    width: 380px;
-    padding: 8px;
+    font-size: 26px;
+    color: #1f2937;
+    margin: 0 0 8px 0;
 }
 
 .head-p {
-    color: gray;
+    color: #6b7280;
+    font-size: 14px;
+    margin-bottom: 25px;
 }
 
-.input-1 {
-    width: 90%;
-    padding: 10px 10px;
-    border: 1px solid gray;
-    font-size: 18px;
+.card-input {
+    margin-top: 10px;
+    text-align: left;
+}
+
+.email, .parol1 {
+    color: #4b5563;
+    font-size: 14px;
+    font-weight: 500;
+    margin: 0 0 6px 5px;
+}
+
+.input-1, .input-2 {
+    width: 100%;
+    padding: 12px 15px;
+    border: 1px solid #e5e7eb;
+    background: white;
+    font-size: 15px;
     outline: none;
-    border-radius: 10px;
+    border-radius: 12px;
+    transition: 0.3s;
+    margin-bottom: 15px;
 }
-.email{
-    color: gray ;
-    font-size: 18px;
-    margin: 5px;
-    text-align: start;
+
+.input-1:focus, .input-2:focus {
+    border-color: #10b981;
+    box-shadow: 0 0 0 4px rgba(16, 185, 129, 0.1);
 }
-.input-2{
-     width: 90%;
-    padding: 10px 10px;
-    border: 1px solid gray;
-    border-radius: 10px;
-    font-size: 18px;
-    outline: none;
-    
-}
-.input-title{
+
+.input-title {
     display: flex;
     justify-content: space-between;
+    align-items: center;
 }
-.parol1{
-    color: gray;
-    margin: 5px;
+
+.parol {
+    color: #10b981;
+    text-decoration: none;
+    font-size: 13px;
+    font-weight: 500;
+    margin-right: 5px;
 }
-.parol{
-    color: green;
-    margin: 5px;
-}
-.card-input{
-    margin-top: 20px;
-}
-.card-btn{
-    width: 90%;
+
+.card-btn {
+    width: 100%;
     background-color: #006948;
     color: white;
-    padding: 14px 20px;
+    padding: 14px;
     border-radius: 12px;
     border: none;
-    margin-top: 20px;
-    font-size: 15px;
+    margin-top: 10px;
+    font-size: 16px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: 0.3s;
 }
-.footer-text{
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    gap: 10px;
-    color: gray ;
+
+.card-btn:hover {
+    background-color: #005238;
+    transform: translateY(-2px);
 }
-.foter-text2{
+
+.footer-text {
+    margin-top: 25px;
+    font-size: 14px;
+    color: #6b7280;
+    gap: 8px;
+}
+
+.foter-text2 {
     color: #006948;
     text-decoration: none;
+    font-weight: 600;
+    margin-left: 5px;
 }
-.foter-title{
-    display: flex; 
-    justify-content: center;
-    gap: 20px;
-    color: gray;
 
-}
-.xabar-con{
+/* --- TOAST TIZIMI (SCROLL-SIZ) --- */
+.xabar-con {
     position: fixed;
-    top: 30px;
-    right: 30px;
+    top: 20px;
+    right: 20px;
+    z-index: 10000;
+    max-width: calc(100vw - 40px);
 }
 
-.xabar{
-    width: 400px;
-    padding: 15px 20px;
-    color: white;
-    border-radius: 10px;
-    margin: 10px 0px;
-
-    animation: kirish 1s ease, chiqish 1s ease 2s forwards;
+.xabar {
+    width: 320px;
+    padding: 16px;
+    border-radius: 12px;
+    margin-bottom: 10px;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+    background: white;
+    border-left: 6px solid;
+    transform: translateX(120%);
+    animation: kirish 0.5s forwards cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
 }
 
+.error { border-left-color: #ef4444; }
+.success { border-left-color: #10b981; }
 
+@keyframes kirish { to { transform: translateX(0); } }
 
-.error{
-    background-color: red;
-}
-.success{
-    background-color: rgb(0, 209, 0);
-}
-.info{
-    background-color: skyblue;
-}
-@keyframes kirish{
-    from{
-        transform: translateX(100%);
-        opacity: 0;
+/* --- RESPONSIVE 300px --- */
+@media (max-width: 350px) {
+    .card {
+        padding: 25px 15px;
+        border-radius: 16px;
     }
-    to{
-        transform: translateX(0%);
-        opacity: 1;
-    }
-}
-
-@keyframes chiqish{
-    from{
-        transform: translateX(0%);
-        opacity: 1;
-    }
-    to{
-        transform: translateX(120%);
-        opacity: 0;
-    }
+    .head-h1 { font-size: 20px; }
+    .input-1, .input-2 { padding: 10px; font-size: 14px; }
+    .card-btn { padding: 12px; font-size: 14px; }
+    .xabar { width: 260px; font-size: 13px; }
 }

@@ -1,183 +1,125 @@
 <!DOCTYPE html>
-<html lang="en">
-
+<html lang="uz">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-    <link rel="stylesheet" href="qarzlar.css">
-        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css"
-        integrity="sha512-2SwdPD6INVrV/lHTZbO2nodKhrnDdJK9/kg2XD1r9uGqPo1cUbujc+IYdlYdEErWNu69gVcYgdxlmVmzTWnetw=="
-        crossorigin="anonymous" referrerpolicy="no-referrer" />
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link
-        href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap"
-        rel="stylesheet">
+    <title>Qarzlar | OilaBalance</title>
+    <link rel="stylesheet" href="style7.css"> <link rel="stylesheet" href="qarzlar.css"> <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;600;800&display=swap" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-
 </head>
-
 <body>
-    <div id="debtModal" class="modal">
-        <div class="modal-content">
-            <span class="close-btn">&times;</span>
-            <h2>Yangi qarz qo'shish</h2>
-            <div class="modal-body">
-                <input type="text" id="ism" placeholder="Kimga / Kimdan?">
-                <input type="text" id="summa" placeholder="Summa (masalan: 500 000)">
-                <input type="date" id="sana" placeholder="Sana">
-                <input type="text" id="sabab" placeholder="nima uchun">
-                <select name="" id="holat">
-                    <option value="Qaytarildi">Qaytarildi</option>
-                    <option value="Kutilmoqda">Kutilmoqda</option>
-                </select>
-                <button class="save-btn" onclick="Jonatish()" > Saqlash </button>
-            </div>
-        </div>
-    </div>
-    <div class="container">
-        <div class="left-con">
-            <div class="logo">
-                <img src="./M_rasmlar/Logo (1).svg" alt="">
-            </div>
-            <ul>
-                <a href="./bosh sahifa.html" class="btn1">
-                    <i class="fa-regular fa-house"></i>Bosh sahifa
-                </a>
-                <a href="#" class="btn2">
-                    <i class="fa-solid fa-wallet"></i>Kirim/Chiqim
-                </a>
-                <a href="./kategotiya.html" class="btn3">
-                    <i class="fa-solid fa-table-cells-large"></i>Kategoriyalar
-                </a>
-                <a href="./Maqsadlar.html" class="btn4">
-                    <i class="fa-solid fa-bullseye"></i>Maqsadlar
-                </a>
-                <a href="./qarzlar.html" class="btn5">
-                    <i class="fa-regular fa-credit-card"></i> Qarzlar
-                </a>
-                <a href="./Hisobot dashboad.html" class="btn6">
-                    <i class="fa-regular fa-file-lines"></i>Hisobot
-                </a>
-                <a href="./ai maslahatlar.html" class="btn7">
-                    <i class="fa-solid fa-robot"></i>AI maslahat
-                </a>
-            </ul>
-            <button class="btn8"><i class="fa-solid fa-gear"></i> Sozlamalar</button>
-            <button id="menu-toggle" class="hamburger">
-    <i class="fas fa-bars"></i>
-</button>
+    <div id="toast-container"></div>
 
-<div id="sidebar-overlay" class="overlay"></div>
-        </div>
-        <div class="right-con">
-            <header>
-                <div class="con-input">
-                    <h1>Qarzlar</h1>
-                    <div class="input-card">
-                        <div class="input">
-                            <i class="fa-solid fa-magnifying-glass search"></i>
-                            <input class="input-3" type="text" placeholder=" Qidirish...">
-                        </div>
-                        <i class="fa-solid fa-bell"></i>
-                        <i class="fa-regular fa-circle-question"></i>
+    <div class="app-background">
+        <div class="liquid-blob blob-1"></div>
+        <div class="liquid-blob blob-2"></div>
+    </div>
+
+    <div class="app-shell">
+        <aside class="app-sidebar">
+            <div class="app-logo">
+                <img src="./M_rasmlar/Logo (1).svg" alt="Logo">
+            </div>
+            <nav class="app-nav">
+                <a href="bosh sahifa.html" class="nav-link"><i class="fa-solid fa-house"></i> <span>Dashboard</span></a>
+                <a href="#" class="nav-link"><i class="fa-solid fa-wallet"></i> <span>Kirim/Chiqim</span></a>
+                <a href="./kategotiya.html" class="nav-link"><i class="fa-solid fa-table-cells-large"></i> <span>Kategoriyalar</span></a>
+                <a href="./Maqsadlar.html" class="nav-link"><i class="fa-solid fa-bullseye"></i> <span>Maqsadlar</span></a>
+                <a href="./qarzlar.html" class="nav-link active"><i class="fa-regular fa-credit-card"></i> <span>Qarzlar</span></a>
+                <a href="./ai maslahatlar.html" class="nav-link ai-gold"><i class="fa-solid fa-wand-magic-sparkles"></i> <span>AI Maslahat</span></a>
+            </nav>
+            <div class="app-sidebar-footer">
+                <button class="nav-link"><i class="fa-solid fa-gear"></i> <span>Sozlamalar</span></button>
+            </div>
+        </aside>
+
+        <main class="app-main">
+            <header class="app-header">
+                <div class="calendar-nav">
+                    <h2>Qarzlar nazorati</h2>
+                </div>
+                <div class="header-tools" style="display: flex; gap: 15px; align-items: center;">
+                    <div class="input-card glass-card" style="padding: 5px 15px; border-radius: 15px; display: flex; align-items: center;">
+                        <i class="fa-solid fa-magnifying-glass search"></i>
+                        <input class="input-3" type="text" placeholder=" Qidirish...">
                     </div>
+                    <div class="user-avatar">AB</div>
                 </div>
             </header>
-            <div class="qarz">
-                <p class="berilgan">Men bergan</p>
-                <p class="bergan">Menga berilgan</p>
-            </div>
+
+
             <div class="kirimlar">
-                <div class="card">
+                <div class="card glass-card">
                     <div class="text">
                         <p>Jami men bergan</p>
-                        <h1 class="red">2 300 000 so'm</h1>
+                        <h1 class="red" id="totalSent">0 so'm</h1>
                     </div>
-                    <div class="img-card">
-                        <img src="./M_rasmlar/Overlay.svg" alt="">
-                    </div>
+                    <div class="img-card"><img src="./M_rasmlar/Overlay.svg" alt=""></div>
                 </div>
-                <div class="card">
+                <div class="card glass-card">
                     <div class="text">
                         <p>Jami menga berilgan</p>
-                        <h1 class="green">800 000 so'm</h1>
+                        <h1 class="green" id="totalReceived">0 so'm</h1>
                     </div>
-                    <div class="img-card">
-                        <img src="./M_rasmlar/Overlay (1).svg" alt="">
-                    </div>
+                    <div class="img-card"><img src="./M_rasmlar/Overlay (1).svg" alt=""></div>
                 </div>
             </div>
-            <div class="chiqim-kirim">
+
+            <div class="chiqim-kirim glass-card">
                 <div class="royxat">
                     <h1>Qarzlar ro'yxati</h1>
-                    <p><span><i class="fa-solid fa-filter"></i></span>Saralash</p>
+                    <p><i class="fa-solid fa-filter"></i> Saralash</p>
                 </div>
                 <hr>
-                <div class="card2">
-                    <div class="img-card">
-                        <img src="./M_rasmlar/Background.svg" alt="">
-                        <div class="text2">
-                            <h1>Sardor K.</h1>
-                            <p>To'y uchun berilgan 12-may,2024</p>
-                        </div>
+                <div id="debtsListContainer">
                     </div>
-                    <div class="oxiri">
-                        <div class="oxiri-text">
-                            <h1 class="boshqa1">-800 000 so'm</h1>
-                            <p class="boshqa2">Kutilmoqda</p>
-                        </div>
-                        <span><i class="fa-solid fa-ellipsis-vertical"></i></span>
-
-                    </div>
-                </div>
-                <hr>
-                <div class="card2">
-
-                    <div class="img-card">
-                        <img src="./M_rasmlar/Background (1).svg" alt="">
-                        <div class="text2">
-                            <h1>Nilufar R.</h1>
-                            <p> Kurs to'lovi 05-iyun,2024</p>
-                        </div>
-                    </div>
-                    <div class="oxiri">
-                        <div class="oxiri-text">
-                            <h1 class="boshqa1">-1200 000 so'm</h1>
-                            <p class="boshqa2">Kutilmoqda</p>
-                        </div>
-                        <span><i class="fa-solid fa-ellipsis-vertical"></i></span>
-
-                    </div>
-                </div>
-                <hr>
-                <div class="card2">
-                    <div class="img-card">
-                        <img src="./M_rasmlar/Background (2).svg" alt="">
-                        <div class="text2">
-                            <h1>Bobur T.</h1>
-                            <p>Kichik yordam 20-aprel,2024</p>
-                        </div>
-                    </div>
-                    <div class="oxiri">
-                        <div class="oxiri-text">
-                            <h1 class="boshqa5">-300 000 so'm</h1>
-                            <p class="boshqa6">Qaytarildi</p>
-                        </div>
-                        <span><i class="fa-solid fa-ellipsis-vertical"></i></span>
-
-                    </div>
-                </div>
-
             </div>
+
             <div class="foter">
-                <button class="btn">+ Qarz qo'shish</button>
-                <p class="qaytarilish">Qaytarilish kutilmoqda:2 000 000 so'm</p>
+                <button class="btn-primary" onclick="openDebtModal()" style="padding: 15px 40px; border-radius: 30px;">
+                    <i class="fa-solid fa-plus"></i> Yangi qarz qo'shish
+                </button>
+                <p class="qaytarilish">Qaytarilish kutilmoqda: <span id="pendingAmount">0</span> so'm</p>
+            </div>
+        </main>
+    </div>
+
+    <div id="debtModal" class="modal-overlay">
+        <div class="glass-modal">
+            <div class="modal-header" style="display:flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
+                <h3 style="font-weight: 800;">Yangi qarz</h3>
+                <span class="close-x" onclick="closeDebtModal()" style="cursor:pointer; font-size: 24px;">&times;</span>
+            </div>
+            <div class="modal-body">
+                <div class="input-group">
+                    <label>Ism</label>
+                    <input type="text" id="ism" placeholder="Kimga / Kimdan?">
+                </div>
+                <div class="input-group">
+                    <label>Summa</label>
+                    <input type="number" id="summa" placeholder="500000">
+                </div>
+                <div class="input-group">
+                    <label>Sana</label>
+                    <input type="date" id="sana">
+                </div>
+                <div class="input-group">
+                    <label>Sabab</label>
+                    <input type="text" id="sabab" placeholder="Nima uchun?">
+                </div>
+                <div class="input-group">
+                    <label>Holat</label>
+                    <select id="holat" style="width: 100%; padding: 12px; border-radius: 12px; border: 1px solid #ddd;">
+                        <option value="Kutilmoqda">Kutilmoqda</option>
+                        <option value="Qaytarildi">Qaytarildi</option>
+                    </select>
+                </div>
+                <button class="btn-primary" style="width: 100%; justify-content: center; margin-top: 10px;" onclick="Jonatish()">Saqlash</button>
             </div>
         </div>
     </div>
+
     <script src="qarzlar.js"></script>
 </body>
-
 </html>

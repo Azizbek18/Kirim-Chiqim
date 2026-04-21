@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="uz">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kirish | Oila Hisobi</title>
+    <link rel="stylesheet" href="kirish.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+</head>
+<body>
+
+    <div class="card" id="mainCard">
+        <div class="card-img">
+            <img src="https://cdn-icons-png.flaticon.com/512/295/295128.png" alt="login-icon" style="width: 80px; margin-bottom: 15px;">
+        </div>
+        <h1 class="head-h1">Xush kelibsiz</h1>
+        <p class="head-p">Tizimga kirish uchun ma'lumotlarni kiriting</p>
+
+        <div class="card-input">
+            <div class="input-group">
+                <p class="email">Email manzilingiz</p>
+                <input id="gmail" type="email" class="input-1" placeholder="example@gmail.com">
+            </div>
+
+            <div class="input-group">
+                <div class="input-title">
+                    <p class="parol1">Parolingiz</p>
+                    <a href="#" class="parol">Unutdingizmi?</a>
+                </div>
+                <input id="parol" type="password" class="input-2" placeholder="••••••••">
+            </div>
+        </div>
+
+        <button class="card-btn" onclick="Kirish()">Tizimga kirish</button>
+
+        <div class="footer-text">
+            <span>Hisobingiz yo'qmi?</span>
+            <a href="./oilahisobi.html" class="foter-text2">Ro'yxatdan o'ting</a>
+        </div>
+    </div>
+
+    <div id="toast-container" class="xabar-con"></div>
+
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="kirish.js"></script>
+</body>
+</html>

@@ -1,54 +1,79 @@
-const xabarCon = document.querySelector(".xabar-con");
+// 1. Supabase Sozlamalari
+const SUPABASE_URL = "https://nwjqvgqydrjkveievogo.supabase.co"; 
+const SUPABASE_ANON_KEY = "sb_publishable_WaZvU4qjGkSQu2Vd1qZujw_RcPZfqAh";
 
-function xabarnoma(xabar, turi) {
-    let xabarMatn = document.createElement('div');
-    xabarMatn.classList.add("xabar", turi);
-    xabarMatn.innerText = xabar;
+const _supabase = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
-    xabarCon.appendChild(xabarMatn);
+// 2. Toast Xabarnoma Funksiyasi
+function showToast(message, type = 'success') {
+    const container = document.getElementById('toast-container');
+    const toast = document.createElement('div');
+    
+    // Type orqali klass qo'shamiz (success yoki error)
+    toast.className = `xabar ${type}`;
+    
+    toast.innerHTML = `
+        <span style="color: #374151; font-weight: 500;">${message}</span>
+        <div class="progress-bar-container" style="height: 3px; background: rgba(0,0,0,0.05); margin-top: 10px;">
+            <div class="progress-bar" style="height: 100%; width: 100%; background: ${type === 'error' ? '#ef4444' : '#10b981'}; transition: width 3s linear;"></div>
+        </div>
+    `;
 
+    container.appendChild(toast);
+
+    // Progress barni boshlash
     setTimeout(() => {
-        xabarMatn.remove();
-    }, 4000);
+        const pb = toast.querySelector('.progress-bar');
+        if (pb) pb.style.width = '0%';
+    }, 10);
+
+    // Toastni o'chirish
+    setTimeout(() => {
+        toast.style.transform = "translateX(150%)";
+        toast.style.opacity = "0";
+        toast.style.transition = "all 0.5s ease";
+        setTimeout(() => toast.remove(), 500);
+    }, 3000);
 }
 
-let supaBaseUrl = 'https://mwndanxkvpgeaicrjeia.supabase.co';
-let supaBaseKey = 'sb_publishable_deLmezxuUNJ7NZHLJJAAuA_YGluXUAo';
+// 3. Tizimga Kirish Logikasi
+// 3. Tizimga Kirish Logikasi (TO'G'RILANGAN)
+async function Kirish() {
+    const gmail = document.getElementById("gmail").value.trim();
+    const parol = document.getElementById("parol").value.trim();
 
-const _supabase = supabase.createClient(supaBaseUrl, supaBaseKey);
-
-async function Yubor() {
-    let email = document.getElementById('email');
-    let parol = document.getElementById('parol');
-  
-    if(email.value === "" || parol.value === ""){
-        xabarnoma("Maydonlarni to'ldiring", "error"); 
+    if (!gmail || !parol) {
+        showToast("Iltimos, barcha maydonlarni to'ldiring! ⚠️", "error");
         return;
     }
 
-    const { data: foydalanuvchi, error: xatolik } = await _supabase
-        .from('login')
-        .select('*')
-        .eq('email', email.value)
-        .eq('parol', parol.value);
+    try {
+        // MUHIM: Supabase-ning rasmiy Auth tizimi orqali kirish
+        const { data, error } = await _supabase.auth.signInWithPassword({
+            email: gmail,
+            password: parol,
+        });
 
-    if(xatolik){
-        xabarnoma("Xatolik yuz berdi: " + xatolik.message, "error");
-        return;
-    }
+        if (error) {
+            // Agar Supabase Auth-da xato bo'lsa (parol noto'g'ri yoki user yo'q)
+            showToast("Email yoki parol noto'g'ri! ❌", "error");
+            console.error("Auth error:", error.message);
+            return;
+        }
 
-    if(foydalanuvchi && foydalanuvchi.length > 0){
-        xabarnoma("Siz tizimga muvaffaqiyatli kirdingiz!!!", "success");
-        
-        setTimeout(() => {
-            window.location.href = "qarzlar.html";
-        }, 1500);
-    } 
-    else {
-        xabarnoma("Siz ro'yxatdan o'tmagansiz yoki ma'lumotlar xato", "error");
-        
-        setTimeout(() => {
-            window.location.href = "oila Hisobi.html";
-        }, 2000);
+        // Agar hamma narsa to'g'ri bo'lsa, data.user mavjud bo'ladi
+        if (data.user) {
+            showToast("Xush kelibsiz! Asosiy sahifaga o'tilmoqda... ✅", "success");
+            
+            // Sessiya brauzerga saqlanishi uchun biroz vaqt beramiz
+            setTimeout(() => {
+                window.location.href = "bosh sahifa.html";
+            }, 1500);
+        }
+
+    } catch (err) {
+        console.error("Xatolik:", err);
+        showToast("Tizimda kutilmagan xatolik! ❌", "error");
     }
 }
+

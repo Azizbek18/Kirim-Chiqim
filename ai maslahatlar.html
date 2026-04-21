@@ -5,33 +5,52 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>AI Maslahat</title>
 <link rel="stylesheet" href="/style6.css">
+ <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css"
+        integrity="sha512-2SwdPD6INVrV/lHTZbO2nodKhrnDdJK9/kg2XD1r9uGqPo1cUbujc+IYdlYdEErWNu69gVcYgdxlmVmzTWnetw=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
 </head>
 <body>
 
-<div class="sidebar">
-  <div class="logo">OilaBalance</div>
-
-  <div class="menu">
-    <div>Bosh sahifa</div>
-    <div>Kirim / Chiqim</div>
-    <div>Kategoriyalar</div>
-    <div>Maqsadlar</div>
-    <div>Qarzlar</div>
-    <div class="active">AI maslahat</div>
-  </div>
-</div>
-
+    <div class="left-con">
+      
+            <div class="logo">
+                <img src="./M_rasmlar/Logo (1).svg" alt="">
+            </div>
+            <ul>
+                <button class="btn1"><i class="fa-regular fa-house"></i>Home</button>
+                <button class="btn2"><i class="fa-solid fa-wallet"></i>Kirim/Chiqim</button>
+                <button class="btn3"><i class="fa-solid fa-table-cells-large"></i>Kategoriyalar</button>
+                <button class="btn4"><i class="fa-solid fa-bullseye"></i>Maqsadlar</button>
+                <button class="btn5"><i class="fa-regular fa-credit-card"></i>Qarzlar</button>
+                <button class="btn6"><i class="fa-regular fa-file-lines"></i>Hisobot</button>
+                <button class="btn7"><i class="fa-solid fa-robot"></i>AI maslahat</button>
+            </ul>
+            <button class="btn8"><i class="fa-solid fa-gear"></i> Sozlamalar</button>
+        </div>
 <div class="main">
   <div class="title">Byudjetingiz bo‘yicha aqlli tavsiyalar</div>
-  <div class="subtitle">Shaxsiy moliyaviy yordamchingizdan tahlil oling.</div>
+
 
   <div class="chat-container" id="chat"></div>
 
-  <div class="input-box">
-    <input id="input" placeholder="AI'dan so‘rash...">
-    <button class="send" onclick="send()">➤</button>
+<div class="input-box">
+  <button class="icon-btn" onclick="startVoice()">🎤</button>
+  
+  <label class="icon-btn">
+    📎
+    <input type="file" id="imageInput" hidden>
+  </label>
+
+  <input id="input" placeholder="Xabar yozing...">
+
+  <button class="send" onclick="send()">➤</button>
+</div>
   </div>
 </div>
+
+<div class="burger" id="burger">☰</div>
+<div class="overlay" id="overlay"></div> 
+
 
 <div class="right">
 

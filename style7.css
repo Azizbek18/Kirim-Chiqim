@@ -1,0 +1,363 @@
+:root {
+    --primary: #006948;
+    --accent: #16ff92;
+    --text-main: #0a251c;
+    --glass: rgba(255, 255, 255, 0.5);
+    --border: rgba(255, 255, 255, 0.4);
+}
+
+/* 1. Global Reset */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Plus Jakarta Sans', sans-serif;
+}
+
+body {
+    background: #f0f4f3;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+}
+/* Modal Overlay */
+.modal-overlay {
+    position: fixed; inset: 0;
+    background: rgba(0, 0, 0, 0.2);
+    backdrop-filter: blur(10px);
+    display: flex; align-items: center; justify-content: center;
+    z-index: 1000;
+    opacity: 0; visibility: hidden;
+    transition: 0.3s;
+}
+
+.modal-overlay.active { opacity: 1; visibility: visible; }
+
+/* Glass Modal Card */
+.glass-modal {
+    background: rgba(255, 255, 255, 0.8);
+    width: 90%; max-width: 450px;
+    padding: 30px; border-radius: 30px;
+    border: 1px solid rgba(255, 255, 255, 0.5);
+    box-shadow: 0 25px 50px rgba(0,0,0,0.1);
+}
+
+.modal-header { display: flex; justify-content: space-between; margin-bottom: 20px; }
+.input-group { margin-bottom: 15px; display: flex; flex-direction: column; gap: 8px; }
+
+.input-group input {
+    padding: 12px 15px; border-radius: 12px;
+    border: 1px solid rgba(0,0,0,0.1);
+    background: rgba(255, 255, 255, 0.5);
+    outline: none; font-size: 16px;
+}
+
+.modal-footer { display: flex; justify-content: flex-end; gap: 10px; margin-top: 25px; }
+
+.btn-secondary {
+    padding: 12px 20px; border-radius: 12px; border: none;
+    background: rgba(0,0,0,0.05); cursor: pointer; font-weight: 600;
+}
+
+/* 2. Liquid Background */
+.app-background {
+    position: fixed;
+    inset: 0;
+    z-index: -1;
+    filter: blur(100px);
+}
+.profile-group{
+    display: flex;
+    gap: 30px;
+    align-items: center;
+}
+.user-avatar{
+    background-color: #9d9d9d;
+    padding: 12px;
+    border-radius: 50%;
+    color: white;
+}
+.liquid-blob {
+    position: absolute;
+    width: 500px;
+    height: 500px;
+    border-radius: 50%;
+}
+.header-tools{
+    display: flex;
+    gap: 40px;
+    align-items: center;
+}
+.blob-1 {
+    background: rgba(22, 255, 146, 0.2);
+    top: -10%;
+    left: -10%;
+}
+
+.blob-2 {
+    background: rgba(0, 105, 72, 0.15);
+    bottom: -10%;
+    right: -10%;
+}
+
+/* 3. Main Shell */
+.app-shell {
+    width: 96%;
+    height: 92vh;
+    background: var(--glass);
+    backdrop-filter: blur(25px);
+    border: 1.5px solid var(--border);
+    border-radius: 35px;
+    display: flex;
+    box-shadow: 0 25px 50px rgba(0, 0, 0, 0.05);
+    overflow: hidden;
+}
+
+/* 4. Sidebar */
+.app-sidebar {
+    width: 270px;
+    background: rgba(255, 255, 255, 0.3);
+    border-right: 1.5px solid var(--border);
+    display: flex;
+    flex-direction: column;
+    padding: 35px 20px;
+}
+
+.app-logo img {
+    width: 160px;
+    margin-bottom: 45px;
+    margin-left: 15px;
+}
+
+.app-nav {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.nav-link {
+    padding: 14px 18px;
+    border: none;
+    background: transparent;
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    color: #5d716a;
+    font-size: 15px;
+    font-weight: 600;
+    cursor: pointer;
+    border-radius: 18px;
+    transition: 0.3s;
+}
+
+.nav-link.active,
+.nav-link:hover {
+    background: #fff;
+    color: var(--primary);
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.03);
+}
+
+.ai-gold {
+    color: #8b5cf6;
+}
+
+/* 5. Main Content Area */
+.app-main {
+    flex: 1;
+    padding: 40px;
+    overflow-y: auto;
+}
+
+.app-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 35px;
+}
+
+.calendar-nav {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.calendar-nav h2 {
+    font-size: 28px;
+    font-weight: 800;
+    color: var(--text-main);
+}
+
+.icon-circle {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    border: 1.5px solid var(--border);
+    background: #fff;
+    cursor: pointer;
+}
+
+.btn-primary {
+    padding: 12px 22px;
+    background: var(--primary);
+    color: #fff;
+    border: none;
+    border-radius: 14px;
+    font-weight: 700;
+    cursor: pointer;
+}
+
+/* 6. Stats Cards */
+.stats-container {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 20px;
+    margin-bottom: 35px;
+}
+
+.glass-card {
+    background: #fff;
+    padding: 25px;
+    border-radius: 25px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.02);
+    transition: 0.3s;
+}
+
+.glass-card:hover {
+    transform: translateY(-8px);
+}
+
+.glass-card.highlight {
+    background: var(--primary);
+    color: #fff;
+}
+
+.card-tag {
+    font-size: 11px;
+    font-weight: 800;
+    opacity: 0.7;
+}
+
+.card-value {
+    font-size: 24px;
+    font-weight: 800;
+    margin: 12px 0;
+}
+
+.card-trend {
+    font-size: 13px;
+    font-weight: 700;
+}
+
+.card-trend.up {
+    color: #16ff92;
+}
+
+/* Progress Bars */
+.p-bar-bg {
+    width: 100%;
+    height: 8px;
+    background: rgba(0, 0, 0, 0.05);
+    border-radius: 10px;
+    margin-top: 10px;
+}
+
+.p-bar-fill {
+    height: 100%;
+    border-radius: 10px;
+    background: var(--primary);
+}
+
+.p-bar-fill.orange {
+    background: #f97316;
+}
+
+/* 7. Grid & Panels */
+.main-grid {
+    display: grid;
+    grid-template-columns: 1.7fr 1fr;
+    gap: 25px;
+}
+
+.content-panel {
+    background: rgba(255, 255, 255, 0.4);
+    padding: 25px;
+    border-radius: 28px;
+    border: 1.5px solid var(--border);
+}
+
+.panel-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+/* 8. FAB */
+.app-fab {
+    position: fixed;
+    bottom: 35px;
+    right: 35px;
+    width: 65px;
+    height: 65px;
+    background: var(--primary);
+    color: #fff;
+    border-radius: 50%;
+    border: none;
+    font-size: 26px;
+    cursor: pointer;
+    box-shadow: 0 15px 35px rgba(0, 105, 72, 0.3);
+}
+
+/* 9. RESPONSIVE - Yon panel pastga tushadi */
+@media (max-width: 1024px) {
+    .app-shell {
+        flex-direction: column;
+        width: 98%;
+        height: 98vh;
+    }
+
+    .app-sidebar {
+        width: 100%;
+        height: auto;
+        flex-direction: row;
+        order: 2;
+        padding: 15px;
+        border-right: none;
+        border-top: 1.5px solid var(--border);
+        justify-content: center;
+    }
+
+    .app-logo,
+    .app-sidebar-footer,
+    .nav-link span {
+        display: none;
+    }
+
+    .app-nav {
+        flex-direction: row;
+        width: 100%;
+        justify-content: space-around;
+    }
+
+    .app-main {
+        order: 1;
+        padding: 20px;
+    }
+
+    .stats-container {
+        grid-template-columns: 1fr 1fr;
+    }
+
+    .main-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+@media (max-width: 600px) {
+    .stats-container {
+        grid-template-columns: 1fr;
+    }
+}
