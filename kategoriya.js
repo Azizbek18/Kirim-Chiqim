@@ -66,6 +66,8 @@ async function Jonatish() {
         if (error) {
             alert("Xatolik: " + error.message);
         } else {
+            alert("Muvaffaqiyatli qo'shildi!");
+
             document.getElementById("catName").value = "";
             document.getElementById("catLimit").value = "";
             document.getElementById("catSpent").value = "";
@@ -79,6 +81,10 @@ async function Jonatish() {
     } else {
         alert("Iltimos, barcha maydonlarni to'ldiring!");
     }
+    
+
+
+    
 }
 
 function renderCard(item) {
@@ -163,19 +169,16 @@ function initCalendar() {
     const leftCon = document.querySelector('.left-con');
 
     menuToggle.addEventListener('click', () => {
-        // "active" klassini qo'shadi yoki olib tashlaydi
         leftCon.classList.toggle('active');
         
-        // Tugma ikonkasini o'zgartirish (ixtiyoriy)
         const icon = menuToggle.querySelector('i');
         if (leftCon.classList.contains('active')) {
-            icon.classList.replace('fa-bars', 'fa-times'); // X shakli
+            icon.classList.replace('fa-bars', 'fa-times'); 
         } else {
-            icon.classList.replace('fa-times', 'fa-bars'); // Hamburger shakli
+            icon.classList.replace('fa-times', 'fa-bars'); 
         }
     });
 
-    // Menyu tashqarisini bossa yopilishi uchun (Ixtiyoriy)
     document.addEventListener('click', (e) => {
         if (!leftCon.contains(e.target) && !menuToggle.contains(e.target)) {
             leftCon.classList.remove('active');
