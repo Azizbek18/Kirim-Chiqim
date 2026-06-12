@@ -1,120 +1,254 @@
 <!DOCTYPE html>
 <html lang="uz">
+
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>AI Maslahat</title>
-<link rel="stylesheet" href="/style6.css">
- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css"
-        integrity="sha512-2SwdPD6INVrV/lHTZbO2nodKhrnDdJK9/kg2XD1r9uGqPo1cUbujc+IYdlYdEErWNu69gVcYgdxlmVmzTWnetw=="
-        crossorigin="anonymous" referrerpolicy="no-referrer" />
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AI Maslahat | OilaBalance</title>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;600;800&display=swap"
+    rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  <link rel="stylesheet" href="style7.css">
+  <link rel="stylesheet" href="dashboard.css">
+  <link rel="stylesheet" href="style6.css">
+  <link rel="stylesheet" href="settings-modal.css">
 </head>
+
 <body>
+  <div class="app-background">
+    <div class="animated-gradient"></div>
+    <div class="floating-shape shape-1"></div>
+    <div class="floating-shape shape-2"></div>
+    <div class="floating-shape shape-3"></div>
+  </div>
 
-    <div class="left-con">
-      
-            <div class="logo">
-                <img src="./M_rasmlar/Logo (1).svg" alt="">
-            </div>
-            <ul>
-                <button class="btn1"><i class="fa-regular fa-house"></i>Home</button>
-                <button class="btn2"><i class="fa-solid fa-wallet"></i>Kirim/Chiqim</button>
-                <button class="btn3"><i class="fa-solid fa-table-cells-large"></i>Kategoriyalar</button>
-                <button class="btn4"><i class="fa-solid fa-bullseye"></i>Maqsadlar</button>
-                <button class="btn5"><i class="fa-regular fa-credit-card"></i>Qarzlar</button>
-                <button class="btn6"><i class="fa-regular fa-file-lines"></i>Hisobot</button>
-                <button class="btn7"><i class="fa-solid fa-robot"></i>AI maslahat</button>
-            </ul>
-            <button class="btn8"><i class="fa-solid fa-gear"></i> Sozlamalar</button>
+  <div class="app-shell">
+    <aside class="app-sidebar">
+      <div class="app-logo">
+        <img src="./M_rasmlar/Logo (1).svg" alt="Logo">
+      </div>
+      <nav class="app-nav">
+        <a href="bosh sahifa.html" class="nav-link">
+          <i class="fa-solid fa-chart-pie"></i> <span>Dashboard</span>
+        </a>
+        <a href="kategotiya.html" class="nav-link">
+          <i class="fa-solid fa-wallet"></i> <span>Hamyon</span>
+        </a>
+        <a href="Hisobot dashboad.html" class="nav-link">
+          <i class="fa-solid fa-chart-column"></i> <span>Tahlil</span>
+        </a>
+        <a href="Maqsadlar.html" class="nav-link">
+          <i class="fa-solid fa-arrows-to-dot"></i><span>Maqsadlar</span>
+        </a>
+        <a href="ai maslahatlar.html" class="nav-link active ai-gold">
+          <i class="fa-solid fa-brain"></i> <span>AI Maslahat</span>
+        </a>
+      </nav>
+      <div class="app-sidebar-footer">
+        <a href="#" class="nav-link" onclick="openSettingsModal(event)">
+          <i class="fa-solid fa-sliders"></i> <span>Sozlamalar</span>
+        </a>
+      </div>
+    </aside>
+
+    <main class="app-main ai-page">
+      <header class="app-header">
+        <div class="header-content">
+          <div>
+            <h2 class="header-title">AI Maslahat</h2>
+            <p class="header-subtitle">Byudjetingiz bo'yicha aqlli tavsiyalar va tezkor javoblar</p>
+          </div>
         </div>
-<div class="main">
-  <div class="title">Byudjetingiz bo‘yicha aqlli tavsiyalar</div>
+        <div class="header-tools">
+          <div class="profile-group">
+            <div class="user-avatar pulse">AI</div>
+            <span class="user-name">OilaBalance Assistant</span>
+          </div>
+        </div>
+      </header>
 
+      <section class="stats-grid ai-stats">
+        <div class="stat-card stat-income">
+          <div class="stat-decoration"></div>
+          <div class="stat-icon">
+            <i class="fa-solid fa-sparkles"></i>
+          </div>
+          <div class="stat-info">
+            <p class="stat-label">Faol Tavsiya</p>
+            <h3 class="stat-value">3 yangi insight</h3>
+            <p class="stat-change">Xarajatlarni optimallashtirish uchun tayyor</p>
+          </div>
+        </div>
 
-  <div class="chat-container" id="chat"></div>
+        <div class="stat-card stat-balance">
+          <div class="stat-decoration"></div>
+          <div class="stat-icon">
+            <i class="fa-solid fa-ranking-star"></i>
+          </div>
+          <div class="stat-info">
+            <p class="stat-label">Byudjet Reytingi</p>
+            <h3 class="stat-value">B+</h3>
+            <p class="stat-change">O'tgan oyga nisbatan 5% yaxshiroq</p>
+          </div>
+        </div>
+      </section>
 
-<div class="input-box">
-  <button class="icon-btn" onclick="startVoice()">🎤</button>
-  
-  <label class="icon-btn">
-    📎
-    <input type="file" id="imageInput" hidden>
-  </label>
+      <section class="main-grid ai-layout">
+        <div class="content-panel chat-panel">
+          <div class="panel-header">
+            <div>
+              <h3>AI bilan suhbat</h3>
+              <p class="panel-subtitle">Savol yozing, ovoz yuboring yoki rasm biriktiring</p>
+            </div>
+            <div class="assistant-status">
+              <span class="status-dot"></span>
+              <span>Onlayn</span>
+            </div>
+          </div>
 
-  <input id="input" placeholder="Xabar yozing...">
+          <div class="chat-container" id="chat"></div>
 
-  <button class="send" onclick="send()">➤</button>
-</div>
+          <div class="chat-composer">
+            <button class="icon-btn" type="button" onclick="startVoice()" aria-label="Ovozli yozish">
+              <i class="fa-solid fa-microphone"></i>
+            </button>
+
+            <label class="icon-btn" aria-label="Rasm biriktirish">
+              <i class="fa-solid fa-paperclip"></i>
+              <input type="file" id="imageInput" hidden accept="image/*">
+            </label>
+
+            <input id="input" type="text" placeholder="Masalan: Bu oy nimani qisqartirsam bo'ladi?">
+
+            <button class="send-btn" type="button" onclick="send()">
+              <i class="fa-solid fa-paper-plane"></i>
+            </button>
+          </div>
+        </div>
+
+        <div class="ai-side-column">
+          <div class="content-panel insight-panel">
+            <div class="panel-header">
+              <div>
+                <h3>Avtomatik tavsiyalar</h3>
+                <p class="panel-subtitle">Bugungi kuzatuvlar</p>
+              </div>
+              <span class="insight-badge">3 yangi</span>
+            </div>
+
+            <div class="insight-list">
+              <div class="insight-item warning">
+                <div class="insight-icon">
+                  <i class="fa-solid fa-triangle-exclamation"></i>
+                </div>
+                <div>
+                  <h4>Kofexona limiti yaqin</h4>
+                  <p>Oylik limitingizning 85% ishlatilgan. Taxminan 42 000 so'm qoldi.</p>
+                </div>
+              </div>
+
+              <div class="insight-item success">
+                <div class="insight-icon">
+                  <i class="fa-solid fa-circle-check"></i>
+                </div>
+                <div>
+                  <h4>Yaxshi tejash</h4>
+                  <p>Kommunal to'lovlar o'z vaqtida yopilgan va xarajatlar barqaror qolgan.</p>
+                </div>
+              </div>
+
+              <div class="insight-item danger">
+                <div class="insight-icon">
+                  <i class="fa-solid fa-car-burst"></i>
+                </div>
+                <div>
+                  <h4>Kutilmagan xarajat</h4>
+                  <p>Avtomobil ta'miri uchun rejasiz 1.2 mln so'm sarflangan.</p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="content-panel tips-panel">
+            <div class="panel-header">
+              <div>
+                <h3>Reytingni oshirish</h3>
+                <p class="panel-subtitle">Bugun qilish mumkin bo'lgan qadamlar</p>
+              </div>
+            </div>
+
+            <div class="tips-list">
+              <div class="tip-row">
+                <i class="fa-solid fa-repeat"></i>
+                <span>Obunalarni tekshirib, keraksizlarini to'xtating</span>
+              </div>
+              <div class="tip-row">
+                <i class="fa-solid fa-calendar-check"></i>
+                <span>Haftalik xarajat limitini oldindan belgilang</span>
+              </div>
+              <div class="tip-row">
+                <i class="fa-solid fa-pen-to-square"></i>
+                <span>Har bir katta xarajatni yozib boring</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="bonus-section">
+        <div class="bonus-card ai-bonus-card">
+          <div class="bonus-decoration">
+            <i class="fa-solid fa-robot"></i>
+          </div>
+          <div>
+            <h4>AI yordamchidan faol foydalaning</h4>
+            <p>Har bir savol uchun sizga aniqroq tavsiyalar va byudjet bo'yicha tezkor yo'nalish beriladi.</p>
+          </div>
+        </div>
+      </section>
+    </main>
   </div>
-</div>
 
-<div class="burger" id="burger">☰</div>
-<div class="overlay" id="overlay"></div> 
-
-
-<div class="right">
-
-
-  <div class="rating-card">
-    <div class="circle">
-      <span>B+</span>
-    </div>
-
-    <div>
-      <h3>Byudjet reytingingiz</h3>
-      <p>Siz boshqa foydalanuvchilarning 74% idan ko‘ra intizomliroqsiz.</p>
-      <small>📈 O‘tgan oyga nisbatan +5%</small>
-    </div>
-  </div>
-
- 
-  <div class="suggestions">
-
-    <div class="title">
-      <h3>Avtomatik tavsiyalar</h3>
-      <span>3 YANGI</span>
-    </div>
-
-   
-    <div class="item warning">
-      <div class="icon">⚠️</div>
-      <div>
-        <b>"Kofexona" limiti yaqin</b>
-        <p>Oylik limitingizning 85% qismini sarflab bo‘ldingiz. Yana 42,000 so‘m qoldi.</p>
+  <div class="settings-modal-overlay" id="settingsModal" onclick="closeSettingsModal(event)">
+    <div class="settings-modal" onclick="event.stopPropagation()">
+      <div class="settings-header">
+        <h3>Sozlamalar</h3>
+        <button class="settings-close" onclick="closeSettingsModal()">
+          <i class="fa-solid fa-xmark"></i>
+        </button>
+      </div>
+      <div class="settings-content">
+        <div class="settings-item">
+          <div class="settings-item-info">
+            <i class="fa-solid fa-moon"></i>
+            <div>
+              <h4>Dark Mode</h4>
+              <p>Qorong'i rejimni yoqish yoki o'chirish</p>
+            </div>
+          </div>
+          <label class="toggle-switch">
+            <input type="checkbox" id="darkModeToggle" onchange="toggleDarkMode()">
+            <span class="toggle-slider"></span>
+          </label>
+        </div>
+        <div class="settings-item">
+          <div class="settings-item-info">
+            <i class="fa-solid fa-right-from-bracket"></i>
+            <div>
+              <h4>Akkauntdan chiqish</h4>
+              <p>Tizimdan xavfsiz chiqish</p>
+            </div>
+          </div>
+          <button class="btn-logout" onclick="logout()">
+            <i class="fa-solid fa-arrow-right-from-bracket"></i> Chiqish
+          </button>
+        </div>
       </div>
     </div>
-
-
-    <div class="item success">
-      <div class="icon">✔️</div>
-      <div>
-        <b>Yaxshi tejash!</b>
-        <p>Kommunal xizmatlar uchun to‘lovni vaqtida amalga oshirdingiz.</p>
-      </div>
-    </div>
-
-  
-    <div class="item danger">
-      <div class="icon">❗</div>
-      <div>
-        <b>Kutilmagan xarajat</b>
-        <p>Avtomobil ta’miri uchun byudjetdan tashqari 1.2 mln so‘m sarflandi.</p>
-      </div>
-    </div>
-
-  
-    <div class="footer">
-      <b>Reytingni oshirish uchun:</b>
-      <ul>
-        <li>Obunalarni tekshiring (Netflix, Spotify)</li>
-        <li>Haftalik reja qiling</li>
-        <li>Xarajatlarni yozib boring</li>
-      </ul>
-    </div>
-
   </div>
-</div>
-<script src="ai.js"></script>
 
+  <script src="ai.js"></script>
+  <script src="settings-modal.js"></script>
 </body>
+
 </html>

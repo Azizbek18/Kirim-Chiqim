@@ -1,49 +1,132 @@
-const SUPABASE_URL = "https://nwjqvgqydrjkveievogo.supabase.co"; 
+const SUPABASE_URL = "https://nwjqvgqydrjkveievogo.supabase.co";
 const SUPABASE_ANON_KEY = "sb_publishable_WaZvU4qjGkSQu2Vd1qZujw_RcPZfqAh";
 const supabaseClient = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+const USER_NAME_KEY = "oilaBalanceUserName";
+const USER_INITIALS_KEY = "oilaBalanceUserInitials";
+const USER_EMAIL_KEY = "oilaBalanceUserEmail";
 
+let mainChart = null;
+
+function capitalizeText(value) {
+    if (!value) return "";
+    return value.charAt(0).toUpperCase() + value.slice(1);
+}
+
+function getFallbackNameFromEmail(email = "") {
+    const prefix = email.split("@")[0] || "foydalanuvchi";
+    return capitalizeText(prefix);
+}
+
+function getInitials(name = "", email = "") {
+    const parts = name.trim().split(/\s+/).filter(Boolean);
+
+    if (parts.length >= 2) {
+        return (parts[0][0] + parts[1][0]).toUpperCase();
+    }
+
+    if (parts.length === 1 && parts[0].length >= 2) {
+        return parts[0].slice(0, 2).toUpperCase();
+    }
+
+    return (email.split("@")[0] || "FB").slice(0, 2).toUpperCase();
+}
+
+async function syncStoredUserProfile(user) {
+    const storedName = localStorage.getItem(USER_NAME_KEY);
+    let displayName = storedName || user?.user_metadata?.full_name || user?.user_metadata?.name || "";
+
+    if (!displayName && user?.id) {
+        const { data } = await supabaseClient
+            .from("xabiblogin")
+            .select("ism")
+            .eq("id", user.id)
+            .maybeSingle();
+
+        if (data?.ism) {
+            displayName = data.ism.trim();
+        }
+    }
+
+    if (!displayName) {
+        displayName = getFallbackNameFromEmail(user?.email || "");
+    }
+
+    const initials = localStorage.getItem(USER_INITIALS_KEY) || getInitials(displayName, user?.email || "");
+
+    localStorage.setItem(USER_NAME_KEY, displayName);
+    localStorage.setItem(USER_INITIALS_KEY, initials);
+    localStorage.setItem(USER_EMAIL_KEY, user?.email || "");
+
+    const nameSpan = document.getElementById("user-display-name");
+    if (nameSpan) {
+        nameSpan.textContent = displayName;
+    }
+
+    const avatar = document.getElementById("avatar");
+    if (avatar) {
+        avatar.textContent = initials;
+    }
+}
+
+// Greeting Text Function
+function getGreeting() {
+    const hour = new Date().getHours();
+    if (hour < 12) return "Xush kelibsiz! 🌅 Yangi kun boshlandi";
+    if (hour < 18) return "Xush kelibsiz! 🌤️ Yaxshi kunimiz bor";
+    return "Xush kelibsiz! 🌙 Kechasi shunga yugur qiling";
+}
+
+// Update Active Navigation Link
+function updateActiveNavigation() {
+    const currentPage = window.location.pathname.split('/').pop() || 'bosh sahifa.html';
+    const navLinks = document.querySelectorAll('.app-nav a.nav-link, .app-sidebar-footer a.nav-link');
+
+    navLinks.forEach(link => {
+        link.classList.remove('active');
+        const href = link.getAttribute('href');
+        if (href === currentPage) {
+            link.classList.add('active');
+        }
+    });
+}
 
 document.addEventListener("DOMContentLoaded", async () => {
     let currentDate = new Date();
     const months = ["Yanvar", "Fevral", "Mart", "Aprel", "May", "Iyun", "Iyul", "Avgust", "Sentabr", "Oktabr", "Noyabr", "Dekabr"];
 
-    // --- SELEKTORLAR ---
-    const monthTitle = document.querySelector(".calendar-nav h2");
-    const list = document.getElementById("transactionList");
-    const leftBtn = document.querySelectorAll(".icon-circle")[0];
-    const rightBtn = document.querySelectorAll(".icon-circle")[1];
-    
-    // Modal va Inputlar
-    const modal = document.getElementById("modal");
-    const openFab = document.querySelector(".app-fab");
-    const saveBtn = document.querySelector(".save");
-    const cancelBtns = document.querySelectorAll(".cancel"); // Ikkala bekor qilish tugmasi uchun
-    const nameInput = document.getElementById("t-nomi");
-    const amountInput = document.getElementById("t-summa");
+    // Update active navigation
+    updateActiveNavigation();
 
     // --- 1. FOYDALANUVCHINI TEKSHIRISH ---
     async function checkUser() {
         const { data: { user }, error } = await supabaseClient.auth.getUser();
         if (error || !user) {
-            window.location.href = "index.html"; // Kirilmagan bo'lsa login sahifasiga
+            window.location.href = "index.html";
             return null;
         }
+        await syncStoredUserProfile(user);
         return user;
     }
 
-    // --- 2. MA'LUMOTLARNI OLISH (FETCH) ---
+    // --- 2. GREETING SAATLARI ---
+    const greetingEl = document.getElementById("greetingText");
+    if (greetingEl) {
+        greetingEl.textContent = getGreeting();
+    }
+
+    // --- 3. MA'LUMOTLARNI OLISH ---
     async function fetchTransactions() {
         const user = await checkUser();
         if (!user) return;
 
-        // Tanlangan oy oralig'ini hisoblash
+        // Joriy oy oralig'i
         const firstDay = new Date(currentDate.getFullYear(), currentDate.getMonth(), 1).toISOString();
         const lastDay = new Date(currentDate.getFullYear(), currentDate.getMonth() + 1, 0, 23, 59, 59).toISOString();
 
         const { data: transactions, error } = await supabaseClient
             .from('transactions')
             .select('*')
-            .eq('user_id', user.id) // Faqat shu userga tegishli ma'lumotlar
+            .eq('user_id', user.id)
             .gte('created_at', firstDay)
             .lte('created_at', lastDay)
             .order('created_at', { ascending: false });
@@ -53,125 +136,268 @@ document.addEventListener("DOMContentLoaded", async () => {
             return;
         }
 
-        renderTransactions(transactions);
+        renderRecentTransactions(transactions);
         updateStats(transactions);
+        updateChart(transactions);
     }
 
-    // --- 3. EKRANGA CHIQARISH (RENDER) ---
-    function renderTransactions(data) {
-        if (!list) return;
-        list.innerHTML = "";
+    // --- 4. OXIRGI OPERATSIYALAR ---
+    function renderRecentTransactions(data) {
+        const container = document.getElementById("recentTransactions");
+        if (!container) return;
 
-        if (data.length === 0) {
-            list.innerHTML = `<p style="text-align:center; padding:40px; color:#9ca3af; font-size:14px; grid-column: 1/-1;">Hozircha hech qanday harakat topilmadi.</p>`;
+        if (!data || data.length === 0) {
+            container.innerHTML = `
+                <div class="empty-state">
+                    <i class="fa-solid fa-inbox"></i>
+                    <span>Hali operatsiyalar yo'q</span>
+                </div>
+            `;
             return;
         }
 
-        data.forEach((t) => {
-            const isIncome = t.amount > 0;
-            const div = document.createElement("div");
-            div.className = "data-item";
-            // Dizaynni inline-style orqali yanada kuchaytiramiz
-            div.style = "display: flex; align-items: center; justify-content: space-between; padding: 16px; background: rgba(255,255,255,0.3); border-radius: 20px; margin-bottom: 12px; border: 1px solid rgba(255,255,255,0.4);";
+        // Faqat oxirgi 5 ta operatsiya
+        const recent = data.slice(0, 5);
 
-            div.innerHTML = `
-                <div style="display: flex; align-items: center; gap: 14px;">
-                    <div style="background: ${isIncome ? '#e6fcf5' : '#fff5f5'}; width: 42px; height: 42px; border-radius: 14px; display: flex; align-items: center; justify-content: center;">
-                        <i class="fa-solid ${isIncome ? 'fa-arrow-up' : 'fa-arrow-down'}" style="color: ${isIncome ? '#10b981' : '#ef4444'}"></i>
+        container.innerHTML = recent.map((t, index) => {
+            const isIncome = t.amount > 0;
+            const date = new Date(t.created_at);
+            const dateStr = date.toLocaleDateString('uz-UZ', { month: 'short', day: 'numeric' });
+
+            return `
+                <div class="transaction-item" style="animation-delay: ${index * 0.1}s;">
+                    <div class="transaction-left">
+                        <div class="transaction-icon" style="background: ${isIncome ? 'rgba(16, 185, 129, 0.15)' : 'rgba(239, 68, 68, 0.15)'};">
+                            <i class="fa-solid ${isIncome ? 'fa-arrow-down' : 'fa-arrow-up'}" style="color: ${isIncome ? '#10b981' : '#ef4444'};"></i>
+                        </div>
+                        <div class="transaction-details">
+                            <h4>${t.name}</h4>
+                            <p>${dateStr}</p>
+                        </div>
                     </div>
-                    <div>
-                        <p style="font-weight: 700; color: #1f2937; margin: 0; font-size: 15px;">${t.name}</p>
-                        <small style="color: #6b7280; font-size: 11px;">${new Date(t.created_at).toLocaleDateString('uz-UZ')}</small>
+                    <div class="transaction-amount" style="color: ${isIncome ? '#10b981' : '#ef4444'}">
+                        ${isIncome ? '+' : ''}${t.amount.toLocaleString()}
                     </div>
-                </div>
-                <div style="font-weight: 800; font-size: 15px; color: ${isIncome ? '#10b981' : '#ef4444'}">
-                    ${isIncome ? '+' : ''}${t.amount.toLocaleString()} UZS
                 </div>
             `;
-            list.appendChild(div);
-        });
+        }).join('');
     }
 
-    // --- 4. STATISTIKANI HISOBLASH ---
+    // --- 5. STATISTIKANI YANGILASH ---
     function updateStats(data) {
         const income = data.filter(t => t.amount > 0).reduce((s, t) => s + Number(t.amount), 0);
         const expense = data.filter(t => t.amount < 0).reduce((s, t) => s + Math.abs(Number(t.amount)), 0);
         const balance = income - expense;
 
-        const cards = document.querySelectorAll(".card-value");
-        if (cards.length >= 3) {
-            cards[0].innerHTML = `${balance.toLocaleString()} <span>UZS</span>`;
-            cards[1].textContent = income.toLocaleString();
-            cards[2].textContent = expense.toLocaleString();
-            // Agar Tejalgan (Savings) kartasi bo'lsa:
-            if(cards[3]) cards[3].textContent = (balance > 0 ? balance : 0).toLocaleString();
+        const incomeEl = document.getElementById("totalIncome");
+        const expenseEl = document.getElementById("totalExpense");
+        const balanceEl = document.getElementById("totalBalance");
+
+        // Animated counter effect
+        if (incomeEl) {
+            animateValue(incomeEl, 0, income, 800);
+        }
+        if (expenseEl) {
+            animateValue(expenseEl, 0, expense, 800);
+        }
+        if (balanceEl) {
+            animateValue(balanceEl, 0, balance, 800);
         }
     }
 
-    // --- 5. MODALNI BOSHQARISH (NULL-CHECK BILAN) ---
-    if (openFab && modal) {
-        openFab.onclick = () => modal.classList.add("active");
+    // Animated Counter Function
+    function animateValue(el, start, end, duration) {
+        const range = end - start;
+        const increment = range / (duration / 16);
+        let current = start;
+
+        const timer = setInterval(() => {
+            current += increment;
+            if ((increment > 0 && current >= end) || (increment < 0 && current <= end)) {
+                current = end;
+                clearInterval(timer);
+            }
+            el.textContent = Math.round(current).toLocaleString() + " so'm";
+        }, 16);
     }
 
-    if (cancelBtns.length > 0 && modal) {
-        cancelBtns.forEach(btn => {
-            btn.onclick = () => modal.classList.remove("active");
+    // --- 6. GRAFIKNI CHIZISH ---
+    function updateChart(data) {
+        const ctx = document.getElementById("mainChart");
+        if (!ctx) return;
+
+        const income = data.filter(t => t.amount > 0).reduce((s, t) => s + Number(t.amount), 0);
+        const expense = data.filter(t => t.amount < 0).reduce((s, t) => s + Math.abs(Number(t.amount)), 0);
+
+        if (mainChart) {
+            mainChart.destroy();
+        }
+
+        const chartData = {
+            kirim: income || 0,
+            chiqim: expense || 0
+        };
+
+        mainChart = new Chart(ctx, {
+            type: 'doughnut',
+            data: {
+                labels: ['Kirim', 'Chiqim'],
+                datasets: [{
+                    data: [chartData.kirim || 1, chartData.chiqim || 1],
+                    backgroundColor: [
+                        'rgba(16, 185, 129, 0.8)',
+                        'rgba(239, 68, 68, 0.8)'
+                    ],
+                    borderColor: [
+                        '#10b981',
+                        '#ef4444'
+                    ],
+                    borderWidth: 3,
+                    borderRadius: 8,
+                    hoverBorderWidth: 5
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: true,
+                plugins: {
+                    legend: {
+                        position: 'bottom',
+                        labels: {
+                            font: { size: 13, weight: 600 },
+                            padding: 20,
+                            color: '#64748b',
+                            usePointStyle: true,
+                            pointStyle: 'circle'
+                        }
+                    },
+                    tooltip: {
+                        backgroundColor: 'rgba(0, 0, 0, 0.8)',
+                        padding: 12,
+                        titleFont: { size: 14, weight: 600 },
+                        bodyFont: { size: 13 },
+                        borderColor: 'rgba(255, 255, 255, 0.2)',
+                        borderWidth: 1,
+                        callbacks: {
+                            label: function (context) {
+                                return context.label + ': ' + context.parsed.toLocaleString() + ' so\'m';
+                            }
+                        }
+                    }
+                }
+            }
         });
     }
 
-    // --- 6. MA'LUMOT SAQLASH ---
-    if (saveBtn) {
-        saveBtn.onclick = async () => {
-            const user = await checkUser();
-            if (!user) return;
+    // Add some interactivity to stat cards
+    document.querySelectorAll('.stat-card').forEach(card => {
+        card.addEventListener('mouseenter', function () {
+            this.style.transform = 'translateY(-8px)';
+        });
+        card.addEventListener('mouseleave', function () {
+            this.style.transform = 'translateY(0)';
+        });
+    });
 
-            const name = nameInput?.value.trim();
-            const amount = parseFloat(amountInput?.value);
+    // Sahifani yuklash
+    fetchTransactions();
 
-            if (!name || isNaN(amount)) {
-                alert("Iltimos, barcha maydonlarni to'g'ri to'ldiring!");
-                return;
-            }
+    // Auto-refresh every 30 seconds
+    setInterval(fetchTransactions, 30000);
 
-            const { error } = await supabaseClient
-                .from('transactions')
-                .insert([{ name, amount, user_id: user.id }]);
+    // Dark mode toggle initialization
+    initDarkMode();
+});
 
-            if (error) {
-                alert("Xatolik: " + error.message);
-            } else {
-                if (nameInput) nameInput.value = "";
-                if (amountInput) amountInput.value = "";
-                modal?.classList.remove("active");
-                fetchTransactions(); // Ro'yxatni yangilash
-            }
-        };
+// =====================================
+// SETTINGS MODAL FUNCTIONS
+// =====================================
+
+function openSettingsModal(event) {
+    if (event) event.preventDefault();
+    const modal = document.getElementById('settingsModal');
+    if (modal) {
+        modal.classList.add('active');
     }
+}
 
-    // --- 7. OY NAVIGATSIYASI ---
-    function updateMonthUI() {
-        if (monthTitle) {
-            monthTitle.textContent = `${months[currentDate.getMonth()]} ${currentDate.getFullYear()}`;
+function closeSettingsModal(event) {
+    if (event && event.target !== event.currentTarget) return;
+    const modal = document.getElementById('settingsModal');
+    if (modal) {
+        modal.classList.remove('active');
+    }
+}
+
+// Close modal on Escape key
+document.addEventListener('keydown', function (e) {
+    if (e.key === 'Escape') {
+        closeSettingsModal(e);
+    }
+});
+
+// Dark Mode Functions
+function initDarkMode() {
+    const toggle = document.getElementById('darkModeToggle');
+    if (toggle) {
+        // Check saved preference
+        const isDark = localStorage.getItem('darkMode') === 'true';
+        toggle.checked = isDark;
+        if (isDark) {
+            document.body.classList.add('dark-mode');
         }
     }
+}
 
-    if (leftBtn) {
-        leftBtn.onclick = () => {
-            currentDate.setMonth(currentDate.getMonth() - 1);
-            updateMonthUI();
-            fetchTransactions();
-        };
+function toggleDarkMode() {
+    const toggle = document.getElementById('darkModeToggle');
+    if (toggle) {
+        const isDark = toggle.checked;
+        document.body.classList.toggle('dark-mode', isDark);
+        localStorage.setItem('darkMode', isDark);
+
+        // Apply to all pages
+        applyDarkModeToAllPages(isDark);
     }
+}
 
-    if (rightBtn) {
-        rightBtn.onclick = () => {
-            currentDate.setMonth(currentDate.getMonth() + 1);
-            updateMonthUI();
-            fetchTransactions();
-        };
+function applyDarkModeToAllPages(isDark) {
+    // Save to localStorage for other pages
+    localStorage.setItem('darkMode', isDark);
+}
+
+// Logout Function
+async function logout() {
+    try {
+        const { error } = await supabaseClient.auth.signOut();
+        if (error) {
+            console.error('Chiqish xatosi:', error.message);
+            return;
+        }
+        // Redirect to login
+        window.location.href = 'index.html';
+    } catch (err) {
+        console.error('Xatolik:', err);
     }
+}
 
-    // --- ILK BOR ISHGA TUSHIRISH ---
-    updateMonthUI();
-    fetchTransactions();
+if (leftBtn) {
+    leftBtn.onclick = () => {
+        currentDate.setMonth(currentDate.getMonth() - 1);
+        updateMonthUI();
+        fetchTransactions();
+    };
+}
+
+if (rightBtn) {
+    rightBtn.onclick = () => {
+        currentDate.setMonth(currentDate.getMonth() + 1);
+        updateMonthUI();
+        fetchTransactions();
+    };
+}
+
+// --- ILK BOR ISHGA TUSHIRISH ---
+updateMonthUI();
+fetchTransactions();
 });

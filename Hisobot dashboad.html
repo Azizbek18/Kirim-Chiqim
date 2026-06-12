@@ -4,72 +4,196 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Hisobot Dashboard</title>
+    <title>Tahlil | OilaBalance</title>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;600;800&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link rel="stylesheet" href="style7.css">
+    <link rel="stylesheet" href="dashboard.css">
+    <link rel="stylesheet" href="settings-modal.css">
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    <link rel="stylesheet" href="style5.css">
-     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css"
-        integrity="sha512-2SwdPD6INVrV/lHTZbO2nodKhrnDdJK9/kg2XD1r9uGqPo1cUbujc+IYdlYdEErWNu69gVcYgdxlmVmzTWnetw=="
-        crossorigin="anonymous" referrerpolicy="no-referrer" />
 </head>
 
 <body>
-<div class="burger" id="burger">☰</div>
-<div class="overlay" id="overlay"></div>
-        <div class="left-con">
-            <div class="logo">
-                <img src="./M_rasmlar/Logo (1).svg" alt="">
+    <div id="toast-container"></div>
+
+    <div class="app-background">
+        <div class="animated-gradient"></div>
+        <div class="floating-shape shape-1"></div>
+        <div class="floating-shape shape-2"></div>
+        <div class="floating-shape shape-3"></div>
+    </div>
+
+    <div class="app-shell">
+        <aside class="app-sidebar">
+            <div class="app-logo">
+                <img src="./M_rasmlar/Logo (1).svg" alt="Logo">
             </div>
-            <ul class="ull">
-    <button class="btn1"><i class="fa-regular fa-house"></i>Home</button>
-                <button class="btn2"><i class="fa-solid fa-wallet"></i>Kirim/Chiqim</button>
-                <button class="btn3"><i class="fa-solid fa-table-cells-large"></i>Kategoriyalar</button>
-                <button class="btn4"><i class="fa-solid fa-bullseye"></i>Maqsadlar</button>
-                <button class="btn5"><i class="fa-regular fa-credit-card"></i>Qarzlar</button>
-                <button class="btn6"><i class="fa-regular fa-file-lines"></i>Hisobot</button>
-                <button class="btn7"><i class="fa-solid fa-robot"></i>AI maslahat</button>
-            
-            </ul>
-            
-            <button class="btn8"><i class="fa-solid fa-gear"></i> Sozlamalar</button>
-        </div>
-
-    <div class="main">
-        <div class="container">
-
-            <div class="header">
-                <h1>Hisobotlar</h1>
-                <button onclick="downloadPDF()">PDF yuklash</button>
+            <nav class="app-nav">
+                <a href="bosh sahifa.html" class="nav-link">
+                    <i class="fa-solid fa-chart-pie"></i> <span>Dashboard</span>
+                </a>
+                <a href="kategotiya.html" class="nav-link">
+                    <i class="fa-solid fa-wallet"></i> <span>Hamyon</span>
+                </a>
+                <a href="Hisobot dashboad.html" class="nav-link active">
+                    <i class="fa-solid fa-chart-column"></i> <span>Tahlil</span>
+                </a>
+                <a href="Maqsadlar.html" class="nav-link">
+                    <i class="fa-solid fa-arrows-to-dot"></i> <span>Maqsadlar</span>
+                </a>
+                <a href="ai maslahatlar.html" class="nav-link ai-gold">
+                    <i class="fa-solid fa-brain"></i> <span>AI Maslahat</span>
+                </a>
+            </nav>
+            <div class="app-sidebar-footer">
+                <a href="#" class="nav-link" onclick="openSettingsModal(event)">
+                    <i class="fa-solid fa-sliders"></i> <span>Sozlamalar</span>
+                </a>
             </div>
+        </aside>
 
-            <div class="card stats">
-                <div class="stat">
-                    <h3>Jami kirim</h3>
-                    <p class="green">+18,400,000</p>
+        <main class="app-main">
+            <header class="app-header">
+                <div class="header-content">
+                    <div>
+                        <h2 class="header-title">Tahlil</h2>
+                        <p class="header-subtitle">Moliyaviy hisobotingiz tahlili</p>
+                    </div>
                 </div>
-                <div class="stat">
-                    <h3>Jami chiqim</h3>
-                    <p class="red">-12,250,000</p>
+                <div class="header-tools">
+                    <button class="btn-primary" onclick="downloadPDF()">
+                        <i class="fa-solid fa-download"></i> PDF yuklash
+                    </button>
+                    <div class="profile-group">
+                        <div class="user-avatar pulse" id="avatar">AB</div>
+                        <span id="user-display-name" class="user-name"></span>
+                    </div>
                 </div>
-                <div class="stat">
-                    <h3>Tejaldı</h3>
-                    <p class="blue">6,150,000</p>
+            </header>
+
+            <!-- Statistika kartalari -->
+            <div class="stats-grid">
+                <div class="stat-card stat-income" data-stat="income">
+                    <div class="stat-decoration"></div>
+                    <div class="stat-icon">
+                        <i class="fa-solid fa-arrow-down"></i>
+                    </div>
+                    <div class="stat-info">
+                        <p class="stat-label">Jami Kirim</p>
+                        <h3 class="stat-value" id="totalIncome">0 so'm</h3>
+                        <p class="stat-change">+12% bu oydan</p>
+                    </div>
+                </div>
+
+                <div class="stat-card stat-expense" data-stat="expense">
+                    <div class="stat-decoration"></div>
+                    <div class="stat-icon">
+                        <i class="fa-solid fa-arrow-up"></i>
+                    </div>
+                    <div class="stat-info">
+                        <p class="stat-label">Jami Chiqim</p>
+                        <h3 class="stat-value" id="totalExpense">0 so'm</h3>
+                        <p class="stat-change">-5% bu oydan</p>
+                    </div>
+                </div>
+
+                <div class="stat-card stat-balance" data-stat="balance">
+                    <div class="stat-decoration"></div>
+                    <div class="stat-icon">
+                        <i class="fa-solid fa-piggy-bank"></i>
+                    </div>
+                    <div class="stat-info">
+                        <p class="stat-label">Tejalgan</p>
+                        <h3 class="stat-value" id="totalSavings">0 so'm</h3>
+                        <p class="stat-change">✨ Zo'r natija!</p>
+                    </div>
                 </div>
             </div>
 
-            <div class="card">
-                <h3>6 oylik grafik</h3>
-                <canvas id="lineChart"></canvas>
+            <!-- Grafiklar -->
+            <div class="main-grid">
+                <div class="content-panel chart-panel">
+                    <div class="panel-header">
+                        <div>
+                            <h3>6 oylik dinamika</h3>
+                            <p class="panel-subtitle">Kirim va chiqim o'zgarishi</p>
+                        </div>
+                    </div>
+                    <div class="chart-container">
+                        <canvas id="lineChart"></canvas>
+                    </div>
+                </div>
+
+                <div class="content-panel chart-panel">
+                    <div class="panel-header">
+                        <div>
+                            <h3>Kategoriya taqsimoti</h3>
+                            <p class="panel-subtitle">Chiqimlar bo'yicha</p>
+                        </div>
+                    </div>
+                    <div class="chart-container">
+                        <canvas id="pieChart"></canvas>
+                    </div>
+                </div>
             </div>
 
-            <div class="card">
-                <h3>Kategoriya</h3>
-                <canvas id="pieChart"></canvas>
+            <!-- Bonus Section -->
+            <div class="bonus-section">
+                <div class="bonus-card">
+                    <div class="bonus-decoration">
+                        <i class="fa-solid fa-file-pdf"></i>
+                    </div>
+                    <div>
+                        <h4>Hisobotingizni yuklab oling</h4>
+                        <p>PDF formatda to'liq hisobotni yuklab olishingiz mumkin 📊</p>
+                    </div>
+                </div>
             </div>
+        </main>
+    </div>
 
+    <div class="settings-modal-overlay" id="settingsModal" onclick="closeSettingsModal(event)">
+        <div class="settings-modal" onclick="event.stopPropagation()">
+            <div class="settings-header">
+                <h3>Sozlamalar</h3>
+                <button class="settings-close" onclick="closeSettingsModal()">
+                    <i class="fa-solid fa-xmark"></i>
+                </button>
+            </div>
+            <div class="settings-content">
+                <div class="settings-item">
+                    <div class="settings-item-info">
+                        <i class="fa-solid fa-moon"></i>
+                        <div>
+                            <h4>Dark Mode</h4>
+                            <p>Qorong'i rejimni yoqish yoki o'chirish</p>
+                        </div>
+                    </div>
+                    <label class="toggle-switch">
+                        <input type="checkbox" id="darkModeToggle" onchange="toggleDarkMode()">
+                        <span class="toggle-slider"></span>
+                    </label>
+                </div>
+                <div class="settings-item">
+                    <div class="settings-item-info">
+                        <i class="fa-solid fa-right-from-bracket"></i>
+                        <div>
+                            <h4>Akkauntdan chiqish</h4>
+                            <p>Tizimdan xavfsiz chiqish</p>
+                        </div>
+                    </div>
+                    <button class="btn-logout" onclick="logout()">
+                        <i class="fa-solid fa-arrow-right-from-bracket"></i> Chiqish
+                    </button>
+                </div>
+            </div>
         </div>
     </div>
 
-    <script src="/script.js"></script>
+    <script src="script.js"></script>
+    <script src="settings-modal.js"></script>
 </body>
 
 </html>

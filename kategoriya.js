@@ -7,7 +7,7 @@ let totalExpensesText;
 let modal;
 
 document.addEventListener('DOMContentLoaded', () => {
-    listContainer = document.querySelector('.chiqim-kirim') || document.querySelector('.right-con');
+    listContainer = document.querySelector('.chiqim-kirim') || document.querySelector('.category-page') || document.querySelector('.app-main');
     totalExpensesText = document.querySelector('.span');
     modal = document.getElementById('categoryModal');
     
@@ -86,24 +86,24 @@ function renderCard(item) {
     const imageSrc = getCategoryImage(item.nomi);
 
     const cardHTML = `
-    <div class="hisoblar" style="display:flex; justify-content:space-between; align-items:center; margin-bottom: 15px;">
+    <div class="hisoblar">
         <div class="card">
-            <div class="start" style="display:flex; align-items:center;">
-                <img src="${imageSrc}" alt="${item.nomi}" style="width:40px; margin-right:10px;">
+            <div class="start">
+                <img src="${imageSrc}" alt="${item.nomi}">
                 <div class="text">
-                    <h1 style="font-size:16px; margin:0;">${item.nomi}</h1>
-                    <p style="font-size:12px; color:#666;">${Number(item.sarflangan).toLocaleString()} / ${Number(item.oylik_limit).toLocaleString()}</p>
+                    <h1>${item.nomi}</h1>
+                    <p>${Number(item.sarflangan).toLocaleString()} / ${Number(item.oylik_limit).toLocaleString()}</p>
                 </div>
             </div>
         </div>
-        <div class="center" style="flex-grow: 1; margin: 0 20px;">
-            <div style="width: 100%; background: #eee; height: 8px; border-radius: 5px;">
-                <div style="width: ${percentage}%; background: ${percentage > 90 ? '#ff4d4d' : '#4CAF50'}; height: 100%; border-radius: 5px;"></div>
+        <div class="center">
+            <div style="width: 100%; background: rgba(148, 163, 184, 0.16); height: 10px; border-radius: 999px;">
+                <div style="width: ${percentage}%; background: ${percentage > 90 ? 'linear-gradient(135deg, #ef4444, #dc2626)' : 'linear-gradient(135deg, #10b981, #059669)'}; height: 100%; border-radius: 999px;"></div>
             </div>
         </div>
-        <div class="end" style="text-align:right;">
-            <h1 class="foiz" style="font-size:14px; margin:0;">${percentage}%</h1>
-            <h1 class="som" style="white-space: nowrap; font-size:14px; color:red;">-${Number(item.sarflangan).toLocaleString()}</h1>
+        <div class="end">
+            <h1 class="foiz">${percentage}%</h1>
+            <h1 class="som">-${Number(item.sarflangan).toLocaleString()}</h1>
         </div>
     </div>`;
 
@@ -159,25 +159,26 @@ function initCalendar() {
     updateMonthYear();
 }
 
-    const menuToggle = document.getElementById('menu-toggle');
-    const leftCon = document.querySelector('.left-con');
+const menuToggle = document.getElementById('menu-toggle');
+const leftCon = document.querySelector('.left-con');
 
+if (menuToggle && leftCon) {
     menuToggle.addEventListener('click', () => {
-        // "active" klassini qo'shadi yoki olib tashlaydi
         leftCon.classList.toggle('active');
-        
-        // Tugma ikonkasini o'zgartirish (ixtiyoriy)
+
         const icon = menuToggle.querySelector('i');
+        if (!icon) return;
+
         if (leftCon.classList.contains('active')) {
-            icon.classList.replace('fa-bars', 'fa-times'); // X shakli
+            icon.classList.replace('fa-bars', 'fa-times');
         } else {
-            icon.classList.replace('fa-times', 'fa-bars'); // Hamburger shakli
+            icon.classList.replace('fa-times', 'fa-bars');
         }
     });
 
-    // Menyu tashqarisini bossa yopilishi uchun (Ixtiyoriy)
     document.addEventListener('click', (e) => {
         if (!leftCon.contains(e.target) && !menuToggle.contains(e.target)) {
             leftCon.classList.remove('active');
         }
     });
+}

@@ -1,21 +1,23 @@
-
 const chat = document.getElementById("chat");
 const input = document.getElementById("input");
-
+const imageInput = document.getElementById("imageInput");
 
 function addMessage(text, type = "user", image = null) {
+  if (!chat) return;
+
   const div = document.createElement("div");
   div.className = "msg " + type;
 
   if (text) {
-    const p = document.createElement("div");
-    p.innerText = text;
-    div.appendChild(p);
+    const textBlock = document.createElement("div");
+    textBlock.innerText = text;
+    div.appendChild(textBlock);
   }
 
   if (image) {
     const img = document.createElement("img");
     img.src = image;
+    img.alt = "Yuklangan rasm";
     div.appendChild(img);
   }
 
@@ -23,92 +25,108 @@ function addMessage(text, type = "user", image = null) {
   chat.scrollTop = chat.scrollHeight;
 }
 
-
 function getAIResponse(text) {
-  text = text.toLowerCase();
+  const normalizedText = text.toLowerCase();
 
-  if (text.includes("salom")) {
-    return "Va alaykum assalom 😊";
+  if (normalizedText.includes("salom")) {
+    return "Va alaykum assalom. Sizga byudjet bo'yicha qanday yordam bera olaman?";
   }
 
-  if (text.includes("pul") || text.includes("byudjet")) {
-    return "Xarajatlaringizni nazorat qiling va 20% tejashga harakat qiling 💰";
+  if (normalizedText.includes("pul") || normalizedText.includes("byudjet")) {
+    return "Xarajatlaringizni toifalarga ajrating va kamida 20 foizini jamg'armaga yo'naltiring.";
   }
 
-  if (text.includes("qarz")) {
-    return "Qarzlarni kichikdan boshlab yopish samaraliroq 📉";
+  if (normalizedText.includes("qarz")) {
+    return "Qarzlarni eng yuqori foizli yoki eng kichik summalardan boshlab yopish foydali bo'ladi.";
   }
 
-  return "Tushundim 👍 yana savol bering!";
+  if (normalizedText.includes("tejash")) {
+    return "Doimiy obunalar, transport va mayda kundalik xarajatlar birinchi optimallashtiriladigan joy bo'ladi.";
+  }
+
+  return "Tushundim. Xohlasangiz xarajatlaringizni tahlil qilib, qayerdan tejash mumkinligini aytib beraman.";
 }
-
 
 function speak(text) {
+  if (!("speechSynthesis" in window)) return;
+
   const speech = new SpeechSynthesisUtterance(text);
   speech.lang = "uz-UZ";
-  speechSynthesis.speak(speech);
+  window.speechSynthesis.cancel();
+  window.speechSynthesis.speak(speech);
 }
 
-
 function send() {
+  if (!input) return;
+
   const text = input.value.trim();
   if (!text) return;
 
   addMessage(text, "user");
 
-  setTimeout(() => {
+  window.setTimeout(() => {
     const reply = getAIResponse(text);
     addMessage(reply, "ai");
     speak(reply);
-  }, 500);
+  }, 450);
 
   input.value = "";
+  input.focus();
 }
 
-
-input.addEventListener("keypress", (e) => {
-  if (e.key === "Enter") send();
-});
-
 function startVoice() {
-  const recognition = new (window.SpeechRecognition || window.webkitSpeechRecognition)();
+  const Recognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+
+  if (!Recognition) {
+    addMessage("Bu brauzer ovozli kiritishni qo'llab-quvvatlamaydi.", "ai");
+    return;
+  }
+
+  const recognition = new Recognition();
   recognition.lang = "uz-UZ";
 
-  recognition.onresult = function(event) {
+  recognition.onresult = function (event) {
     const text = event.results[0][0].transcript;
-    input.value = text;
-    send();
+    if (input) {
+      input.value = text;
+      send();
+    }
+  };
+
+  recognition.onerror = function () {
+    addMessage("Ovozli yozishda xatolik yuz berdi. Qayta urinib ko'ring.", "ai");
   };
 
   recognition.start();
 }
 
-document.getElementById("imageInput").addEventListener("change", function() {
-  const file = this.files[0];
-  if (!file) return;
+if (input) {
+  input.addEventListener("keypress", (event) => {
+    if (event.key === "Enter") {
+      send();
+    }
+  });
+}
 
-  const reader = new FileReader();
-  reader.onload = function(e) {
-    addMessage("", "user", e.target.result);
+if (imageInput) {
+  imageInput.addEventListener("change", function () {
+    const file = this.files && this.files[0];
+    if (!file) return;
 
-    setTimeout(() => {
-      addMessage("Rasm qabul qilindi 📸", "ai");
-    }, 500);
-  };
+    const reader = new FileReader();
+    reader.onload = function (event) {
+      addMessage("Rasm yuborildi.", "user", event.target.result);
 
-  reader.readAsDataURL(file);
+      window.setTimeout(() => {
+        addMessage("Rasm qabul qilindi. Xohlasangiz shu rasm asosida tavsiya beraman.", "ai");
+      }, 400);
+    };
+
+    reader.readAsDataURL(file);
+    this.value = "";
+  });
+}
+
+document.addEventListener("DOMContentLoaded", () => {
+  addMessage("Salom. Men sizning AI yordamchingizman. Xarajat, tejash yoki qarzlar haqida savol berishingiz mumkin.", "ai");
 });
-
-  const burger = document.getElementById("burger");
-  const sidebar = document.querySelector(".left-con");
-  const overlay = document.getElementById("overlay");
-
-  burger.addEventListener("click", () => {
-    sidebar.classList.toggle("active");
-    overlay.classList.toggle("active");
-  });
-
-  overlay.addEventListener("click", () => {
-    sidebar.classList.remove("active");
-    overlay.classList.remove("active");
-  });

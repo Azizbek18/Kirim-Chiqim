@@ -1,60 +1,58 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="uz">
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-    <link rel="stylesheet" href="kategoriya.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css"
-        integrity="sha512-2SwdPD6INVrV/lHTZbO2nodKhrnDdJK9/kg2XD1r9uGqPo1cUbujc+IYdlYdEErWNu69gVcYgdxlmVmzTWnetw=="
-        crossorigin="anonymous" referrerpolicy="no-referrer" />
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link
-        href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap"
+    <title>Kategoriyalar | OilaBalance</title>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;600;800&display=swap"
         rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link rel="stylesheet" href="style7.css">
+    <link rel="stylesheet" href="dashboard.css">
+    <link rel="stylesheet" href="kategoriya.css">
+    <link rel="stylesheet" href="settings-modal.css">
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-    
-        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 </head>
 
 <body>
-    <div class="container">
-        <div class="left-con">
-            <div class="logo">
-                <img src="./M_rasmlar/Logo (1).svg" alt="">
+    <div class="app-background">
+        <div class="animated-gradient"></div>
+        <div class="floating-shape shape-1"></div>
+        <div class="floating-shape shape-2"></div>
+        <div class="floating-shape shape-3"></div>
+    </div>
+
+    <div class="app-shell">
+        <aside class="app-sidebar">
+            <div class="app-logo">
+                <img src="./M_rasmlar/Logo (1).svg" alt="Logo">
             </div>
-            <ul>
-                <a href="./bosh sahifa.html" class="btn1">
-                     <i class="fa-regular fa-house"></i>Bosh sahifa
+            <nav class="app-nav">
+                <a href="bosh sahifa.html" class="nav-link">
+                    <i class="fa-solid fa-chart-pie"></i> <span>Dashboard</span>
                 </a>
-                <a href="#" class="btn2">
-                    <i class="fa-solid fa-wallet"></i>Kirim/Chiqim
+                <a href="kategotiya.html" class="nav-link active">
+                    <i class="fa-solid fa-wallet"></i> <span>Hamyon</span>
                 </a>
-                <a href="./kategotiya.html" class="btn3">
-                    <i class="fa-solid fa-table-cells-large"></i>Kategoriyalar
+                <a href="Hisobot dashboad.html" class="nav-link">
+                    <i class="fa-solid fa-chart-column"></i> <span>Tahlil</span>
                 </a>
-                <a href="./Maqsadlar.html" class="btn4">
-                    <i class="fa-solid fa-bullseye"></i>Maqsadlar
+                <a href="Maqsadlar.html" class="nav-link">
+                    <i class="fa-solid fa-arrows-to-dot"></i> <span>Maqsadlar</span>
                 </a>
-                <a href="./qarzlar.html" class="btn5">
-                    <i class="fa-regular fa-credit-card"></i> Qarzlar
+                <a href="ai maslahatlar.html" class="nav-link ai-gold">
+                    <i class="fa-solid fa-brain"></i> <span>AI Maslahat</span>
                 </a>
-                <a href="./Hisobot dashboad.html" class="btn6">
-                    <i class="fa-regular fa-file-lines"></i>Hisobot
+            </nav>
+            <div class="app-sidebar-footer">
+                <a href="#" class="nav-link" onclick="openSettingsModal(event)">
+                    <i class="fa-solid fa-sliders"></i> <span>Sozlamalar</span>
                 </a>
-                <a href="./ai maslahatlar.html" class="btn7">
-                    <i class="fa-solid fa-robot"></i>AI maslahat
-                </a>
-            </ul>
-            <a href="#" class="btn8">
-                <i class="fa-solid fa-gear"></i> Sozlamalar
-            </a>
-            <button id="menu-toggle" class="hamburger">
-    <i class="fas fa-bars"></i> </button>
-        </div>
-        <div class="right-con">
+            </div>
+        </aside>
+
+        <main class="app-main category-page">
             <div id="categoryModal" class="modal">
                 <div class="modal-content">
                     <div class="modal-header">
@@ -67,40 +65,114 @@
                         <input type="number" id="catSpent" placeholder="Sarflangan summa (so'm)">
                     </div>
                     <div class="modal-footer">
-                        <button id="saveCategory" class="btn-save" onclick="Jonatish()">Saqlash</button>
+                        <button id="saveCategory" class="btn-save">Saqlash</button>
                     </div>
                 </div>
             </div>
-            <div class="head">
-                <div class="con">
-                    <div class="head-title">
-                        <h1>Kategoriyalar</h1>
-                        <p class="xarajat">Bu oy xarajat taqsimoti</p>
-                    </div>
 
-                    <p class="oy">
-                        <button id="prevMonth" class="month-btn">
+            <header class="app-header">
+                <div class="header-content">
+                    <h2 class="header-title">Kategoriyalar</h2>
+                    <p class="header-subtitle">Bu oy xarajat taqsimoti va limit nazorati</p>
+                </div>
+
+                <div class="header-tools category-tools">
+                    <div class="calendar-nav category-month-nav">
+                        <button id="prevMonth" class="icon-circle month-btn" type="button">
                             <i class="fa-solid fa-chevron-left"></i>
                         </button>
-                        <span id="currentMonthYear"></span>
-                        <button id="nextMonth" class="month-btn">
+                        <h2 id="currentMonthYear"></h2>
+                        <button id="nextMonth" class="icon-circle month-btn" type="button">
                             <i class="fa-solid fa-chevron-right"></i>
                         </button>
-                    </p>
+                    </div>
                 </div>
-            </div>
-            <div class="pul">
-                <p class="chiqim">Jami chiqim: <span class="span">6050 000 so'm</span></p>
-            </div>
-           
+            </header>
 
-            <div class="foter">
-                <button class="btn9">+ Kategoriya qo'shish</button>
-                <p>Har kategoriyaga oylik limit belgilash uchun bosing</p>
+            <section class="stats-grid category-stats">
+                <div class="stat-card stat-expense">
+                    <div class="stat-decoration"></div>
+                    <div class="stat-icon">
+                        <i class="fa-solid fa-receipt"></i>
+                    </div>
+                    <div class="stat-info">
+                        <p class="stat-label">Jami Chiqim</p>
+                        <h3 class="stat-value"><span class="span">0 so'm</span></h3>
+                        <p class="stat-change category-warning">Kategoriyalar bo'yicha jamlangan</p>
+                    </div>
+                </div>
+
+                <div class="stat-card stat-balance">
+                    <div class="stat-decoration"></div>
+                    <div class="stat-icon">
+                        <i class="fa-solid fa-layer-group"></i>
+                    </div>
+                    <div class="stat-info">
+                        <p class="stat-label">Nazorat</p>
+                        <h3 class="stat-value">Oylik limitlar</h3>
+                        <p class="stat-change">Har kategoriya uchun limit belgilab boring</p>
+                    </div>
+                </div>
+            </section>
+
+            <section class="content-panel category-list-panel">
+                <div class="panel-header">
+                    <div>
+                        <h3>Kategoriya kartalari</h3>
+                        <p class="panel-subtitle">Sarflangan summa va limitlar ko'rinishi</p>
+                    </div>
+                </div>
+
+                <div class="chiqim-kirim category-list"></div>
+
+                <div class="foter category-footer">
+                    <button class="btn9" type="button">+ Kategoriya qo'shish</button>
+                    <p>Har kategoriyaga oylik limit belgilash uchun bosing</p>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <div class="settings-modal-overlay" id="settingsModal" onclick="closeSettingsModal(event)">
+        <div class="settings-modal" onclick="event.stopPropagation()">
+            <div class="settings-header">
+                <h3>Sozlamalar</h3>
+                <button class="settings-close" onclick="closeSettingsModal()">
+                    <i class="fa-solid fa-xmark"></i>
+                </button>
+            </div>
+            <div class="settings-content">
+                <div class="settings-item">
+                    <div class="settings-item-info">
+                        <i class="fa-solid fa-moon"></i>
+                        <div>
+                            <h4>Dark Mode</h4>
+                            <p>Qorong'i rejimni yoqish yoki o'chirish</p>
+                        </div>
+                    </div>
+                    <label class="toggle-switch">
+                        <input type="checkbox" id="darkModeToggle" onchange="toggleDarkMode()">
+                        <span class="toggle-slider"></span>
+                    </label>
+                </div>
+                <div class="settings-item">
+                    <div class="settings-item-info">
+                        <i class="fa-solid fa-right-from-bracket"></i>
+                        <div>
+                            <h4>Akkauntdan chiqish</h4>
+                            <p>Tizimdan xavfsiz chiqish</p>
+                        </div>
+                    </div>
+                    <button class="btn-logout" onclick="logout()">
+                        <i class="fa-solid fa-arrow-right-from-bracket"></i> Chiqish
+                    </button>
+                </div>
             </div>
         </div>
     </div>
+
     <script src="kategoriya.js"></script>
+    <script src="settings-modal.js"></script>
 </body>
 
 </html>

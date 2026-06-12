@@ -6,6 +6,20 @@ const _supabase = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 // Global o'zgaruvchi - qaysi maqsad ustida ishlayotganimizni bilish uchun
 let currentGoalId = null;
 
+// Update Active Navigation Link
+function updateActiveNavigation() {
+  const currentPage = window.location.pathname.split('/').pop() || 'Maqsadlar.html';
+  const navLinks = document.querySelectorAll('.app-nav a.nav-link, .app-sidebar-footer a.nav-link');
+
+  navLinks.forEach(link => {
+    link.classList.remove('active');
+    const href = link.getAttribute('href');
+    if (href === currentPage) {
+      link.classList.add('active');
+    }
+  });
+}
+
 // 2. TOAST XABARNOMALARI (ERKIN VA TEPADA)
 function showToast(message, type = 'success') {
   let container = document.getElementById('toast-container');
@@ -78,20 +92,24 @@ function renderGoals(goals) {
 
   goals.forEach(goal => {
     const percent = Math.min((goal.current_amount / goal.total_price) * 100, 100);
+    const isCompleted = percent >= 100;
+    const statusColor = isCompleted ? '#10b981' : '#006948';
+    const statusBg = isCompleted ? 'rgba(16, 185, 129, 0.12)' : 'rgba(0, 105, 72, 0.12)';
+    const statusIcon = isCompleted ? 'fa-check-double' : 'fa-bullseye';
+    const statusText = isCompleted ? 'Tugallangan' : 'Jarayonda';
 
     const card = document.createElement("div");
     card.className = "glass-card";
     card.innerHTML = `
             <div style="display: flex; justify-content: space-between; align-items: start; margin-bottom: 20px;">
                 <div>
-                    <span class="card-tag" style="color: ${percent >= 100 ? 'var(--success)' : 'var(--primary)'}">
-                        ${percent >= 100 ? 'Tugallangan' : 'Jarayonda'}
+                    <span class="card-tag" style="color: ${statusColor}">
+                        ${statusText}
                     </span>
                     <h3 style="margin-top: 5px; font-size: 18px; font-weight: 800;">${goal.name}</h3>
                 </div>
-                <div class="icon-circle" style="background: ${percent >= 100 ? 'rgba(16, 185, 129, 0.1)' : 'var(--primary-light)'}">
-                    <i class="fa-solid ${percent >= 100 ? 'fa-check-double' : 'fa-bullseye'}" 
-                       style="color: ${percent >= 100 ? 'var(--success)' : 'var(--primary)'}"></i>
+                <div class="icon-circle" style="width: 48px; height: 48px; background: ${statusBg};">
+                    <i class="fa-solid ${statusIcon}" style="color: ${statusColor}; font-size: 18px;"></i>
                 </div>
             </div>
 
@@ -101,7 +119,7 @@ function renderGoals(goals) {
                     <span style="font-weight: 800;">${Math.round(percent)}%</span>
                 </div>
                 <div class="p-bar-bg">
-                    <div class="p-bar-fill" style="width: ${percent}%; background: ${percent >= 100 ? 'var(--success)' : 'var(--primary)'}"></div>
+                    <div class="p-bar-fill" style="width: ${percent}%; background: ${statusColor}"></div>
                 </div>
             </div>
 
@@ -230,4 +248,7 @@ function closeModal() {
 }
 
 // SAHIFA YUKLANGANDA
-document.addEventListener("DOMContentLoaded", loadGoals);
+document.addEventListener("DOMContentLoaded", () => {
+  updateActiveNavigation();
+  loadGoals();
+});
